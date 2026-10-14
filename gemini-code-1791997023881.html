@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Periodic Lab — Bảng Tuần Hoàn 118 Nguyên Tố & Phòng Thí Nghiệm Ảo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #090d16;
+      color: #f3f4f6;
+      overflow-x: hidden;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .periodic-grid {
+      display: grid;
+      grid-template-columns: 32px repeat(18, minmax(52px, 1fr));
+      gap: 4px;
+      user-select: none;
+    }
+    .el-card {
+      position: relative;
+      aspect-ratio: 1 / 1.08;
+      border-radius: 8px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .el-card:hover {
+      transform: scale(1.18) translateY(-3px);
+      z-index: 30;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 14px currentColor;
+      border-color: #fff;
+    }
+    .el-card.dimmed {
+      opacity: 0.14;
+      filter: grayscale(85%);
+      transform: scale(0.95);
+    }
+    .cat-alkali          { background: rgba(239,68,68,0.28); border-color: rgba(248,113,113,0.5); color: #fca5a5; }
+    .cat-alkaline-earth  { background: rgba(249,115,22,0.28); border-color: rgba(251,146,60,0.5); color: #fdba74; }
+    .cat-transition      { background: rgba(234,179,8,0.24); border-color: rgba(250,204,21,0.45); color: #fde047; }
+    .cat-post-transition { background: rgba(16,185,129,0.25); border-color: rgba(52,211,153,0.45); color: #6ee7b7; }
+    .cat-metalloid       { background: rgba(20,184,166,0.28); border-color: rgba(45,212,191,0.5); color: #5eead4; }
+    .cat-nonmetal        { background: rgba(59,130,246,0.28); border-color: rgba(96,165,250,0.5); color: #93c5fd; }
+    .cat-halogen         { background: rgba(6,182,212,0.28); border-color: rgba(34,211,238,0.5); color: #67e8f9; }
+    .cat-noble-gas       { background: rgba(168,85,247,0.28); border-color: rgba(192,132,252,0.5); color: #d8b4fe; }
+    .cat-lanthanide      { background: rgba(236,72,153,0.26); border-color: rgba(244,114,182,0.5); color: #f9a8d4; }
+    .cat-actinide        { background: rgba(244,63,94,0.26); border-color: rgba(251,113,133,0.5); color: #fda4af; }
+    .cat-unknown         { background: rgba(148,163,184,0.2); border-color: rgba(148,163,184,0.4); color: #cbd5e1; }
+    @keyframes bubbleRise {
+      0% { transform: translateY(0) scale(0.7); opacity: 0.85; }
+      100% { transform: translateY(-120px) scale(1.25); opacity: 0; }
+    }
+    .bubble {
+      position: absolute;
+      bottom: 10px;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.7);
+      animation: bubbleRise 1.6s infinite ease-in;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/90 border-b border-slate-800 px-4 lg:px-8 py-3">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-extrabold text-white mono text-lg shadow-lg shadow-cyan-500/20">
+          Pt
+        </div>
+        <div>
+          <h1 class="text-lg font-extrabold tracking-tight text-white">PERIODIC LAB — 118 NGUYÊN TỐ</h1>
+          <p class="text-xs text-slate-400">Bảng tuần hoàn tương tác, Mô hình nguyên tử Bohr & Phòng thí nghiệm ảo</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <nav class="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+          <button onclick="switchTab('table')" id="tab-table" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500 text-slate-950">⚛️ Bảng Tuần Hoàn</button>
+          <button onclick="switchTab('lab')" id="tab-lab" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">🧪 Phòng Thí Nghiệm</button>
+          <button onclick="switchTab('calc')" id="tab-calc" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">⚖️ Tính Mol (M)</button>
+        </nav>
+        <button onclick="downloadSelfHTML()" class="px-3 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition">
+          ⬇️ Tải file .HTML
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto px-3 sm:px-6 py-4">
+
+    <!-- TAB 1: BẢNG TUẦN HOÀN -->
+    <section id="view-table" class="space-y-4">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 bg-slate-900/80 border border-slate-800 rounded-2xl p-3.5">
+        <div class="lg:col-span-4">
+          <label class="text-[11px] font-semibold text-slate-400 uppercase">Tìm kiếm nhanh</label>
+          <input id="searchInput" type="text" oninput="renderFilters()" placeholder="Tên (Sắt, Vàng, Oxy), ký hiệu (Fe, Au) hoặc Z (26)..."
+            class="mt-1 w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl px-3.5 py-2 text-sm text-white outline-none" />
+        </div>
+        <div class="lg:col-span-4">
+          <label class="text-[11px] font-semibold text-slate-400 uppercase">Lọc theo nhóm nguyên tố</label>
+          <select id="catSelect" onchange="renderFilters()" class="mt-1 w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white outline-none">
+            <option value="all">Tất cả 118 nguyên tố</option>
+            <option value="alkali">Kim loại kiềm</option>
+            <option value="alkaline-earth">Kim loại kiềm thổ</option>
+            <option value="transition">Kim loại chuyển tiếp</option>
+            <option value="post-transition">Kim loại hậu chuyển tiếp</option>
+            <option value="metalloid">Á kim</option>
+            <option value="nonmetal">Phi kim</option>
+            <option value="halogen">Halogen</option>
+            <option value="noble-gas">Khí hiếm</option>
+            <option value="lanthanide">Họ Lanthanide</option>
+            <option value="actinide">Họ Actinide</option>
+          </select>
+        </div>
+        <div class="lg:col-span-4 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+          <div class="flex justify-between text-xs">
+            <span class="text-slate-400 font-semibold">Nhiệt độ thử trạng thái:</span>
+            <span id="tempLabel" class="mono font-bold text-cyan-300">298 K (25 °C)</span>
+          </div>
+          <input id="tempSlider" type="range" min="0" max="6000" value="298" oninput="onTempChange(this.value)" class="w-full accent-cyan-400 mt-1.5 cursor-pointer" />
+          <div class="flex justify-between text-[10px] mono text-slate-400">
+            <span>0 K</span>
+            <span class="text-sky-300">■ Rắn</span>
+            <span class="text-amber-300">● Lỏng</span>
+            <span class="text-rose-300">▲ Khí</span>
+            <span>6000 K</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thanh xem nhanh + Mô hình Bohr trực tiếp -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 items-center">
+        <div class="lg:col-span-5 flex items-center gap-4">
+          <div id="inspBadge" class="w-20 h-20 rounded-2xl flex flex-col items-center justify-center shrink-0 cat-nonmetal border-2">
+            <span id="inspZ" class="text-xs mono font-bold">1</span>
+            <span id="inspSym" class="text-3xl font-extrabold mono">H</span>
+            <span id="inspMass" class="text-[10px] mono">1.008</span>
+          </div>
+          <div>
+            <h2 id="inspTitle" class="text-lg font-extrabold text-white">Hydro (Hydrogen)</h2>
+            <p id="inspCat" class="text-xs text-cyan-400 font-semibold">Phi kim</p>
+            <p id="inspDesc" class="text-xs text-slate-300 mt-1 line-clamp-2">Nguyên tố nhẹ nhất và phổ biến nhất trong vũ trụ.</p>
+          </div>
+        </div>
+        <div class="lg:col-span-4 grid grid-cols-2 gap-2 text-xs mono bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div>Cấu hình: <strong id="inspConfig" class="text-cyan-300">1s¹</strong></div>
+          <div>Độ âm điện: <strong id="inspEN" class="text-amber-300">2.20</strong></div>
+          <div>Nóng chảy: <strong id="inspMelt" class="text-white">13.99 K</strong></div>
+          <div>Nhiệt độ sôi: <strong id="inspBoil" class="text-white">20.27 K</strong></div>
+          <div>Khối lượng riêng: <strong id="inspDens" class="text-white">0.00009</strong></div>
+          <div>Oxi hóa: <strong id="inspOx" class="text-emerald-300">-1, +1</strong></div>
+        </div>
+        <div class="lg:col-span-3 flex items-center justify-center gap-3 bg-slate-950 p-2 rounded-xl border border-slate-800">
+          <canvas id="bohrCanvas" width="110" height="110"></canvas>
+          <div class="text-xs mono space-y-1">
+            <div class="text-slate-400">Mô hình Bohr</div>
+            <div id="inspShells" class="text-cyan-300 font-bold">K(1)</div>
+            <div id="inspParticles" class="text-[11px] text-slate-300">1p / 0n / 1e</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bảng tuần hoàn 18 cột -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 overflow-x-auto">
+        <div class="min-w-[1040px]">
+          <div id="periodicGrid" class="periodic-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: PHÒNG THÍ NGHIỆM ẢO -->
+    <section id="view-lab" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <h2 class="text-lg font-bold text-white">🧪 Chọn Phản Ứng Thí Nghiệm</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs text-slate-400">Chất A</label>
+            <select id="chemA" class="mt-1 w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-sm text-white"></select>
+          </div>
+          <div>
+            <label class="text-xs text-slate-400">Chất B</label>
+            <select id="chemB" class="mt-1 w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-sm text-white"></select>
+          </div>
+        </div>
+        <button onclick="runLab()" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition">
+          ⚡ Thực Hiện Phản Ứng
+        </button>
+        <div class="pt-3 border-t border-slate-800 space-y-2">
+          <div class="text-xs text-slate-400 font-semibold">Thí nghiệm mẫu nhanh:</div>
+          <div id="presetBtns" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-5 items-center">
+        <div class="flex flex-col items-center justify-center bg-slate-950 border border-slate-800 rounded-2xl p-6 min-h-[260px]">
+          <div class="relative w-36 h-44 border-4 border-t-0 border-slate-400/70 rounded-b-3xl overflow-hidden flex flex-col justify-end bg-slate-900/40">
+            <div id="beakerLiquid" class="w-full h-24 bg-sky-500/25 transition-all duration-700 relative">
+              <div id="bubbleBox" class="absolute inset-0 overflow-hidden"></div>
+            </div>
+            <div id="beakerPrecip" class="w-full h-0 transition-all duration-700"></div>
+          </div>
+          <p id="labStatus" class="text-xs text-slate-400 mt-3 text-center">Bình phản ứng sẵn sàng</p>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+            <span class="text-[11px] text-cyan-400 font-bold uppercase">Phương trình cân bằng</span>
+            <div id="labEq" class="mono text-base font-bold text-white mt-1">2Na + 2H₂O → 2NaOH + H₂↑</div>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+            <span class="text-[11px] text-amber-400 font-bold uppercase">Hiện tượng hóa học</span>
+            <p id="labPhenom" class="text-xs text-slate-200 mt-1 leading-relaxed">Bấm "Thực Hiện Phản Ứng" để quan sát hiện tượng.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: TÍNH KHỐI LƯỢNG MOL -->
+    <section id="view-calc" class="hidden max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+      <h2 class="text-lg font-bold text-white">⚖️ Máy Tính Khối Lượng Mol Phân Tử</h2>
+      <div class="flex gap-2">
+        <input id="molInput" type="text" value="Fe2(SO4)3" oninput="calcMol()" placeholder="VD: H2SO4, Ca(OH)2, C6H12O6..."
+          class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 mono text-white outline-none" />
+        <button onclick="calcMol()" class="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm">Tính</button>
+      </div>
+      <div id="molOutput" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2"></div>
+    </section>
+
+  </main>
+
+  <script>
+    const CAT_NAMES = {
+      "alkali":"Kim loại kiềm","alkaline-earth":"Kim loại kiềm thổ","transition":"Kim loại chuyển tiếp",
+      "post-transition":"Kim loại hậu chuyển tiếp","metalloid":"Á kim","nonmetal":"Phi kim",
+      "halogen":"Halogen","noble-gas":"Khí hiếm","lanthanide":"Họ Lanthanide","actinide":"Họ Actinide","unknown":"Chưa rõ"
+    };
+
+    const RAW = [
+      [1,"H","Hydro","Hydrogen",1.008,"nonmetal",1,1,2.20,13.99,20.27,0.00009,"1s¹","-1, +1","Nguyên tố nhẹ nhất vũ trụ, thành phần chính của nước."],
+      [2,"He","Heli","Helium",4.0026,"noble-gas",18,1,null,0.95,4.22,0.00018,"1s²","0","Khí hiếm nhẹ, trơ hóa học, dùng làm mát nam châm siêu dẫn."],
+      [3,"Li","Liti","Lithium",6.94,"alkali",1,2,0.98,453.65,1603,0.534,"[He] 2s¹","+1","Kim loại nhẹ nhất, cốt lõi của pin Lithium-ion."],
+      [4,"Be","Beri","Beryllium",9.0122,"alkaline-earth",2,2,1.57,1560,2742,1.85,"[He] 2s²","+2","Kim loại kiềm thổ nhẹ, dùng trong hàng không vũ trụ."],
+      [5,"B","Bo","Boron",10.81,"metalloid",13,2,2.04,2349,4200,2.34,"[He] 2s² 2p¹","+3","Á kim dùng trong thủy tinh chịu nhiệt Pyrex."],
+      [6,"C","Cacbon","Carbon",12.011,"nonmetal",14,2,2.55,3823,4098,2.267,"[He] 2s² 2p²","-4,+2,+4","Nền tảng của sự sống hữu cơ, kim cương và than chì."],
+      [7,"N","Nitơ","Nitrogen",14.007,"nonmetal",15,2,3.04,63.15,77.36,0.00125,"[He] 2s² 2p³","-3,+3,+5","Chiếm 78% thể tích khí quyển Trái Đất."],
+      [8,"O","Oxy","Oxygen",15.999,"nonmetal",16,2,3.44,54.36,90.20,0.00143,"[He] 2s² 2p⁴","-2","Duy trì sự hô hấp và sự cháy."],
+      [9,"F","Flo","Fluorine",18.998,"halogen",17,2,3.98,53.48,85.03,0.0017,"[He] 2s² 2p⁵","-1","Phi kim có độ âm điện lớn nhất."],
+      [10,"Ne","Neon","Neon",20.180,"noble-gas",18,2,null,24.56,27.07,0.0009,"[He] 2s² 2p⁶","0","Khí hiếm phát sáng đỏ cam trong đèn Neon."],
+      [11,"Na","Natri","Sodium",22.990,"alkali",1,3,0.93,370.94,1156,0.971,"[Ne] 3s¹","+1","Kim loại kiềm phản ứng mạnh với nước, tạo muối ăn NaCl."],
+      [12,"Mg","Magie","Magnesium",24.305,"alkaline-earth",2,3,1.31,923,1363,1.738,"[Ne] 3s²","+2","Cháy sáng trắng rực rỡ, tâm của phân tử diệp lục."],
+      [13,"Al","Nhôm","Aluminium",26.982,"post-transition",13,3,1.61,933.47,2792,2.70,"[Ne] 3s² 3p¹","+3","Kim loại nhẹ, bền, chống ăn mòn cao."],
+      [14,"Si","Silic","Silicon",28.085,"metalloid",14,3,1.90,1687,3538,2.329,"[Ne] 3s² 3p²","-4,+4","Vật liệu cốt lõi của chip bán dẫn và pin mặt trời."],
+      [15,"P","Photpho","Phosphorus",30.974,"nonmetal",15,3,2.19,317.3,553.7,1.82,"[Ne] 3s² 3p³","-3,+3,+5","Thành phần thiết yếu của DNA và xương."],
+      [16,"S","Lưu huỳnh","Sulfur",32.06,"nonmetal",16,3,2.58,388.36,717.8,2.067,"[Ne] 3s² 3p⁴","-2,+4,+6","Chất rắn màu vàng, dùng sản xuất H₂SO₄."],
+      [17,"Cl","Clo","Chlorine",35.45,"halogen",17,3,3.16,171.6,239.11,0.0032,"[Ne] 3s² 3p⁵","-1,+1,+5,+7","Khí màu vàng lục dùng khử trùng nước và sản xuất PVC."],
+      [18,"Ar","Argon","Argon",39.948,"noble-gas",18,3,null,83.80,87.30,0.00178,"[Ne] 3s² 3p⁶","0","Khí hiếm phổ biến thứ 3 trong khí quyển."],
+      [19,"K","Kali","Potassium",39.098,"alkali",1,4,0.82,336.53,1032,0.862,"[Ar] 4s¹","+1","Kim loại kiềm cháy với ngọn lửa tím."],
+      [20,"Ca","Canxi","Calcium",40.078,"alkaline-earth",2,4,1.00,1115,1757,1.54,"[Ar] 4s²","+2","Thành phần chính của xương, răng và đá vôi."],
+      [21,"Sc","Scandi","Scandium",44.956,"transition",3,4,1.36,1814,3109,2.989,"[Ar] 3d¹ 4s²","+3","Hợp kim nhôm-scandi dùng trong hàng không."],
+      [22,"Ti","Titan","Titanium",47.867,"transition",4,4,1.54,1941,3560,4.506,"[Ar] 3d² 4s²","+2,+3,+4","Kim loại siêu bền, nhẹ, chống ăn mòn."],
+      [23,"V","Vanadi","Vanadium",50.942,"transition",5,4,1.63,2183,3680,6.11,"[Ar] 3d³ 4s²","+2,+3,+4,+5","Phụ gia tăng độ cứng vượt trội cho thép."],
+      [24,"Cr","Crom","Chromium",51.996,"transition",6,4,1.66,2180,2944,7.15,"[Ar] 3d⁵ 4s¹","+2,+3,+6","Tạo độ bóng chống gỉ cho thép Inox."],
+      [25,"Mn","Mangan","Manganese",54.938,"transition",7,4,1.55,1519,2334,7.44,"[Ar] 3d⁵ 4s²","+2,+4,+7","Dùng luyện thép chịu va đập và sản xuất pin."],
+      [26,"Fe","Sắt","Iron",55.845,"transition",8,4,1.83,1811,3134,7.874,"[Ar] 3d⁶ 4s²","+2,+3","Kim loại trụ cột trong luyện gang thép và Hemoglobin."],
+      [27,"Co","Coban","Cobalt",58.933,"transition",9,4,1.88,1768,3200,8.86,"[Ar] 3d⁷ 4s²","+2,+3","Kim loại từ tính dùng trong pin và nam châm."],
+      [28,"Ni","Niken","Nickel",58.693,"transition",10,4,1.91,1728,3186,8.912,"[Ar] 3d⁸ 4s²","+2,+3","Chống ăn mòn cao, dùng làm thép không gỉ."],
+      [29,"Cu","Đồng","Copper",63.546,"transition",11,4,1.90,1357.77,2835,8.96,"[Ar] 3d¹⁰ 4s¹","+1,+2","Dẫn điện và dẫn nhiệt tuyệt vời."],
+      [30,"Zn","Kẽm","Zinc",65.38,"transition",12,4,1.65,692.68,1180,7.134,"[Ar] 3d¹⁰ 4s²","+2","Dùng mạ thép chống gỉ và tạo đồng thau."],
+      [31,"Ga","Gali","Gallium",69.723,"post-transition",13,4,1.81,302.91,2673,5.907,"[Ar] 3d¹⁰ 4s² 4p¹","+3","Nóng chảy ngay trên lòng bàn tay (29.8°C)."],
+      [32,"Ge","Gemani","Germanium",72.630,"metalloid",14,4,2.01,1211.4,3106,5.323,"[Ar] 3d¹⁰ 4s² 4p²","+2,+4","Á kim bán dẫn dùng trong cáp quang."],
+      [33,"As","Asen","Arsenic",74.922,"metalloid",15,4,2.18,1090,887,5.776,"[Ar] 3d¹⁰ 4s² 4p³","-3,+3,+5","Á kim dùng trong bán dẫn GaAs."],
+      [34,"Se","Selen","Selenium",78.971,"nonmetal",16,4,2.55,494,958,4.809,"[Ar] 3d¹⁰ 4s² 4p⁴","-2,+4,+6","Phi kim quang dẫn và vi chất sinh học."],
+      [35,"Br","Brom","Bromine",79.904,"halogen",17,4,2.96,265.8,332.0,3.122,"[Ar] 3d¹⁰ 4s² 4p⁵","-1,+1,+5","Phi kim duy nhất ở thể lỏng ở nhiệt độ phòng."],
+      [36,"Kr","Krypton","Krypton",83.798,"noble-gas",18,4,3.00,115.78,119.93,0.0037,"[Ar] 3d¹⁰ 4s² 4p⁶","0,+2","Khí hiếm dùng trong đèn flash nhiếp ảnh."],
+      [37,"Rb","Rubidi","Rubidium",85.468,"alkali",1,5,0.82,312.46,961,1.532,"[Kr] 5s¹","+1","Kim loại kiềm dùng trong đồng hồ nguyên tử."],
+      [38,"Sr","Stronti","Strontium",87.62,"alkaline-earth",2,5,0.95,1050,1655,2.64,"[Kr] 5s²","+2","Tạo màu đỏ rực rỡ cho pháo hoa."],
+      [39,"Y","Ytri","Yttrium",88.906,"transition",3,5,1.22,1799,3609,4.469,"[Kr] 4d¹ 5s²","+3","Dùng chế tạo laser YAG và chất siêu dẫn."],
+      [40,"Zr","Zirconi","Zirconium",91.224,"transition",4,5,1.33,2128,4682,6.506,"[Kr] 4d² 5s²","+4","Vật liệu bọc thanh nhiên liệu hạt nhân."],
+      [41,"Nb","Niobi","Niobium",92.906,"transition",5,5,1.6,2750,5017,8.57,"[Kr] 4d⁴ 5s¹","+3,+5","Dùng trong nam châm siêu dẫn."],
+      [42,"Mo","Molipden","Molybdenum",95.95,"transition",6,5,2.16,2896,4912,10.22,"[Kr] 4d⁵ 5s¹","+4,+6","Kim loại chịu nhiệt cực cao cho thép."],
+      [43,"Tc","Tecneti","Technetium",98,"transition",7,5,1.9,2430,4538,11.5,"[Kr] 4d⁵ 5s²","+4,+7","Nguyên tố phóng xạ nhân tạo đầu tiên."],
+      [44,"Ru","Rutheni","Ruthenium",101.07,"transition",8,5,2.2,2607,4423,12.37,"[Kr] 4d⁷ 5s¹","+3,+4","Kim loại quý nhóm Platin dùng làm xúc tác."],
+      [45,"Rh","Rhodi","Rhodium",102.91,"transition",9,5,2.28,2237,3968,12.41,"[Kr] 4d⁸ 5s¹","+3","Kim loại quý hiếm dùng xử lý khí thải ô tô."],
+      [46,"Pd","Paladi","Palladium",106.42,"transition",10,5,2.20,1828.05,3236,12.02,"[Kr] 4d¹⁰","+2,+4","Hấp thụ lượng lớn khí Hydro, làm xúc tác."],
+      [47,"Ag","Bạc","Silver",107.87,"transition",11,5,1.93,1234.93,2435,10.50,"[Kr] 4d¹⁰ 5s¹","+1","Kim loại dẫn điện và dẫn nhiệt tốt nhất."],
+      [48,"Cd","Cadimi","Cadmium",112.41,"transition",12,5,1.69,594.22,1040,8.69,"[Kr] 4d¹⁰ 5s²","+2","Dùng trong pin sạc Ni-Cd."],
+      [49,"In","Indi","Indium",114.82,"post-transition",13,5,1.78,429.75,2345,7.31,"[Kr] 4d¹⁰ 5s² 5p¹","+3","Dùng chế tạo màn hình cảm ứng ITO."],
+      [50,"Sn","Thiếc","Tin",118.71,"post-transition",14,5,1.96,505.08,2875,7.287,"[Kr] 4d¹⁰ 5s² 5p²","+2,+4","Kim loại dùng tráng vỏ đồ hộp và chì hàn."],
+      [51,"Sb","Antimon","Antimony",121.76,"metalloid",15,5,2.05,903.78,1860,6.685,"[Kr] 4d¹⁰ 5s² 5p³","-3,+3,+5","Á kim dùng trong vật liệu chống cháy."],
+      [52,"Te","Telu","Tellurium",127.60,"metalloid",16,5,2.1,722.66,1261,6.232,"[Kr] 4d¹⁰ 5s² 5p⁴","-2,+4,+6","Á kim dùng trong pin mặt trời CdTe."],
+      [53,"I","Iốt","Iodine",126.90,"halogen",17,5,2.66,386.85,457.4,4.93,"[Kr] 4d¹⁰ 5s² 5p⁵","-1,+1,+5,+7","Tinh thể tím đen dễ thăng hoa, cần cho tuyến giáp."],
+      [54,"Xe","Xenon","Xenon",131.29,"noble-gas",18,5,2.60,161.4,165.03,0.0059,"[Kr] 4d¹⁰ 5s² 5p⁶","0,+2,+4,+6","Khí hiếm dùng trong động cơ đẩy ion tàu vũ trụ."],
+      [55,"Cs","Xesi","Caesium",132.91,"alkali",1,6,0.79,301.59,944,1.873,"[Xe] 6s¹","+1","Kim loại hoạt động mạnh nhất, chuẩn đồng hồ nguyên tử."],
+      [56,"Ba","Bari","Barium",137.33,"alkaline-earth",2,6,0.89,1000,2170,3.594,"[Xe] 6s²","+2","Tạo pháo hoa màu lục và chất cản quang X-quang."],
+      [57,"La","Lantan","Lanthanum",138.91,"lanthanide",3,9,1.10,1193,3737,6.145,"[Xe] 5d¹ 6s²","+3","Mở đầu họ Lanthanide, làm kính quang học."],
+      [58,"Ce","Xeri","Cerium",140.12,"lanthanide",4,9,1.12,1068,3716,6.77,"[Xe] 4f¹ 5d¹ 6s²","+3,+4","Đất hiếm phổ biến nhất, dùng trong đá bật lửa."],
+      [59,"Pr","Praseodymi","Praseodymium",140.91,"lanthanide",5,9,1.13,1208,3793,6.773,"[Xe] 4f³ 6s²","+3","Chế tạo nam châm đất hiếm và kính thợ hàn."],
+      [60,"Nd","Neodymi","Neodymium",144.24,"lanthanide",6,9,1.14,1297,3347,7.007,"[Xe] 4f⁴ 6s²","+3","Tạo nam châm vĩnh cửu mạnh nhất hiện nay."],
+      [61,"Pm","Promethi","Promethium",145,"lanthanide",7,9,1.13,1315,3273,7.26,"[Xe] 4f⁵ 6s²","+3","Đất hiếm phóng xạ dùng trong pin hạt nhân."],
+      [62,"Sm","Samari","Samarium",150.36,"lanthanide",8,9,1.17,1345,2067,7.52,"[Xe] 4f⁶ 6s²","+2,+3","Nam châm SmCo chịu nhiệt độ rất cao."],
+      [63,"Eu","Europi","Europium",151.96,"lanthanide",9,9,1.2,1099,1802,5.243,"[Xe] 4f⁷ 6s²","+2,+3","Chất phát quang chống giả trên tiền Euro."],
+      [64,"Gd","Gadolini","Gadolinium",157.25,"lanthanide",10,9,1.20,1585,3546,7.895,"[Xe] 4f⁷ 5d¹ 6s²","+3","Dùng làm chất đối quang từ trong MRI."],
+      [65,"Tb","Terbi","Terbium",158.93,"lanthanide",11,9,1.2,1629,3503,8.229,"[Xe] 4f⁹ 6s²","+3","Chất phát quang màu lục cho màn hình."],
+      [66,"Dy","Dysprosi","Dysprosium",162.50,"lanthanide",12,9,1.22,1680,2840,8.55,"[Xe] 4f¹⁰ 6s²","+3","Phụ gia nam châm động cơ xe điện."],
+      [67,"Ho","Holmi","Holmium",164.93,"lanthanide",13,9,1.23,1734,2993,8.795,"[Xe] 4f¹¹ 6s²","+3","Nguyên tố có mômen từ tự nhiên lớn nhất."],
+      [68,"Er","Erbi","Erbium",167.26,"lanthanide",14,9,1.24,1802,3141,9.066,"[Xe] 4f¹² 6s²","+3","Khuếch đại tín hiệu cáp quang viễn thông."],
+      [69,"Tm","Thuli","Thulium",168.93,"lanthanide",15,9,1.25,1818,2223,9.321,"[Xe] 4f¹³ 6s²","+3","Dùng trong thiết bị X-quang di động."],
+      [70,"Yb","Yterbi","Ytterbium",173.05,"lanthanide",16,9,1.1,1097,1469,6.965,"[Xe] 4f¹⁴ 6s²","+2,+3","Dùng trong đồng hồ nguyên tử quang học."],
+      [71,"Lu","Luteti","Lutetium",174.97,"lanthanide",17,9,1.27,1925,3675,9.84,"[Xe] 4f¹⁴ 5d¹ 6s²","+3","Nguyên tố cuối cùng và nặng nhất họ Lanthanide."],
+      [72,"Hf","Hafni","Hafnium",178.49,"transition",4,6,1.3,2506,4876,13.31,"[Xe] 4f¹⁴ 5d² 6s²","+4","Dùng trong vi xử lý và thanh điều khiển hạt nhân."],
+      [73,"Ta","Tantan","Tantalum",180.95,"transition",5,6,1.5,3290,5731,16.65,"[Xe] 4f¹⁴ 5d³ 6s²","+5","Chế tạo tụ điện siêu nhỏ trong điện thoại."],
+      [74,"W","Vonfram","Tungsten",183.84,"transition",6,6,2.36,3695,5828,19.25,"[Xe] 4f¹⁴ 5d⁴ 6s²","+4,+6","Kim loại có điểm nóng chảy cao nhất (3422°C)."],
+      [75,"Re","Rheni","Rhenium",186.21,"transition",7,6,1.9,3459,5869,21.02,"[Xe] 4f¹⁴ 5d⁵ 6s²","+4,+7","Siêu hợp kim cánh tua-bin động cơ phản lực."],
+      [76,"Os","Osmi","Osmium",190.23,"transition",8,6,2.2,3306,5285,22.59,"[Xe] 4f¹⁴ 5d⁶ 6s²","+4,+8","Kim loại tự nhiên có khối lượng riêng lớn nhất."],
+      [77,"Ir","Iridi","Iridium",192.22,"transition",9,6,2.20,2719,4701,22.56,"[Xe] 4f¹⁴ 5d⁷ 6s²","+3,+4","Kim loại chống ăn mòn tốt nhất."],
+      [78,"Pt","Bạch kim","Platinum",195.08,"transition",10,6,2.28,2041.4,4098,21.46,"[Xe] 4f¹⁴ 5d⁹ 6s¹","+2,+4","Kim loại quý làm xúc tác và trang sức."],
+      [79,"Au","Vàng","Gold",196.97,"transition",11,6,2.54,1337.33,3129,19.28,"[Xe] 4f¹⁴ 5d¹⁰ 6s¹","+1,+3","Kim loại quý không bị oxy hóa, cực dẻo."],
+      [80,"Hg","Thủy ngân","Mercury",200.59,"transition",12,6,2.00,234.32,629.88,13.53,"[Xe] 4f¹⁴ 5d¹⁰ 6s²","+1,+2","Kim loại duy nhất ở thể lỏng ở nhiệt độ phòng."],
+      [81,"Tl","Tali","Thallium",204.38,"post-transition",13,6,1.62,577,1746,11.85,"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹","+1,+3","Kim loại mềm dùng trong cảm biến hồng ngoại."],
+      [82,"Pb","Chì","Lead",207.2,"post-transition",14,6,1.87,600.61,2022,11.34,"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²","+2,+4","Dùng trong ắc quy và tấm chắn tia X."],
+      [83,"Bi","Bitmut","Bismuth",208.98,"post-transition",15,6,2.02,544.7,1837,9.807,"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³","+3,+5","Tạo tinh thể bậc thang óng ánh cầu vồng."],
+      [84,"Po","Poloni","Polonium",209,"post-transition",16,6,2.0,527,1235,9.32,"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴","+2,+4","Nguyên tố phóng xạ do Marie Curie phát hiện."],
+      [85,"At","Astatin","Astatine",210,"halogen",17,6,2.2,575,610,7,"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵","-1,+1","Nguyên tố tự nhiên hiếm nhất vỏ Trái Đất."],
+      [86,"Rn","Radon","Radon",222,"noble-gas",18,6,2.2,202,211.3,0.0097,"[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶","0","Khí hiếm phóng xạ nặng."],
+      [87,"Fr","Franxi","Francium",223,"alkali",1,7,0.7,300,950,1.87,"[Rn] 7s¹","+1","Kim loại kiềm phóng xạ chu kỳ bán rã 22 phút."],
+      [88,"Ra","Radi","Radium",226,"alkaline-earth",2,7,0.9,973,2010,5.5,"[Rn] 7s²","+2","Kim loại kiềm thổ phóng xạ phát sáng xanh mờ."],
+      [89,"Ac","Actini","Actinium",227,"actinide",3,10,1.1,1323,3471,10.07,"[Rn] 6d¹ 7s²","+3","Nguyên tố mở đầu họ Actinide."],
+      [90,"Th","Thori","Thorium",232.04,"actinide",4,10,1.3,2115,5061,11.72,"[Rn] 6d² 7s²","+4","Nhiên liệu hạt nhân tiềm năng thế hệ mới."],
+      [91,"Pa","Protactini","Protactinium",231.04,"actinide",5,10,1.5,1841,4300,15.37,"[Rn] 5f² 6d¹ 7s²","+4,+5","Nguyên tố phóng xạ tự nhiên hiếm."],
+      [92,"U","Urani","Uranium",238.03,"actinide",6,10,1.38,1405.3,4404,18.95,"[Rn] 5f³ 6d¹ 7s²","+4,+6","Nhiên liệu cốt lõi cho nhà máy điện hạt nhân."],
+      [93,"Np","Neptuni","Neptunium",237,"actinide",7,10,1.36,917,4273,20.45,"[Rn] 5f⁴ 6d¹ 7s²","+3,+4,+5,+6","Nguyên tố siêu Urani đầu tiên."],
+      [94,"Pu","Plutoni","Plutonium",244,"actinide",8,10,1.28,912.5,3501,19.84,"[Rn] 5f⁶ 7s²","+3,+4,+5,+6","Nguồn nhiệt điện đồng vị cho tàu thăm dò vũ trụ."],
+      [95,"Am","Americi","Americium",243,"actinide",9,10,1.13,1449,2880,13.69,"[Rn] 5f⁷ 7s²","+3,+4","Ứng dụng trong cảm biến báo khói gia đình."],
+      [96,"Cm","Curi","Curium",247,"actinide",10,10,1.28,1613,3383,13.51,"[Rn] 5f⁷ 6d¹ 7s²","+3","Đặt tên vinh danh nhà bác học Marie và Pierre Curie."],
+      [97,"Bk","Berkeli","Berkelium",247,"actinide",11,10,1.3,1259,2900,14.79,"[Rn] 5f⁹ 7s²","+3,+4","Nguyên tố nhân tạo tổng hợp tại Berkeley."],
+      [98,"Cf","Californi","Californium",251,"actinide",12,10,1.3,1173,1743,15.1,"[Rn] 5f¹⁰ 7s²","+3","Nguồn phát tia neutron mạnh mẽ."],
+      [99,"Es","Einsteini","Einsteinium",252,"actinide",13,10,1.3,1133,1269,8.84,"[Rn] 5f¹¹ 7s²","+3","Đặt tên vinh danh nhà vật lý Albert Einstein."],
+      [100,"Fm","Fermi","Fermium",257,"actinide",14,10,1.3,1800,null,9.7,"[Rn] 5f¹² 7s²","+3","Đặt tên vinh danh nhà vật lý Enrico Fermi."],
+      [101,"Md","Mendelevi","Mendelevium",258,"actinide",15,10,1.3,1100,null,10.3,"[Rn] 5f¹³ 7s²","+2,+3","Vinh danh cha đẻ bảng tuần hoàn Dmitri Mendeleev."],
+      [102,"No","Nobeli","Nobelium",259,"actinide",16,10,1.3,1100,null,9.9,"[Rn] 5f¹⁴ 7s²","+2,+3","Vinh danh nhà hóa học Alfred Nobel."],
+      [103,"Lr","Lawrenci","Lawrencium",266,"actinide",17,10,1.3,1900,null,15.6,"[Rn] 5f¹⁴ 7s² 7p¹","+3","Nguyên tố kết thúc họ Actinide."],
+      [104,"Rf","Rutherfordi","Rutherfordium",267,"transition",4,7,null,2400,5800,23.2,"[Rn] 5f¹⁴ 6d² 7s²","+4","Vinh danh nhà vật lý hạt nhân Ernest Rutherford."],
+      [105,"Db","Dubni","Dubnium",268,"transition",5,7,null,null,null,29.3,"[Rn] 5f¹⁴ 6d³ 7s²","+5","Đặt tên theo viện nghiên cứu hạt nhân Dubna."],
+      [106,"Sg","Seaborgi","Seaborgium",269,"transition",6,7,null,null,null,35.0,"[Rn] 5f¹⁴ 6d⁴ 7s²","+6","Vinh danh Glenn T. Seaborg."],
+      [107,"Bh","Bohri","Bohrium",270,"transition",7,7,null,null,null,37.1,"[Rn] 5f¹⁴ 6d⁵ 7s²","+7","Vinh danh nhà vật lý lượng tử Niels Bohr."],
+      [108,"Hs","Hassi","Hassium",277,"transition",8,7,null,null,null,40.7,"[Rn] 5f¹⁴ 6d⁶ 7s²","+8","Nguyên tố siêu nặng đặt tên theo bang Hesse."],
+      [109,"Mt","Meitneri","Meitnerium",278,"unknown",9,7,null,null,null,37.4,"[Rn] 5f¹⁴ 6d⁷ 7s²","+3,+4","Vinh danh nhà vật lý Lise Meitner."],
+      [110,"Ds","Darmstadti","Darmstadtium",281,"unknown",10,7,null,null,null,34.8,"[Rn] 5f¹⁴ 6d⁸ 7s²","+2,+4","Tổng hợp tại viện nghiên cứu GSI Darmstadt."],
+      [111,"Rg","Roentgeni","Roentgenium",282,"unknown",11,7,null,null,null,28.7,"[Rn] 5f¹⁴ 6d⁹ 7s²","+3","Vinh danh nhà phát minh tia X Wilhelm Röntgen."],
+      [112,"Cn","Copernici","Copernicium",285,"transition",12,7,null,283,340,14.0,"[Rn] 5f¹⁴ 6d¹⁰ 7s²","+2","Vinh danh nhà thiên văn học Nicolaus Copernicus."],
+      [113,"Nh","Nihoni","Nihonium",286,"unknown",13,7,null,700,1400,16.0,"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹","+1,+3","Nguyên tố đầu tiên tổng hợp tại Nhật Bản (RIKEN)."],
+      [114,"Fl","Flerovi","Flerovium",289,"post-transition",14,7,null,200,380,14.0,"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²","+2","Nguyên tố siêu nặng nhóm 14."],
+      [115,"Mc","Moscovi","Moscovium",290,"unknown",15,7,null,670,1400,13.5,"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³","+1,+3","Nguyên tố siêu nặng nhóm 15."],
+      [116,"Lv","Livermori","Livermorium",293,"unknown",16,7,null,709,1085,12.9,"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴","+2,+4","Đặt tên theo phòng thí nghiệm Lawrence Livermore."],
+      [117,"Ts","Tennessine","Tennessine",294,"unknown",17,7,null,723,883,7.2,"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵","-1,+1","Nguyên tố siêu nặng thuộc nhóm Halogen."],
+      [118,"Og","Oganesson","Oganesson",294,"noble-gas",18,7,null,325,450,5.0,"[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶","0,+2,+4","Nguyên tố nặng nhất hiện nay trên bảng tuần hoàn (Z=118)."]
+    ];
+
+    function calcShells(z) {
+      const sub = [[1,2],[2,2],[2,6],[3,2],[3,6],[4,2],[3,10],[4,6],[5,2],[4,10],[5,6],[6,2],[4,14],[5,10],[6,6],[7,2],[5,14],[6,10],[7,6]];
+      const s = [0,0,0,0,0,0,0];
+      let rem = z;
+      for (const [n, cap] of sub) {
+        if (rem <= 0) break;
+        const t = Math.min(rem, cap);
+        s[n-1] += t; rem -= t;
+      }
+      return s.filter(v => v > 0);
+    }
+
+    const ELEMENTS = RAW.map(r => ({
+      z:r[0], sym:r[1], nameVi:r[2], nameEn:r[3], mass:r[4], cat:r[5], col:r[6], row:r[7],
+      en:r[8], melt:r[9], boil:r[10], dens:r[11], config:r[12], ox:r[13], desc:r[14],
+      shells: calcShells(r[0])
+    }));
+    const BY_SYM = {}; ELEMENTS.forEach(e => BY_SYM[e.sym] = e);
+
+    let tempK = 298;
+    let bohrTimer = null;
+
+    function getPhase(el, t) {
+      if (el.boil != null && t >= el.boil) return "gas";
+      if (el.melt != null && t >= el.melt) return "liquid";
+      return "solid";
+    }
+
+    function initGrid() {
+      const g = document.getElementById("periodicGrid");
+      g.innerHTML = `<div class="text-[10px] mono text-slate-500 flex items-center justify-center">CK\\N</div>`;
+      for (let c = 1; c <= 18; c++) {
+        g.innerHTML += `<div class="text-center py-1 bg-slate-950/70 rounded text-xs font-bold mono text-slate-400">${c}</div>`;
+      }
+      for (let r = 1; r <= 10; r++) {
+        if (r === 8) {
+          g.innerHTML += `<div style="grid-column: 1 / span 19" class="h-2.5"></div>`;
+          continue;
+        }
+        g.innerHTML += `<div class="flex items-center justify-center bg-slate-950/70 rounded text-xs font-bold mono text-slate-400">${r <= 7 ? r : (r===9 ? '6*' : '7**')}</div>`;
+        for (let c = 1; c <= 18; c++) {
+          if (r === 6 && c === 3) {
+            g.innerHTML += `<div class="el-card cat-lanthanide items-center justify-center text-center"><span class="text-[9px] mono">57-71</span><b class="text-xs">La-Lu</b></div>`;
+            continue;
+          }
+          if (r === 7 && c === 3) {
+            g.innerHTML += `<div class="el-card cat-actinide items-center justify-center text-center"><span class="text-[9px] mono">89-103</span><b class="text-xs">Ac-Lr</b></div>`;
+            continue;
+          }
+          const el = ELEMENTS.find(x => x.row === r && x.col === c);
+          if (!el) { g.innerHTML += `<div></div>`; continue; }
+          const div = document.createElement("div");
+          div.id = `card-${el.z}`;
+          div.className = `el-card cat-${el.cat}`;
+          div.onmouseenter = () => inspectEl(el);
+          div.onclick = () => inspectEl(el);
+          div.innerHTML = `
+            <div class="flex justify-between text-[9px] mono leading-none"><span>${el.z}</span><span id="pdot-${el.z}">■</span></div>
+            <div class="text-center"><div class="text-base font-extrabold mono text-white leading-tight">${el.sym}</div><div class="text-[9px] truncate">${el.nameVi}</div></div>
+            <div class="text-[8px] mono text-center opacity-75">${el.mass}</div>
+          `;
+          g.appendChild(div);
+        }
+      }
+      updatePhases();
+    }
+
+    function updatePhases() {
+      ELEMENTS.forEach(el => {
+        const d = document.getElementById(`pdot-${el.z}`);
+        if (!d) return;
+        const p = getPhase(el, tempK);
+        d.textContent = p === "solid" ? "■" : (p === "liquid" ? "●" : "▲");
+        d.className = p === "solid" ? "text-sky-300" : (p === "liquid" ? "text-amber-300" : "text-rose-300");
+      });
+    }
+
+    function onTempChange(v) {
+      tempK = Number(v);
+      document.getElementById("tempLabel").textContent = `${tempK} K (${Math.round(tempK - 273.15)} °C)`;
+      updatePhases();
+    }
+
+    function renderFilters() {
+      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const cat = document.getElementById("catSelect").value;
+      ELEMENTS.forEach(el => {
+        const card = document.getElementById(`card-${el.z}`);
+        if (!card) return;
+        const okQ = !q || el.sym.toLowerCase().includes(q) || el.nameVi.toLowerCase().includes(q) || el.nameEn.toLowerCase().includes(q) || String(el.z) === q;
+        const okC = cat === "all" || el.cat === cat;
+        card.classList.toggle("dimmed", !(okQ && okC));
+      });
+    }
+
+    function inspectEl(el) {
+      document.getElementById("inspBadge").className = `w-20 h-20 rounded-2xl flex flex-col items-center justify-center shrink-0 border-2 cat-${el.cat}`;
+      document.getElementById("inspZ").textContent = el.z;
+      document.getElementById("inspSym").textContent = el.sym;
+      document.getElementById("inspMass").textContent = el.mass;
+      document.getElementById("inspTitle").textContent = `${el.nameVi} (${el.nameEn})`;
+      document.getElementById("inspCat").textContent = CAT_NAMES[el.cat];
+      document.getElementById("inspDesc").textContent = el.desc;
+      document.getElementById("inspConfig").textContent = el.config;
+      document.getElementById("inspEN").textContent = el.en ?? "N/A";
+      document.getElementById("inspMelt").textContent = el.melt ? `${el.melt} K` : "N/A";
+      document.getElementById("inspBoil").textContent = el.boil ? `${el.boil} K` : "N/A";
+      document.getElementById("inspDens").textContent = el.dens ? `${el.dens} g/cm³` : "N/A";
+      document.getElementById("inspOx").textContent = el.ox;
+      const sNames = ["K","L","M","N","O","P","Q"];
+      document.getElementById("inspShells").textContent = el.shells.map((n,i)=>`${sNames[i]}(${n})`).join(" ");
+      document.getElementById("inspParticles").textContent = `${el.z}p / ${Math.max(0, Math.round(el.mass)-el.z)}n / ${el.z}e`;
+      drawBohr(el);
+    }
+
+    function drawBohr(el) {
+      if (bohrTimer) cancelAnimationFrame(bohrTimer);
+      const cvs = document.getElementById("bohrCanvas");
+      const ctx = cvs.getContext("2d");
+      let t = 0;
+      function frame() {
+        ctx.clearRect(0,0,110,110);
+        ctx.fillStyle = "#38bdf8";
+        ctx.beginPath(); ctx.arc(55,55,7,0,Math.PI*2); ctx.fill();
+        el.shells.forEach((cnt, idx) => {
+          const r = 14 + idx * (38 / Math.max(1, el.shells.length));
+          ctx.strokeStyle = "rgba(148,163,184,0.35)";
+          ctx.beginPath(); ctx.arc(55,55,r,0,Math.PI*2); ctx.stroke();
+          for (let i=0; i<cnt; i++) {
+            const a = (i*2*Math.PI)/cnt + t*(idx%2===0?0.02:-0.02);
+            ctx.fillStyle = "#facc15";
+            ctx.beginPath(); ctx.arc(55+r*Math.cos(a), 55+r*Math.sin(a), 2.2, 0, Math.PI*2); ctx.fill();
+          }
+        });
+        t++;
+        bohrTimer = requestAnimationFrame(frame);
+      }
+      frame();
+    }
+
+    // PHÒNG THÍ NGHIỆM
+    const CHEMS = ["Na","K","Mg","Fe","Zn","Cu","H2O","HCl","CuSO4","NaOH","AgNO3","Cl2","O2"];
+    const RXNS = [
+      { p:["Na","H2O"], eq:"2Na + 2H₂O → 2NaOH + H₂↑", ph:"Natri nóng chảy thành giọt tròn chạy trên mặt nước, sủi bọt khí H₂ mạnh và tỏa nhiều nhiệt.", col:"rgba(236,72,153,0.35)", bub:true, pre:null },
+      { p:["Fe","CuSO4"], eq:"Fe + CuSO₄ → FeSO₄ + Cu↓", ph:"Dung dịch xanh lam nhạt dần sang xanh lục nhạt, kim loại Đồng (Cu) màu đỏ bám ngoài đinh sắt.", col:"rgba(74,222,128,0.3)", bub:false, pre:"#b45309" },
+      { p:["CuSO4","NaOH"], eq:"CuSO₄ + 2NaOH → Cu(OH)₂↓ + Na₂SO₄", ph:"Xuất hiện kết tủa keo màu xanh lam của Đồng(II) Hydroxit lắng xuống đáy cốc.", col:"rgba(56,189,248,0.25)", bub:false, pre:"#0284c7" },
+      { p:["Zn","HCl"], eq:"Zn + 2HCl → ZnCl₂ + H₂↑", ph:"Kẽm tan dần, sủi bọt khí Hydro không màu thoát ra liên tục.", col:"rgba(186,230,253,0.3)", bub:true, pre:null },
+      { p:["HCl","AgNO3"], eq:"HCl + AgNO₃ → AgCl↓ + HNO₃", ph:"Xuất hiện kết tủa trắng vón cục của Bạc Clorua (AgCl).", col:"rgba(241,245,249,0.25)", bub:false, pre:"#ffffff" }
+    ];
+
+    function initLab() {
+      const sA = document.getElementById("chemA"), sB = document.getElementById("chemB");
+      sA.innerHTML = CHEMS.map(c=>`<option>${c}</option>`).join("");
+      sB.innerHTML = CHEMS.map(c=>`<option>${c}</option>`).join("");
+      sA.value = "Na"; sB.value = "H2O";
+      document.getElementById("presetBtns").innerHTML = RXNS.map((r,i)=>`
+        <button onclick="setLab(${i})" class="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-xs mono text-cyan-300">${r.p[0]} + ${r.p[1]}</button>
+      `).join("");
+    }
+
+    function setLab(i) {
+      document.getElementById("chemA").value = RXNS[i].p[0];
+      document.getElementById("chemB").value = RXNS[i].p[1];
+      runLab();
+    }
+
+    function runLab() {
+      const a = document.getElementById("chemA").value, b = document.getElementById("chemB").value;
+      const r = RXNS.find(x => (x.p[0]===a && x.p[1]===b) || (x.p[0]===b && x.p[1]===a));
+      const liq = document.getElementById("beakerLiquid"), pre = document.getElementById("beakerPrecip"), bub = document.getElementById("bubbleBox");
+      if (r) {
+        document.getElementById("labEq").textContent = r.eq;
+        document.getElementById("labPhenom").textContent = r.ph;
+        liq.style.backgroundColor = r.col;
+        pre.style.height = r.pre ? "24px" : "0px";
+        if (r.pre) pre.style.backgroundColor = r.pre;
+        bub.innerHTML = r.bub ? Array.from({length:12},()=>`<div class="bubble" style="width:7px;height:7px;left:${15+Math.random()*70}%;animation-delay:${Math.random()}s"></div>`).join("") : "";
+      } else {
+        document.getElementById("labEq").textContent = `${a} + ${b} ↛ Chưa ghi nhận phản ứng`;
+        document.getElementById("labPhenom").textContent = "Hãy chọn một trong các cặp thí nghiệm mẫu bên trái.";
+      }
+    }
+
+    // TÍNH MOL
+    function calcMol() {
+      const f = document.getElementById("molInput").value.trim();
+      const out = document.getElementById("molOutput");
+      try {
+        const st = [{}]; let i = 0;
+        while (i < f.length) {
+          if (f[i] === "(") { st.push({}); i++; }
+          else if (f[i] === ")") {
+            i++; let n = ""; while (i<f.length && /\d/.test(f[i])) n += f[i++];
+            const m = n ? parseInt(n) : 1, p = st.pop();
+            for (const [k,v] of Object.entries(p)) st[st.length-1][k] = (st[st.length-1][k]||0) + v*m;
+          } else if (/[A-Z]/.test(f[i])) {
+            let s = f[i++]; while (i<f.length && /[a-z]/.test(f[i])) s += f[i++];
+            if (!BY_SYM[s]) throw new Error(`Không tìm thấy nguyên tố ${s}`);
+            let n = ""; while (i<f.length && /\d/.test(f[i])) n += f[i++];
+            st[st.length-1][s] = (st[st.length-1][s]||0) + (n ? parseInt(n) : 1);
+          } else i++;
+        }
+        let total = 0; const items = [];
+        for (const [sym, cnt] of Object.entries(st[0])) {
+          const m = BY_SYM[sym].mass * cnt; total += m;
+          items.push({ sym, name: BY_SYM[sym].nameVi, cnt, m });
+        }
+        out.innerHTML = `<div class="text-xl font-extrabold text-cyan-300 mono">M = ${total.toFixed(3)} g/mol</div>` +
+          items.map(x => `<div class="flex justify-between text-xs mono text-slate-300"><span>${x.sym} (${x.name}) × ${x.cnt}</span><span>${x.m.toFixed(3)} g/mol (${((x.m/total)*100).toFixed(1)}%)</span></div>`).join("");
+      } catch (e) {
+        out.innerHTML = `<div class="text-xs text-rose-400">${e.message}</div>`;
+      }
+    }
+
+    function switchTab(t) {
+      ["table","lab","calc"].forEach(k => {
+        document.getElementById(`view-${k}`).classList.toggle("hidden", k !== t);
+        document.getElementById(`tab-${k}`).className = k === t
+          ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500 text-slate-950"
+          : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white";
+      });
+    }
+
+    function downloadSelfHTML() {
+      const blob = new Blob([document.documentElement.outerHTML], { type: "text/html;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "periodic_lab_118_elements.html";
+      a.click();
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initGrid(); inspectEl(ELEMENTS[0]); initLab(); calcMol();
+    });
+  </script>
+</body>
+</html>
