@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PERIODIC LAB — Bảng tuần hoàn Hóa học 10</title>
+<style>
+:root{--bg:#0b1220;--card:#131c2e;--ink:#e6edf7;--mut:#93a4bd;--navy:#0a1a3a;--cy:#14b8cf;--line:#26344d;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,"Segoe UI",Roboto,sans-serif}
+header{background:var(--navy);color:#fff;padding:14px 18px}header h1{margin:0;font-size:20px}header p{margin:2px 0 0;color:#a9e6ef;font-size:13px}
+nav{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+nav button,.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit;font-weight:600}
+nav button[aria-selected=true],.btn.p{background:var(--cy);color:#04222a;border-color:var(--cy)}
+:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
+main{max-width:1200px;margin:0 auto;padding:16px}section[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:end}label{display:flex;flex-direction:column;font-size:13px;color:var(--mut);gap:3px}
+input,select{padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit;background:var(--bg);color:var(--ink)}
+.wrap{overflow-x:auto}#pt{display:grid;grid-template-columns:repeat(18,minmax(58px,1fr));gap:4px;min-width:1120px;padding:16px}
+.el{border:1px solid rgba(255,255,255,.14);border-radius:6px;padding:3px 2px;min-height:68px;cursor:pointer;color:#fff;font:inherit;line-height:1.15;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;overflow:hidden;position:relative;transition:transform .18s,opacity .2s,filter .2s}
+.el:hover,.el:focus-visible{transform:scale(1.5);z-index:10;box-shadow:0 8px 28px rgba(0,0,0,.6);overflow:visible}.el small{font-size:10px;opacity:.85}.el b{font-size:18px}.el i{font-style:normal;font-size:8.5px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dim{opacity:.15}
+.ak{background:#7f2d3a}.ae{background:#8a4a1e}.tm{background:#7a6a14}.pt{background:#3f6b2a}.md{background:#1d6b58}.nm{background:#1d5f85}.hl{background:#5b3f99}.ng{background:#8a3a78}.ln{background:#2f4fa0}.ac{background:#6e4a34}
+.leg{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;margin-top:8px}.leg span{padding:2px 8px;border-radius:10px;border:1px solid rgba(0,0,0,.12)}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0}dt{color:var(--mut)}dd{margin:0}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}th{background:#1b2a44}
+.q{border-top:1px solid var(--line);padding:10px 0}.q label{flex-direction:row;color:var(--ink);font-size:15px;gap:8px;align-items:center}
+.ok{color:#4ade80}.bad{color:#f87171}.note{font-size:13px;color:var(--mut)}.err{color:#f87171;font-size:13px;min-height:1em}
+.msg{padding:8px 12px;border-radius:8px;background:#1b2a44;margin:8px 0}
+.gap{grid-row:1/4;grid-column:3/13;border:1px dashed var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;justify-content:center}.lab{font-size:11px;color:var(--mut);align-self:center}
+#ov{position:fixed;inset:0;z-index:50;display:grid;grid-template-columns:minmax(260px,1fr) minmax(320px,1.4fr);gap:28px;align-items:center;padding:calc(env(safe-area-inset-top,0px) + 24px) 28px calc(env(safe-area-inset-bottom,0px) + 24px);overflow:auto;background:rgba(5,9,18,.82);backdrop-filter:blur(8px);animation:fi .25s}
+#ov[hidden]{display:none}
+#big{justify-self:center;width:min(360px,80vw);aspect-ratio:1/1.15;border-radius:18px;border:2px solid rgba(255,255,255,.25);padding:16px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#big .z{font-size:22px}#big .s{font-size:clamp(72px,16vw,130px);font-weight:700;text-align:center;line-height:1}#big .n{text-align:center;font-size:22px;font-weight:600}#big .e{text-align:center;opacity:.85}
+#info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;max-height:calc(100vh - 48px);overflow:auto;animation:sl .4s .15s both}
+@keyframes fi{from{opacity:0}}@keyframes sl{from{opacity:0;transform:translateX(30px)}}
+@media(max-width:760px){#ov{grid-template-columns:1fr;align-items:start}}
+.el:hover i,.el:focus-visible i{max-width:none;overflow:visible;text-overflow:clip}
+.conv{margin-top:16px;border:1px solid rgba(20,184,207,.45);border-radius:14px;padding:16px;background:linear-gradient(135deg,rgba(20,184,207,.10),rgba(91,63,153,.12));box-shadow:0 0 28px rgba(20,184,207,.15)}
+.cvh{display:flex;align-items:center;gap:10px;font-size:18px;margin-bottom:12px}
+.badge{background:#ffd23f;color:#2b2200;font-weight:800;font-size:12px;letter-spacing:.08em;padding:3px 10px;border-radius:999px;animation:pul 2s infinite}
+@keyframes pul{50%{box-shadow:0 0 0 6px rgba(255,210,63,.25)}}
+.cvb{grid-template-columns:minmax(260px,340px) 1fr;display:grid;gap:18px;align-items:center}
+.atom{display:flex;flex-direction:column;align-items:center;gap:6px;background:rgba(5,9,18,.45);border-radius:12px;padding:10px}.atom svg{width:100%;max-width:300px;height:auto;display:block}.atom ul{margin:4px 0 0;padding-left:18px;font-size:13px}
+.sh{transform-origin:150px 150px;animation:spin linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.glow{filter:drop-shadow(0 0 6px #ffd23f)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.tile{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--cy);border-radius:10px;padding:10px}.tile p{margin:2px 0 0;font-size:13px;color:var(--mut)}.tile svg{transition:transform .4s}.tile:hover svg{transform:rotate(30deg)}.ic{flex:0 0 auto;display:block}
+#spw{overflow:auto;border-radius:10px;background:#0e1626;border:1px solid var(--line)}#spi svg{display:block;width:100%;min-width:1150px;height:auto;overflow:visible}
+.cell{cursor:pointer;transform-box:fill-box;transform-origin:center;transition:transform .18s,opacity .2s;outline:none}.cell:hover{transform:scale(1.5)}.cell:focus-visible path{stroke:#ffb703;stroke-width:3}.cell path{stroke:#0b1220;stroke-width:1.5}
+.cell text{fill:#fff;pointer-events:none}.cell .n{font-size:9px;opacity:.85}.cell .s{font-size:15px;font-weight:700}.cell.sm .s{font-size:12px}.cell .nm{font-size:8.5px}.cell .ms{font-size:8px;opacity:.85}
+.cell.ak path{fill:#7f2d3a}.cell.ae path{fill:#8a4a1e}.cell.tm path{fill:#7a6a14}.cell.pt path{fill:#3f6b2a}.cell.md path{fill:#1d6b58}.cell.nm path{fill:#1d5f85}.cell.hl path{fill:#5b3f99}.cell.ng path{fill:#8a3a78}.cell.ln path{fill:#2f4fa0}.cell.ac path{fill:#6e4a34}
+.pl{fill:#ffd23f;font-size:13px;font-weight:700}.gl{fill:#93a4bd;font-size:12px}.gl2{fill:#6f819c;font-size:10px}@media(max-width:760px){.cvb{grid-template-columns:1fr}}.atomwrap{display:flex;justify-content:center;margin:12px 0}.atomwrap svg{width:100%;max-width:300px;height:auto}#info h4{margin:14px 0 4px}#info ul{margin:4px 0;padding-left:20px}
+
+[hidden]{display:none!important}
+.gate{max-width:560px;margin:40px auto}.gate.wide{max-width:760px;margin-top:0}.ros tbody tr:hover td{background:#10454f}
+.opt{display:flex;flex-direction:row;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin:8px 0;cursor:pointer;color:var(--ink);font-size:15px;transition:border-color .2s,background .2s}.opt:hover{border-color:var(--cy)}
+.opt.ok-opt{border-color:#4ade80!important;background:rgba(74,222,128,.12)}
+.opt.bad-opt{border-color:#f87171!important;background:rgba(248,113,113,.12)}
+.sc{font-size:46px;font-weight:800;color:#ffd23f}progress{accent-color:var(--cy);height:10px}
+.ros{max-height:440px;overflow:auto}.ros th{background:#2f7a55!important;color:#fff;font-size:15px;text-align:center;position:sticky;top:0}.ros td{text-align:center;font-size:15px}.ros tbody tr:nth-child(even) td{background:#1a2740}
+tr.me td,.ros tr.me td{background:#10454f!important;font-weight:700}
+.st{padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;margin-left:8px;color:#fff}.st.doing{background:#1d5f85}.st.done{background:#2f7a55}.st.act{background:#7a6a14}
+.scard{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;background:var(--bg)}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chips span{padding:2px 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--mut)}summary{cursor:pointer;font-weight:700}
+
+/* --- GIAO DIỆN LÝ THUYẾT BẮT MẮT & CÂU HỎI TƯƠNG TÁC --- */
+.th-sec{margin-top:18px}
+.th-hero{background:linear-gradient(135deg,#0f2447 0%,#162b4d 50%,#1f1c47 100%);border:1px solid rgba(20,184,207,.4);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.th-hero h2{margin:0 0 6px;font-size:22px;color:#fff;display:flex;align-items:center;gap:10px}
+.th-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:12px 0}
+.th-box{background:rgba(11,18,32,.65);border:1px solid var(--line);border-top:3px solid var(--cy);border-radius:12px;padding:14px 16px}
+.th-box.warm{border-top-color:#ffd23f}
+.th-box.pink{border-top-color:#f472b6}
+.th-box.green{border-top-color:#4ade80}
+.th-box h3{margin:0 0 8px;font-size:17px;color:#a9e6ef;display:flex;align-items:center;gap:8px}
+.th-box.warm h3{color:#ffd23f}
+.th-box.pink h3{color:#f472b6}
+.th-box.green h3{color:#4ade80}
+.ion-pill{display:inline-block;padding:1px 8px;border-radius:6px;font-weight:700;font-size:14px;margin:0 2px}
+.ion-acid{background:rgba(244,63,94,.2);color:#fda4af;border:1px solid rgba(244,63,94,.4)}
+.ion-base{background:rgba(56,189,248,.2);color:#7dd3fc;border:1px solid rgba(56,189,248,.4)}
+.ion-amp{background:rgba(250,204,21,.2);color:#fde047;border:1px solid rgba(250,204,21,.4)}
+.p3-grid{display:grid;grid-template-columns:repeat(7,minmax(100px,1fr));gap:8px;min-width:740px;margin:10px 0}
+.p3-item{border-radius:10px;padding:10px 8px;text-align:center;border:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;gap:4px}
+.p3-item.b-type{background:linear-gradient(180deg,rgba(14,116,144,.38),rgba(15,23,42,.8));border-color:#06b6d4}
+.p3-item.m-type{background:linear-gradient(180deg,rgba(180,83,9,.38),rgba(15,23,42,.8));border-color:#f59e0b}
+.p3-item.a-type{background:linear-gradient(180deg,rgba(190,18,60,.38),rgba(15,23,42,.8));border-color:#f43f5e}
+.p3-item .ox-f{font-size:18px;font-weight:800;color:#fff}
+.p3-item .hy-f{font-size:12px;color:var(--mut)}
+.flow-step{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;padding:10px 12px;background:rgba(15,23,42,.6);border-radius:10px;border-left:4px solid var(--cy)}
+.flow-chip{background:#1b2a44;border:1px solid #31466b;padding:4px 10px;border-radius:8px;font-size:14px}
+.flow-arr{color:#ffd23f;font-weight:800;font-size:16px}
+.tip-banner{background:linear-gradient(90deg,rgba(255,210,63,.16),rgba(20,184,207,.16));border:1px solid #ffd23f;border-radius:12px;padding:12px 16px;margin-top:12px;display:flex;align-items:center;gap:12px}
+.tip-banner b{color:#ffd23f}
+.pq-card{background:linear-gradient(180deg,#152238,#111a2c);border:1px solid #2b4166;border-left:4px solid #ffd23f;border-radius:12px;padding:16px;margin:12px 0 20px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.pq-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.pq-tag{background:rgba(255,210,63,.18);color:#ffd23f;border:1px solid rgba(255,210,63,.4);padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.pq-fb{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14.5px;line-height:1.5}
+.pq-fb.ok-box{background:rgba(34,197,94,.14);border:1px solid #4ade80;color:#d1fae5}
+.pq-fb.bad-box{background:rgba(239,68,68,.14);border:1px solid #f87171;color:#fee2e2}
+</style></head><body>
+<header><h1>PERIODIC LAB — Bảng tuần hoàn Hóa học 10</h1><p>Task 3 · Task 4 (Nhóm 4) · Task 5</p></header>
+<div id="gate"></div>
+<nav role="tablist" id="tabs" hidden></nav>
+<main id="app" hidden>
+<section id="s-pt"><div class="card"><div class="row">
+<label>Tìm (tên Anh/Việt, kí hiệu, số hiệu — không phân biệt hoa/thường)<input id="q" type="search" maxlength="40"></label>
+<label>Chu kì<select id="fp"></select></label><label>Nhóm<select id="fg"></select></label><label>Loại<select id="fc"></select></label>
+<button class="btn" id="clr">Xóa lọc</button><span id="cnt" class="note" aria-live="polite"></span></div></div>
+<div class="card"><div class="row" role="group" aria-label="Chọn kiểu bảng tuần hoàn" style="margin-bottom:10px"><button class="btn p" id="vtab" aria-pressed="true">Bảng truyền thống</button><button class="btn" id="vspi" aria-pressed="false">Bảng dạng tròn (tọa độ cực)</button></div><div class="wrap" id="ptw"><div id="pt" role="grid" aria-label="Bảng tuần hoàn 118 nguyên tố"></div></div>
+<div id="spwrap" hidden><div class="leg" id="spleg"></div><p class="note">Bảng tuần hoàn dạng tròn (dạng góc): mỗi chu kì là một vòng tròn đồng tâm (chu kì 1 ở trong cùng, chu kì 7 ngoài cùng); mỗi nhóm 1–18 là một hình quạt, đọc theo chiều kim đồng hồ từ đỉnh. Các nguyên tố cùng nhóm nằm trên cùng một quạt. Lanthanide (La–Yb) và actinide (Ac–No) nằm ở vòng phụ bên phải; Lu và Lr vẫn ở nhóm 3 của vòng chính. Nhãn dưới số nhóm là cách gọi A/B trong SGK.</p><div id="spw"><div id="spi"></div></div></div>
+<div id="conv" class="conv"></div></div>
+<p class="note">Dùng hai nút phía trên để chuyển giữa bảng truyền thống và bảng dạng tròn. Rê chuột vào một ô để phóng to; nhấn để xem chi tiết (trong khung chi tiết có Trang 1 và Trang 2; nhấn Esc để đóng).</p>
+<div id="pt-theory" class="th-sec"></div>
+</section>
+
+<section id="s-ox" hidden></section>
+
+<section id="s-quiz" hidden></section>
+
+<section id="s-prof" hidden></section>
+<section id="s-key" hidden></section>
+</main>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+function h(t,a,...k){const e=document.createElement(t);for(const x in a||{}){if(x==="class")e.className=a[x];else if(x.startsWith("on"))e.addEventListener(x.slice(2),a[x]);else e.setAttribute(x,a[x])}
+ for(const c of k.flat())if(c!=null)e.append(c.nodeType?c:document.createTextNode(String(c)));return e}
+/* ---------- DỮ LIỆU: Sym|English|Tiếng Việt ---------- */
+const RAW="H|Hydrogen|Hiđro;He|Helium|Heli;Li|Lithium|Liti;Be|Beryllium|Beri;B|Boron|Bo;C|Carbon|Cacbon;N|Nitrogen|Nitơ;O|Oxygen|Oxi;F|Fluorine|Flo;Ne|Neon|Neon;Na|Sodium|Natri;Mg|Magnesium|Magie;Al|Aluminium|Nhôm;Si|Silicon|Silic;P|Phosphorus|Photpho;S|Sulfur|Lưu huỳnh;Cl|Chlorine|Clo;Ar|Argon|Agon;K|Potassium|Kali;Ca|Calcium|Canxi;Sc|Scandium|Scanđi;Ti|Titanium|Titan;V|Vanadium|Vanađi;Cr|Chromium|Crom;Mn|Manganese|Mangan;Fe|Iron|Sắt;Co|Cobalt|Coban;Ni|Nickel|Niken;Cu|Copper|Đồng;Zn|Zinc|Kẽm;Ga|Gallium|Gali;Ge|Germanium|Gemani;As|Arsenic|Asen;Se|Selenium|Selen;Br|Bromine|Brom;Kr|Krypton|Kripton;Rb|Rubidium|Rubiđi;Sr|Strontium|Stronti;Y|Yttrium|Ytri;Zr|Zirconium|Zirconi;Nb|Niobium|Niobi;Mo|Molybdenum|Molipđen;Tc|Technetium|Tecneti;Ru|Ruthenium|Rutheni;Rh|Rhodium|Rođi;Pd|Palladium|Paladi;Ag|Silver|Bạc;Cd|Cadmium|Cađimi;In|Indium|Indi;Sn|Tin|Thiếc;Sb|Antimony|Antimon;Te|Tellurium|Telu;I|Iodine|Iot;Xe|Xenon|Xenon;Cs|Caesium|Xesi;Ba|Barium|Bari;La|Lanthanum|Lantan;Ce|Cerium|Xeri;Pr|Praseodymium|Praseođim;Nd|Neodymium|Neođim;Pm|Promethium|Prometi;Sm|Samarium|Samari;Eu|Europium|Europi;Gd|Gadolinium|Gađolini;Tb|Terbium|Tecbi;Dy|Dysprosium|Dysprosi;Ho|Holmium|Honmi;Er|Erbium|Erbi;Tm|Thulium|Tuli;Yb|Ytterbium|Ytecbi;Lu|Lutetium|Luteti;Hf|Hafnium|Hafni;Ta|Tantalum|Tantan;W|Tungsten|Vonfram;Re|Rhenium|Reni;Os|Osmium|Osmi;Ir|Iridium|Iriđi;Pt|Platinum|Platin;Au|Gold|Vàng;Hg|Mercury|Thủy ngân;Tl|Thallium|Tali;Pb|Lead|Chì;Bi|Bismuth|Bitmut;Po|Polonium|Poloni;At|Astatine|Atatin;Rn|Radon|Radon;Fr|Francium|Franxi;Ra|Radium|Rađi;Ac|Actinium|Actini;Th|Thorium|Thori;Pa|Protactinium|Protactini;U|Uranium|Urani;Np|Neptunium|Neptuni;Pu|Plutonium|Plutoni;Am|Americium|Americi;Cm|Curium|Curi;Bk|Berkelium|Beckeli;Cf|Californium|Californi;Es|Einsteinium|Einsteini;Fm|Fermium|Fecmi;Md|Mendelevium|Menđelevi;No|Nobelium|Nobeli;Lr|Lawrencium|Lorenxi;Rf|Rutherfordium|Rutherfordi;Db|Dubnium|Dubni;Sg|Seaborgium|Seaborgi;Bh|Bohrium|Bohri;Hs|Hassium|Hassi;Mt|Meitnerium|Meitneri;Ds|Darmstadtium|Darmstadti;Rg|Roentgenium|Roentgeni;Cn|Copernicium|Copernixi;Nh|Nihonium|Nihoni;Fl|Flerovium|Flerovi;Mc|Moscovium|Moscovi;Lv|Livermorium|Livermori;Ts|Tennessine|Tennessin;Og|Oganesson|Oganesson";
+const CATS={ak:"Kim loại kiềm",ae:"Kiềm thổ",tm:"Kim loại chuyển tiếp",pt:"Kim loại sau chuyển tiếp",md:"Á kim",nm:"Phi kim",hl:"Halogen",ng:"Khí hiếm",ln:"Lanthanide",ac:"Actinide"};
+const EN={H:2.20,Li:.98,Be:1.57,B:2.04,C:2.55,N:3.04,O:3.44,F:3.98,Na:.93,Mg:1.31,Al:1.61,Si:1.90,P:2.19,S:2.58,Cl:3.16,K:.82,Ca:1.00};
+const OXI={Li:"Li₂O / LiOH",Na:"Na₂O / NaOH",K:"K₂O / KOH",Mg:"MgO / Mg(OH)₂",Ca:"CaO / Ca(OH)₂",Al:"Al₂O₃ / Al(OH)₃",C:"CO₂ / H₂CO₃",S:"SO₃ / H₂SO₄",P:"P₂O₅ / H₃PO₄",Si:"SiO₂ / H₂SiO₃",Cl:"Cl₂O₇ / HClO₄",N:"N₂O₅ / HNO₃"};
+function pos(z){let p,g,r,c;
+ if(z<=2){p=1;g=z==1?1:18}else if(z<=10){p=2;g=z<=4?z-2:z+8}else if(z<=18){p=3;g=z<=12?z-10:z}
+ else if(z<=36){p=4;g=z-18}else if(z<=54){p=5;g=z-36}else if(z<=56){p=6;g=z-54}else if(z<=70){p=6;g=null}
+ else if(z<=86){p=6;g=z-68}else if(z<=88){p=7;g=z-86}else if(z<=102){p=7;g=null}else{p=7;g=z-100}
+ if(g==null){r=z<=70?9:10;c=z-(z<=70?57:89)+3}else{r=p;c=g}return{p,g,r,c}}
+function cat(z,g,sym){if(z==1)return"nm";if([5,14,32,33,51,52].includes(z))return"md";if([6,7,8,15,16,34].includes(z))return"nm";
+ if(g==1)return"ak";if(g==2)return"ae";if(z>=57&&z<=70)return"ln";if(z>=89&&z<=102)return"ac";
+ if([13,31,49,50,81,82,83,113,114,115,116].includes(z))return"pt";if(g==17)return"hl";if(g==18)return"ng";return"tm"}
+const SUP="⁰¹²³⁴⁵⁶⁷⁸⁹";const sup=n=>String(n).replace(/\d/g,d=>SUP[d]);
+const ORB="1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p6".split(" ");
+const EXC=[41,42,44,45,46,47,57,58,64,78,79,89,90,91,92,93,96,103];
+function config(z){if(CF[z])return{txt:CF[z]+" (ngoại lệ quy tắc Aufbau)",shells:SH[z]};if(EXC.includes(z)||z>=104)return null;let left=z,o=[];
+ for(const s of ORB){if(left<=0)break;const e=Math.min(+s.slice(2),left);o.push([+s[0],s[1],e]);left-=e}
+ const set=(n,l,e)=>{const x=o.find(a=>a[0]==n&&a[1]==l);if(x)x[2]=e};
+ if(z==24){set(4,"s",1);set(3,"d",5)}if(z==29){set(4,"s",1);set(3,"d",10)}
+ const L="spdf";o.sort((a,b)=>a[0]-b[0]||L.indexOf(a[1])-L.indexOf(b[1]));
+ const shells={};o.forEach(a=>shells[a[0]]=(shells[a[0]]||0)+a[2]);
+ return{txt:o.map(a=>a[0]+a[1]+sup(a[2])).join(" "),shells:Object.values(shells).join(", ")}}
+const MS="1.008 4.0026 6.94 9.0122 10.81 12.011 14.007 15.999 18.998 20.180 22.990 24.305 26.982 28.085 30.974 32.06 35.45 39.948 39.098 40.078 44.956 47.867 50.942 51.996 54.938 55.845 58.933 58.693 63.546 65.38 69.723 72.630 74.922 78.971 79.904 83.798 85.468 87.62 88.906 91.224 92.906 95.95 [98] 101.07 102.91 106.42 107.87 112.41 114.82 118.71 121.76 127.60 126.90 131.29 132.91 137.33 138.91 140.12 140.91 144.24 [145] 150.36 151.96 157.25 158.93 162.50 164.93 167.26 168.93 173.05 174.97 178.49 180.95 183.84 186.21 190.23 192.22 195.08 196.97 200.59 204.38 207.2 208.98 [209] [210] [222] [223] [226] [227] 232.04 231.04 238.03 [237] [244] [243] [247] [247] [251] [252] [257] [258] [259] [266] [267] [268] [269] [270] [277] [278] [281] [282] [285] [286] [289] [290] [293] [294] [294]".split(" ");
+const EL=RAW.split(";").map((s,i)=>{const[sym,en,vi]=s.split("|"),z=i+1,P=pos(z);return{z,sym,en,vi,ms:MS[i],...P,cat:cat(z,P.g,sym)}});
+/* ---------- BẢNG TUẦN HOÀN ---------- */
+const sel=(id,opts)=>{const s=$(id);opts.forEach(([v,t])=>s.append(h("option",{value:v},t)))};
+sel("#fp",[["","Tất cả"],...[1,2,3,4,5,6,7].map(n=>[n,n])]);
+sel("#fg",[["","Tất cả"],...Array.from({length:18},(_,i)=>[i+1,i+1]),["f","f-block (Ln/An)"]]);
+sel("#fc",[["","Tất cả"],...Object.entries(CATS)]);
+$("#pt").append(h("div",{class:"gap"},h("b",{},"Chú thích loại nguyên tố"),h("div",{class:"leg"},Object.entries(CATS).map(([k,v])=>h("span",{class:k},v))),h("span",{class:"note"},"Rê chuột để phóng to · Nhấn để xem chi tiết · [ ] = số khối quy ước (nguyên tố phóng xạ)")));
+EL.forEach(e=>{e.btn=h("button",{class:"el "+e.cat,style:`grid-row:${e.r};grid-column:${e.c}`,title:e.en+" ("+e.vi+")","aria-label":`${e.z} ${e.sym} ${e.en}`,onclick:()=>openEl(e)},h("small",{},e.z),h("b",{},e.sym),h("i",{},e.en),h("small",{},e.ms));$("#pt").append(e.btn)});
+$("#pt").append(h("div",{style:"grid-row:8;grid-column:1/19;height:10px"}),h("div",{class:"lab",style:"grid-row:9;grid-column:1/3"},"Lanthanide 57–70 →"),h("div",{class:"lab",style:"grid-row:10;grid-column:1/3"},"Actinide 89–102 →"));
+const norm=x=>String(x).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"d").toLowerCase();
+function filt(){const q=norm($("#q").value.trim()),p=$("#fp").value,g=$("#fg").value,c=$("#fc").value;let n=0;
+ EL.forEach(e=>{const m=(!q||[e.sym,e.en,e.vi,String(e.z)].some(x=>{x=norm(x);return x==q||(q.length>1&&isNaN(q)&&x.includes(q))}))&&(!p||e.p==p)&&(!g||(g=="f"?e.g==null:e.g==g))&&(!c||e.cat==c);
+  e.btn.classList.toggle("dim",!m);if(e.btn2)e.btn2.classList.toggle("dim",!
