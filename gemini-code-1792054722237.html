@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PERIODIC LAB — Bảng tuần hoàn Hóa học 10</title>
+<style>
+:root{
+ --bg:#080e1a;--card:rgba(19,29,49,.84);--card-solid:#131c2e;--ink:#eef4fc;--mut:#9cb0c9;
+ --navy:#0a1a3a;--cy:#18d2eb;--cy-dark:#0ca6bd;--gold:#ffd23f;--pink:#f472b6;--green:#4ade80;
+ --line:rgba(56,82,122,.52);color-scheme:dark;box-sizing:border-box;
+ padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+ margin:0;background-color:var(--bg);color:var(--ink);
+ font:15px/1.6 system-ui,"Segoe UI",Roboto,sans-serif;
+ position:relative;min-height:100vh;overflow-x:hidden;
+ background-image:
+  radial-gradient(circle at 12% 18%,rgba(24,210,235,.15) 0%,transparent 38%),
+  radial-gradient(circle at 88% 14%,rgba(139,92,246,.15) 0%,transparent 36%),
+  radial-gradient(circle at 50% 85%,rgba(255,210,63,.09) 0%,transparent 45%),
+  linear-gradient(rgba(24,210,235,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(24,210,235,.035) 1px,transparent 1px);
+ background-size:100% 100%,100% 100%,100% 100%,38px 38px,38px 38px;
+ background-attachment:fixed
+}
+
+/* --- CHI TIẾT TRANG TRÍ BACKGROUND --- */
+.bg-decor{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.35;animation:orbFloat 18s ease-in-out infinite alternate}
+.bg-orb.o1{width:380px;height:380px;background:#14b8cf;top:-110px;left:-90px}
+.bg-orb.o2{width:440px;height:440px;background:#6d28d9;bottom:-140px;right:-100px;animation-delay:-7s}
+.bg-orb.o3{width:280px;height:280px;background:#f59e0b;top:42%;left:78%;opacity:.18;animation-delay:-12s}
+.bg-svg{position:absolute;opacity:.065;stroke:#38bdf8;fill:none}
+.bg-svg.s1{width:460px;height:460px;top:60px;right:-80px;animation:spin 95s linear infinite}
+.bg-svg.s2{width:420px;height:420px;bottom:30px;left:-70px}
+@keyframes orbFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(35px,25px) scale(1.12)}}
+
+header,nav,main,#gate{position:relative;z-index:1}
+header{
+ background:linear-gradient(135deg,#07142e 0%,#0f2952 55%,#143566 100%);
+ border-bottom:1px solid rgba(24,210,235,.35);
+ box-shadow:0 6px 28px rgba(0,0,0,.45);
+ color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px
+}
+.h-brand{display:flex;align-items:center;gap:12px}
+.h-logo{
+ width:44px;height:44px;border-radius:12px;
+ background:linear-gradient(135deg,rgba(24,210,235,.25),rgba(139,92,246,.3));
+ border:1px solid rgba(24,210,235,.55);display:grid;place-items:center;
+ box-shadow:0 0 18px rgba(24,210,235,.35)
+}
+header h1{margin:0;font-size:20px;letter-spacing:.02em;text-shadow:0 2px 10px rgba(24,210,235,.35)}
+header p{margin:2px 0 0;color:#a9e6ef;font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.h-chip{background:rgba(255,210,63,.16);border:1px solid rgba(255,210,63,.45);color:#ffd23f;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700}
+
+nav{
+ display:flex;gap:8px;flex-wrap:wrap;padding:10px 18px;
+ background:rgba(13,22,38,.88);backdrop-filter:blur(14px);
+ border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:10;
+ box-shadow:0 4px 20px rgba(0,0,0,.3)
+}
+nav button,.btn{
+ border:1px solid var(--line);background:linear-gradient(180deg,#1a2742,#121c30);
+ color:var(--ink);padding:8px 15px;border-radius:10px;cursor:pointer;
+ font:inherit;font-weight:600;display:inline-flex;align-items:center;gap:6px;
+ transition:transform .15s,border-color .2s,box-shadow .2s,background .2s
+}
+nav button:hover,.btn:hover{border-color:var(--cy);transform:translateY(-1px);box-shadow:0 4px 14px rgba(24,210,235,.2)}
+nav button[aria-selected=true],.btn.p{
+ background:linear-gradient(135deg,#22e1fa 0%,#0ea5c6 100%);
+ color:#031d24;border-color:#5cebf9;
+ box-shadow:0 0 18px rgba(24,210,235,.4);font-weight:700
+}
+:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
+main{max-width:1200px;margin:0 auto;padding:18px 16px}section[hidden]{display:none}
+.card{
+ background:var(--card);backdrop-filter:blur(12px);
+ border:1px solid var(--line);border-top:1px solid rgba(255,255,255,.12);
+ border-radius:16px;padding:18px;margin-bottom:16px;
+ box-shadow:0 12px 32px rgba(0,0,0,.35)
+}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+label{display:flex;flex-direction:column;font-size:13px;color:var(--mut);gap:4px;font-weight:500}
+input,select,textarea{
+ padding:9px 11px;border:1px solid var(--line);border-radius:10px;
+ font:inherit;background:rgba(8,14,26,.85);color:var(--ink);
+ transition:border-color .2s,box-shadow .2s
+}
+input:focus,select:focus,textarea:focus{border-color:var(--cy);box-shadow:0 0 0 3px rgba(24,210,235,.18);outline:none}
+.wrap{overflow-x:auto}
+#grp-bar{display:grid;grid-template-columns:repeat(18,minmax(58px,1fr));gap:5px;min-width:1120px;padding:10px 16px 0}
+.gh{text-align:center;padding:4px 2px;border-radius:6px;background:rgba(24,210,235,.1);border:1px solid rgba(24,210,235,.25);font-size:11px;line-height:1.2}
+.gh b{display:block;color:#ffd23f;font-size:12px}
+.gh span{color:var(--mut);font-size:10px}
+#pt{display:grid;grid-template-columns:repeat(18,minmax(58px,1fr));gap:5px;min-width:1120px;padding:8px 16px 16px}
+.el{
+ border:1px solid rgba(255,255,255,.2);border-top:1px solid rgba(255,255,255,.35);
+ border-radius:8px;padding:3px 2px;min-height:68px;cursor:pointer;color:#fff;
+ font:inherit;line-height:1.15;display:flex;flex-direction:column;align-items:center;
+ justify-content:center;gap:1px;overflow:hidden;position:relative;
+ box-shadow:0 4px 10px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.18);
+ transition:transform .18s cubic-bezier(.2,.8,.2,1),opacity .2s,filter .2s,box-shadow .18s
+}
+.el:hover,.el:focus-visible{transform:scale(1.52);z-index:10;box-shadow:0 12px 30px rgba(0,0,0,.75),0 0 16px rgba(24,210,235,.45);overflow:visible}
+.el small{font-size:10px;opacity:.9}.el b{font-size:18px;text-shadow:0 1px 3px rgba(0,0,0,.45)}.el i{font-style:normal;font-size:8.5px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dim{opacity:.14;filter:grayscale(.5)}
+
+/* --- BẢNG MÀU NGUYÊN TỐ --- */
+.ak{background:linear-gradient(145deg,#a33246,#6d202e)}
+.ae{background:linear-gradient(145deg,#b05c22,#753b14)}
+.tm{background:linear-gradient(145deg,#998316,#63540e)}
+.pt{background:linear-gradient(145deg,#4d8732,#325920)}
+.md{background:linear-gradient(145deg,#228b72,#155747)}
+.nm{background:linear-gradient(145deg,#2279ab,#164e70)}
+.hl{background:linear-gradient(145deg,#744ec4,#4b3280)}
+.ng{background:linear-gradient(145deg,#ad4496,#702b61)}
+.ln{background:linear-gradient(145deg,#3b64cc,#253f82)}
+.ac{background:linear-gradient(145deg,#8c5c3e,#593a27)}
+
+.leg{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;margin-top:8px}.leg span{padding:3px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.22);font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:5px 14px;margin:0}dt{color:var(--mut)}dd{margin:0}
+table{border-collapse:collapse;width:100%;font-size:14px;border-radius:10px;overflow:hidden}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:linear-gradient(180deg,#213559,#182742);color:#d7f3f9;font-weight:700}
+.q{border-top:1px solid var(--line);padding:10px 0}.q label{flex-direction:row;color:var(--ink);font-size:15px;gap:8px;align-items:center}
+.ok{color:#4ade80}.bad{color:#f87171}.note{font-size:13px;color:var(--mut)}.err{color:#f87171;font-size:13px;min-height:1em}
+.msg{padding:10px 14px;border-radius:10px;background:rgba(27,42,68,.9);border-left:4px solid var(--cy);margin:8px 0}
+.gap{grid-row:1/4;grid-column:3/13;border:1px dashed rgba(24,210,235,.4);background:rgba(11,18,32,.55);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;justify-content:center}.lab{font-size:11px;color:#ffd23f;font-weight:600;align-self:center}
+#ov{position:fixed;inset:0;z-index:50;display:grid;grid-template-columns:minmax(260px,1fr) minmax(320px,1.4fr);gap:28px;align-items:center;padding:calc(env(safe-area-inset-top,0px) + 24px) 28px calc(env(safe-area-inset-bottom,0px) + 24px);overflow:auto;background:rgba(5,9,18,.84);backdrop-filter:blur(10px);animation:fi .25s}
+#ov[hidden]{display:none}
+#big{justify-self:center;width:min(360px,80vw);aspect-ratio:1/1.15;border-radius:20px;border:2px solid rgba(255,255,255,.32);padding:18px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;box-shadow:0 24px 65px rgba(0,0,0,.7),0 0 30px rgba(24,210,235,.25)}
+#big .z{font-size:22px;font-weight:700}#big .s{font-size:clamp(72px,16vw,130px);font-weight:800;text-align:center;line-height:1;text-shadow:0 4px 16px rgba(0,0,0,.5)}#big .n{text-align:center;font-size:22px;font-weight:700}#big .e{text-align:center;opacity:.9}
+#info{background:var(--card-solid);border:1px solid rgba(24,210,235,.35);border-radius:16px;padding:20px;max-height:calc(100vh - 48px);overflow:auto;animation:sl .4s .15s both;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+@keyframes fi{from{opacity:0}}@keyframes sl{from{opacity:0;transform:translateX(30px)}}
+@media(max-width:760px){#ov{grid-template-columns:1fr;align-items:start}}
+.el:hover i,.el:focus-visible i{max-width:none;overflow:visible;text-overflow:clip}
+.conv{margin-top:16px;border:1px solid rgba(24,210,235,.48);border-radius:16px;padding:18px;background:linear-gradient(135deg,rgba(24,210,235,.12),rgba(109,40,217,.14));box-shadow:0 0 32px rgba(24,210,235,.15)}
+.cvh{display:flex;align-items:center;gap:10px;font-size:18px;margin-bottom:12px}
+.badge{background:linear-gradient(135deg,#ffe066,#f59e0b);color:#241900;font-weight:800;font-size:12px;letter-spacing:.08em;padding:4px 12px;border-radius:999px;animation:pul 2s infinite;box-shadow:0 2px 10px rgba(245,158,11,.35)}
+@keyframes pul{50%{box-shadow:0 0 0 6px rgba(255,210,63,.25)}}
+.cvb{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:18px;align-items:center}
+.atom{display:flex;flex-direction:column;align-items:center;gap:6px;background:rgba(5,9,18,.55);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px}.atom svg{width:100%;max-width:300px;height:auto;display:block}.atom ul{margin:4px 0 0;padding-left:18px;font-size:13px}
+.sh{transform-origin:150px 150px;animation:spin linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.glow{filter:drop-shadow(0 0 6px #ffd23f)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.tile{display:flex;gap:10px;align-items:center;background:rgba(15,23,42,.82);border:1px solid var(--line);border-left:4px solid var(--cy);border-radius:12px;padding:12px;transition:transform .2s,border-color .2s}.tile:hover{transform:translateY(-2px);border-color:var(--cy)}.tile p{margin:2px 0 0;font-size:13px;color:var(--mut)}.tile svg{transition:transform .4s}.tile:hover svg{transform:rotate(30deg)}.ic{flex:0 0 auto;display:block}
+#spw{overflow:auto;border-radius:12px;background:radial-gradient(circle at 38% 50%,#132342,#091120 75%);border:1px solid var(--line)}#spi svg{display:block;width:100%;min-width:1150px;height:auto;overflow:visible}
+.cell{cursor:pointer;transform-box:fill-box;transform-origin:center;transition:transform .18s,opacity .2s;outline:none}.cell:hover{transform:scale(1.5)}.cell:focus-visible path{stroke:#ffb703;stroke-width:3}.cell path{stroke:#0b1220;stroke-width:1.5}
+.cell text{fill:#fff;pointer-events:none}.cell .n{font-size:9px;opacity:.85}.cell .s{font-size:15px;font-weight:700}.cell.sm .s{font-size:12px}.cell .nm{font-size:8.5px}.cell .ms{font-size:8px;opacity:.85}
+.cell.ak path{fill:#8f2d3e}.cell.ae path{fill:#9e531f}.cell.tm path{fill:#8a7714}.cell.pt path{fill:#46782e}.cell.md path{fill:#1f7a64}.cell.nm path{fill:#1f6b96}.cell.hl path{fill:#6847b0}.cell.ng path{fill:#9c3e87}.cell.ln path{fill:#3559b5}.cell.ac path{fill:#7d5339}
+.pl{fill:#ffd23f;font-size:13px;font-weight:700}.gl{fill:#93a4bd;font-size:12px}.gl2{fill:#6f819c;font-size:10px}@media(max-width:760px){.cvb{grid-template-columns:1fr}}.atomwrap{display:flex;justify-content:center;margin:12px 0}.atomwrap svg{width:100%;max-width:300px;height:auto}#info h4{margin:14px 0 4px}#info ul{margin:4px 0;padding-left:20px}
+
+[hidden]{display:none!important}
+.hero{display:grid;grid-template-columns:minmax(260px,1fr) minmax(300px,1.1fr);gap:28px;max-width:1000px;margin:28px auto;padding:0 16px;align-items:center}
+.art{position:relative;aspect-ratio:1;max-width:420px;width:100%;margin:0 auto;border-radius:24px;background:radial-gradient(circle at 50% 45%,rgba(24,210,235,.32),rgba(109,40,217,.22) 55%,rgba(11,18,32,0) 75%)}
+.art svg{position:absolute;inset:6%;width:88%;height:88%}
+.ft{position:absolute;width:54px;height:60px;border-radius:10px;border:1px solid rgba(255,255,255,.28);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;box-shadow:0 8px 22px rgba(0,0,0,.5);animation:flo 5s ease-in-out infinite}.ft b{font-size:20px;line-height:1}
+@keyframes flo{50%{transform:translateY(-12px) rotate(3deg)}}
+.panel{background:var(--card);backdrop-filter:blur(16px);border:1px solid rgba(24,210,235,.35);border-radius:20px;padding:24px;box-shadow:0 20px 55px rgba(0,0,0,.5)}
+.panel h2{margin:0 0 4px;font-size:24px}.panel .sub{color:var(--mut);margin:0 0 16px}
+.steps{display:flex;gap:6px;list-style:none;padding:0;margin:0 0 18px}.steps li{flex:1;text-align:center;font-size:12px;color:var(--mut)}
+.steps i{display:grid;place-items:center;width:30px;height:30px;margin:0 auto 4px;border-radius:50%;border:2px solid var(--line);font-style:normal;font-weight:700;background:var(--bg)}
+.steps li.on{color:var(--ink)}.steps li.on i{background:var(--cy);border-color:var(--cy);color:#04222a;box-shadow:0 0 0 5px rgba(24,210,235,.25);animation:pul 2s infinite}.steps li.done i{background:#2f7a55;border-color:#2f7a55;color:#fff}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 18px;border:0;border-radius:12px;background:linear-gradient(180deg,#ffffff,#f1f5f9);color:#1f2937;font:inherit;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s}
+.gbtn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(24,210,235,.4)}.gbtn svg{flex:0 0 auto}
+.small{font-size:13px;color:var(--mut);text-align:center;margin:12px 0 0}.small a{color:var(--cy);font-weight:700}.stack{display:grid;gap:10px}.two{display:grid;grid-template-columns:2fr 1fr;gap:10px}input.big{font-size:18px;padding:12px 14px;width:100%}.perks{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:6px;font-size:14px;color:var(--mut)}.perks li:before{content:"✔";color:#4ade80;margin-right:8px;font-weight:700}
+.hero details{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.art{max-width:300px}}
+@media(prefers-reduced-motion:reduce){.ft,.steps li.on i,.sh,.bg-orb,.bg-svg.s1{animation:none!important}}
+.gate{max-width:560px;margin:40px auto}.gate.wide{max-width:760px;margin-top:0}.ros tbody tr:hover td{background:#10454f}
+.opt{display:flex;flex-direction:row;gap:10px;align-items:center;padding:11px 14px;border:1px solid var(--line);background:rgba(11,18,32,.55);border-radius:10px;margin:8px 0;cursor:pointer;color:var(--ink);font-size:15px;transition:border-color .2s,background .2s,transform .15s}.opt:hover{border-color:var(--cy);background:rgba(24,210,235,.08);transform:translateX(3px)}
+.opt.ok-opt{border-color:#4ade80!important;background:rgba(74,222,128,.15)}
+.opt.bad-opt{border-color:#f87171!important;background:rgba(248,113,113,.15)}
+.sc{font-size:48px;font-weight:800;color:#ffd23f;text-shadow:0 0 20px rgba(255,210,63,.35)}progress{accent-color:var(--cy);height:10px;border-radius:999px}
+.ros{max-height:440px;overflow:auto}.ros th{background:#2f7a55!important;color:#fff;font-size:15px;text-align:center;position:sticky;top:0}.ros td{text-align:center;font-size:15px}.ros tbody tr:nth-child(even) td{background:#1a2740}
+tr.me td,.ros tr.me td{background:#10454f!important;font-weight:700}
+.st{padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;margin-left:8px;color:#fff}.st.doing{background:#1d5f85}.st.done{background:#2f7a55}.st.act{background:#7a6a14}
+.scard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0;background:rgba(11,18,32,.75)}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chips span{padding:3px 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--mut)}summary{cursor:pointer;font-weight:700}
+
+/* --- GIAO DIỆN LÝ THUYẾT CHI TIẾT, VÍ DỤ & CÂU HỎI TƯƠNG TÁC --- */
+.th-sec{margin-top:20px}
+.th-hero{background:linear-gradient(135deg,rgba(15,36,71,.94) 0%,rgba(22,43,77,.94) 50%,rgba(38,28,79,.94) 100%);border:1px solid rgba(24,210,235,.45);border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:0 12px 35px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
+.th-hero h2{margin:0 0 6px;font-size:22px;color:#fff;display:flex;align-items:center;gap:10px}
+.th-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:12px 0}
+.th-box{background:rgba(10,17,30,.75);border:1px solid var(--line);border-top:3px solid var(--cy);border-radius:14px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.th-box.warm{border-top-color:#ffd23f}
+.th-box.pink{border-top-color:#f472b6}
+.th-box.green{border-top-color:#4ade80}
+.th-box h3{margin:0 0 10px;font-size:18px;color:#80effc;display:flex;align-items:center;gap:8px}
+.th-box.warm h3{color:#ffd23f}
+.th-box.pink h3{color:#f472b6}
+.th-box.green h3{color:#4ade80}
+.ex-card{background:linear-gradient(135deg,rgba(20,34,58,.9),rgba(13,22,40,.95));border:1px solid rgba(24,210,235,.32);border-left:4px solid #38bdf8;border-radius:12px;padding:14px 16px;margin-top:12px}
+.ex-card.gold{border-left-color:#ffd23f;border-color:rgba(255,210,63,.3)}
+.ex-card.pink{border-left-color:#f472b6;border-color:rgba(244,114,182,.3)}
+.ex-card.green{border-left-color:#4ade80;border-color:rgba(74,222,128,.3)}
+.ex-title{font-weight:800;color:#fff;font-size:15px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.ion-pill{display:inline-block;padding:2px 9px;border-radius:7px;font-weight:700;font-size:13.5px;margin:1px 2px}
+.ion-acid{background:rgba(244,63,94,.22);color:#fda4af;border:1px solid rgba(244,63,94,.45)}
+.ion-base{background:rgba(56,189,248,.22);color:#7dd3fc;border:1px solid rgba(56,189,248,.45)}
+.ion-amp{background:rgba(250,204,21,.22);color:#fde047;border:1px solid rgba(250,204,21,.45)}
+.p3-grid{display:grid;grid-template-columns:repeat(7,minmax(100px,1fr));gap:8px;min-width:740px;margin:10px 0}
+.p3-item{border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(255,255,255,.15);display:flex;flex-direction:column;gap:5px;transition:transform .2s}
+.p3-item:hover{transform:translateY(-3px)}
+.p3-item.b-type{background:linear-gradient(180deg,rgba(14,116,144,.45),rgba(15,23,42,.85));border-color:#06b6d4}
+.p3-item.m-type{background:linear-gradient(180deg,rgba(180,83,9,.45),rgba(15,23,42,.85));border-color:#f59e0b}
+.p3-item.a-type{background:linear-gradient(180deg,rgba(190,18,60,.45),rgba(15,23,42,.85));border-color:#f43f5e}
+.p3-item .ox-f{font-size:18px;font-weight:800;color:#fff}
+.p3-item .hy-f{font-size:12px;color:var(--mut)}
+.flow-step{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;padding:12px 14px;background:rgba(12,20,36,.75);border-radius:12px;border-left:4px solid var(--cy)}
+.flow-chip{background:linear-gradient(180deg,#213354,#17253f);border:1px solid #36507d;padding:5px 11px;border-radius:8px;font-size:14px}
+.flow-arr{color:#ffd23f;font-weight:800;font-size:16px}
+.tip-banner{background:linear-gradient(90deg,rgba(255,210,63,.18),rgba(24,210,235,.18));border:1px solid #ffd23f;border-radius:14px;padding:14px 16px;margin-top:12px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 18px rgba(255,210,63,.12)}
+.tip-banner b{color:#ffd23f}
+.pq-card{background:linear-gradient(180deg,rgba(22,36,61,.92),rgba(15,24,42,.95));border:1px solid #2e4770;border-left:4px solid #ffd23f;border-radius:14px;padding:16px;margin:14px 0 8px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.pq-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.pq-tag{background:rgba(255,210,63,.2);color:#ffd23f;border:1px solid rgba(255,210,63,.45);padding:3px 11px;border-radius:999px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.pq-fb{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14.5px;line-height:1.5}
+.pq-fb.ok-box{background:rgba(34,197,94,.15);border:1px solid #4ade80;color:#d1fae5}
+.pq-fb.bad-box{background:rgba(239,68,68,.15);border:1px solid #f87171;color:#fee2e2}
+.code-box{background:#060b14;border:1px solid var(--line);border-radius:10px;padding:12px;font:12.5px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;color:#a5f3fc;overflow-x:auto;white-space:pre;max-height:260px}
+</style></head><body>
+
+<!-- LỚP TRANG TRÍ BACKGROUND KHOA HỌC -->
+<div class="bg-decor" aria-hidden="true">
+ <div class="bg-orb o1"></div>
+ <div class="bg-orb o2"></div>
+ <div class="bg-orb o3"></div>
+ <svg class="bg-svg s1" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="14" stroke-width="2"/>
+  <ellipse cx="100" cy="100" rx="85" ry="32" stroke-width="1.5" transform="rotate(30 100 100)"/>
+  <ellipse cx="100" cy="100" rx="85" ry="32" stroke-width="1.5" transform="rotate(90 100 100)"/>
+  <ellipse cx="100" cy="100" rx="85" ry="32" stroke-width="1.5" transform="rotate(150 100 100)"/>
+ </svg>
+ <svg class="bg-svg s2" viewBox="0 0 240 240">
+  <polygon points="80,30 120,52 120,98 80,120 40,98 40,52" stroke-width="1.8"/>
+  <polygon points="160,30 200,52 200,98 160,120 120,98 120,52" stroke-width="1.8"/>
+  <polygon points="120,98 160,120 160,166 120,188 80,166 80,120" stroke-width="1.8"/>
+  <circle cx="80" cy="30" r="4" fill="#38bdf8"/><circle cx="160" cy="30" r="4" fill="#38bdf8"/>
+  <circle cx="120" cy="98" r="5" fill="#ffd23f"/><circle cx="120" cy="188" r="4" fill="#38bdf8"/>
+ </svg>
+</div>
+
+<header>
+ <div class="h-brand">
+  <div class="h-logo" aria-hidden="true">
+   <svg width="28" height="28" viewBox="0 0 64 64">
+    <g fill="none" stroke="#18d2eb" stroke-width="2.5">
+     <ellipse cx="32" cy="32" rx="27" ry="10" transform="rotate(30 32 32)"/>
+     <ellipse cx="32" cy="32" rx="27" ry="10" transform="rotate(90 32 32)"/>
+     <ellipse cx="32" cy="32" rx="27" ry="10" transform="rotate(150 32 32)"/>
+    </g>
+    <circle cx="32" cy="32" r="7" fill="#ffd23f"/>
+   </svg>
+  </div>
+  <div>
+   <h1>PERIODIC LAB — Bảng tuần hoàn Hóa học 10</h1>
+   <p><span>⚗️ Khám phá nguyên tố</span> · <span>🧪 Quy luật tuần hoàn</span> · <span>🏆 Đồng bộ Gemini & Google Sheets</span></p>
+  </div>
+ </div>
+ <span class="h-chip">✨ Task 3 · Task 4 (Nhóm 4) · Task 5</span>
+</header>
+
+<div id="gate"></div>
+<nav role="tablist" id="tabs" hidden></nav>
+<main id="app" hidden>
+<section id="s-pt"><div class="card"><div class="row">
+<label>🔍 Tìm kiếm (tên Anh/Việt, kí hiệu, Z, nhóm IA/IIA...)<input id="q" type="search" maxlength="40" placeholder="VD: Sodium, Natri, Na, 11, IA, VIIA..."></label>
+<label>🔄 Chu kì<select id="fp"></select></label><label>📊 Nhóm (Chuẩn IA/IIA – IB/IIB)<select id="fg"></select></label><label>🏷️ Phân loại<select id="fc"></select></label>
+<button class="btn" id="clr">✨ Xóa lọc</button><span id="cnt" class="note" aria-live="polite"></span></div></div>
+<div class="card"><div class="row" role="group" aria-label="Chọn kiểu bảng tuần hoàn" style="margin-bottom:10px"><button class="btn p" id="vtab" aria-pressed="true">⊞ Bảng truyền thống</button><button class="btn" id="vspi" aria-pressed="false">◎ Bảng dạng tròn (tọa độ cực)</button></div>
+<div class="wrap" id="ptw">
+ <div id="grp-bar" aria-hidden="true"></div>
+ <div id="pt" role="grid" aria-label="Bảng tuần hoàn 118 nguyên tố"></div>
+</div>
+<div id="spwrap" hidden><div class="leg" id="spleg"></div><p class="note">Bảng tuần hoàn dạng tròn (dạng góc): mỗi chu kì là một vòng tròn đồng tâm (chu kì 1 ở trong cùng, chu kì 7 ngoài cùng); mỗi nhóm IA–VIIIA / IB–VIIIB là một hình quạt, đọc theo chiều kim đồng hồ từ đỉnh. Các nguyên tố cùng nhóm nằm trên cùng một quạt. Lanthanide (La–Yb) và actinide (Ac–No) nằm ở vòng phụ bên phải; Lu và Lr vẫn ở nhóm IIIB (cột 3) của vòng chính.</p><div id="spw"><div id="spi"></div></div></div>
+<div id="conv" class="conv"></div></div>
+<p class="note">💡 Dùng hai nút phía trên để chuyển giữa bảng truyền thống và bảng dạng tròn. Rê chuột vào một ô để phóng to; nhấn để xem chi tiết (trong khung chi tiết có Trang 1 và Trang 2; nhấn Esc để đóng).</p>
+<div id="pt-theory" class="th-sec"></div>
+</section>
+
+<section id="s-ox" hidden></section>
+
+<section id="s-quiz" hidden></section>
+
+<section id="s-prof" hidden></section>
+<section id="s-key" hidden></section>
+</main>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+function h(t,a,...k){const e=document.createElement(t);for(const x in a||{}){if(x==="class")e.className=a[x];else if(x.startsWith("on"))e.addEventListener(x.slice(2),a[x]);else e.setAttribute(x,a[x])}
+ for(const c of k.flat())if(c!=null)e.append(c.nodeType?c:document.createTextNode(String(c)));return e}
+/* ---------- DỮ LIỆU: Sym|English|Tiếng Việt ---------- */
+const RAW="H|Hydrogen|Hiđro;He|Helium|Heli;Li|Lithium|Liti;Be|Beryllium|Beri;B|Boron|Bo;C|Carbon|Cacbon;N|Nitrogen|Nitơ;O|Oxygen|Oxi;F|Fluorine|Flo;Ne|Neon|Neon;Na|Sodium|Natri;Mg|Magnesium|Magie;Al|Aluminium|Nhôm;Si|Silicon|Silic;P|Phosphorus|Photpho;S|Sulfur|Lưu huỳnh;Cl|Chlorine|Clo;Ar|Argon|Agon;K|Potassium|Kali;Ca|Calcium|Canxi;Sc|Scandium|Scanđi;Ti|Titanium|Titan;V|Vanadium|Vanađi;Cr|Chromium|Crom;Mn|Manganese|Mangan;Fe|Iron|Sắt;Co|Cobalt|Coban;Ni|Nickel|Niken;Cu|Copper|Đồng;Zn|Zinc|Kẽm;Ga|Gallium|Gali;Ge|Germanium|Gemani;As|Arsenic|Asen;Se|Selenium|Selen;Br|Bromine|Brom;Kr|Krypton|Kripton;Rb|Rubidium|Rubiđi;Sr|Strontium|Stronti;Y|Yttrium|Ytri;Zr|Zirconium|Zirconi;Nb|Niobium|Niobi;Mo|Molybdenum|Molipđen;Tc|Technetium|Tecneti;Ru|Ruthenium|Rutheni;Rh|Rhodium|Rođi;Pd|Palladium|Paladi;Ag|Silver|Bạc;Cd|Cadmium|Cađimi;In|Indium|Indi;Sn|Tin|Thiếc;Sb|Antimony|Antimon;Te|Tellurium|Telu;I|Iodine|Iot;Xe|Xenon|Xenon;Cs|Caesium|Xesi;Ba|Barium|Bari;La|Lanthanum|Lantan;Ce|Cerium|Xeri;Pr|Praseodymium|Praseođim;Nd|Neodymium|Neođim;Pm|Promethium|Prometi;Sm|Samarium|Samari;Eu|Europium|Europi;Gd|Gadolinium|Gađolini;Tb|Terbium|Tecbi;Dy|Dysprosium|Dysprosi;Ho|Holmium|Honmi;Er|Erbium|Erbi;Tm|Thulium|Tuli;Yb|Ytterbium|Ytecbi;Lu|Lutetium|Luteti;Hf|Hafnium|Hafni;Ta|Tantalum|Tantan;W|Tungsten|Vonfram;Re|Rhenium|Reni;Os|Osmium|Osmi;Ir|Iridium|Iriđi;Pt|Platinum|Platin;Au|Gold|Vàng;Hg|Mercury|Thủy ngân;Tl|Thallium|Tali;Pb|Lead|Chì;Bi|Bismuth|Bitmut;Po|Polonium|Poloni;At|Astatine|Atatin;Rn|Radon|Radon;Fr|Francium|Franxi;Ra|Radium|Rađi;Ac|Actinium|Actini;Th|Thorium|Thori;Pa|Protactinium|Protactini;U|Uranium|Urani;Np|Neptunium|Neptuni;Pu|Plutonium|Plutoni;Am|Americium|Americi;Cm|Curium|Curi;Bk|Berkelium|Beckeli;Cf|Californium|Californi;Es|Einsteinium|Einsteini;Fm|Fermium|Fecmi;Md|Mendelevium|Menđelevi;No|Nobelium|Nobeli;Lr|Lawrencium|Lorenxi;Rf|Rutherfordium|Rutherfordi;Db|Dubnium|Dubni;Sg|Seaborgium|Seaborgi;Bh|Bohrium|Bohri;Hs|Hassium|Hassi;Mt|Meitnerium|Meitneri;Ds|Darmstadtium|Darmstadti;Rg|Roentgenium|Roentgeni;Cn|Copernicium|Copernixi;Nh|Nihonium|Nihoni;Fl|Flerovium|Flerovi;Mc|Moscovium|Moscovi;Lv|Livermorium|Livermori;Ts|Tennessine|Tennessin;Og|Oganesson|Oganesson";
+const CATS={ak:"Kim loại kiềm",ae:"Kiềm thổ",tm:"Kim loại chuyển tiếp",pt:"Kim loại sau chuyển tiếp",md:"Á kim",nm:"Phi kim",hl:"Halogen",ng:"Khí hiếm",ln:"Lanthanide",ac:"Actinide"};
+const ROM=["IA","IIA","IIIB","IVB","VB","VIB","VIIB","VIIIB","VIIIB","VIIIB","IB","IIB","IIIA","IVA","VA","VIA","VIIA","VIIIA"];
+const OXI={Li:"Li₂O / LiOH",Na:"Na₂O / NaOH",K:"K₂O / KOH",Mg:"MgO / Mg(OH)₂",Ca:"CaO / Ca(OH)₂",Al:"Al₂O₃ / Al(OH)₃",C:"CO₂ / H₂CO₃",S:"SO₃ / H₂SO₄",P:"P₂O₅ / H₃PO₄",Si:"SiO₂ / H₂SiO₃",Cl:"Cl₂O₇ / HClO₄",N:"N₂O₅ / HNO₃"};
+function pos(z){let p,g,r,c;
+ if(z<=2){p=1;g=z==1?1:18}else if(z<=10){p=2;g=z<=4?z-2:z+8}else if(z<=18){p=3;g=z<=12?z-10:z}
+ else if(z<=36){p=4;g=z-18}else if(z<=54){p=5;g=z-36}else if(z<=56){p=6;g=z-54}else if(z<=70){p=6;g=null}
+ else if(z<=86){p=6;g=z-68}else if(z<=88){p=7;g=z-86}else if(z<=102){p=7;g=null}else{p=7;g=z-100}
+ if(g==null){r=z<=70?9:10;c=z-(z<=70?57:89)+3}else{r=p;c=g}return{p,g,grp:g?ROM[g-1]:null,r,c}}
+function cat(z,g,sym){if(z==1)return"nm";if([5,14,32,33,51,52].includes(z))return"md";if([6,7,8,15,16,34].includes(z))return"nm";
+ if(g==1)return"ak";if(g==2)return"ae";if(z>=57&&z<=70)return"ln";if(z>=89&&z<=102)return"ac";
+ if([13,31,49,50,81,82,83,113,114,115,116].includes(z))return"pt";if(g==17)return"hl";if(g==18)return"ng";return"tm"}
+const SUP="⁰¹²³⁴⁵⁶⁷⁸⁹";const sup=n=>String(n).replace(/\d/g,d=>SUP[d]);
+const ORB="1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p6".split(" ");
+const EXC=[41,42,44,45,46,47,57,58,64,78,79,89,90,91,92,93,96,103];
+function config(z){if(CF[z])return{txt:CF[z]+" (ngoại lệ quy tắc Aufbau)",shells:SH[z]};if(EXC.includes(z)||z>=104)return null;let left=z,o=[];
+ for(const s of ORB){if(left<=0)break;const e=Math.min(+s.slice(2),left);o.push([+s[0],s[1],e]);left-=e}
+ const set=(n,l,e)=>{const x=o.find(a=>a[0]==n&&a[1]==l);if(x)x[2]=e};
+ if(z==24){set(4,"s",1);set(3,"d",5)}if(z==29){set(4,"s",1);set(3,"d",10)}
+ const L="spdf";o.sort((a,b)=>a[0]-b[0]||L.indexOf(a[1])-L.indexOf(b[1]));
+ const shells={};o.forEach(a=>shells[a[0]]=(shells[a[0]]||0)+a[2]);
+ return{txt:o.map(a=>a[0]+a[1]+sup(a[2])).join(" "),shells:Object.values(shells).join(", ")}}
+const MS="1.008 4.0026 6.94 9.0122 10.81 12.011 14.007 15.999 18.998 20.180 22.990 24.305 26.982 28.085 30.974 32.06 35.45 39.948 39.098 40.078 44.956 47.867 50.942 51.996 54.938 55.845 58.933 58.693 63.546 65.38 69.723 72.630 74.922 78.971 79.904 83.798 85.468 87.62 88.906 91.224 92.906 95.95 [98] 101.07 102.91 106.42 107.87 112.41 114.82 118.71 121.76 127.60 126.90 131.29 132.91 137.33 138.91 140.12 140.91 144.24 [145] 150.36 151.96 157.25 158.93 162.50 164.93 167.26 168.93 173.05 174.97 178.49 180.95 183.84 186.21 190.23 192.22 195.08 196.97 200.59 204.38 207.2 208.98 [209] [210] [222] [223] [226] [227] 232.04 231.04 238.03 [237] [244] [243] [247] [247] [251] [252] [257] [258] [259] [266] [267] [268] [269] [270] [277] [278] [281] [282] [285] [286] [289] [290] [293] [294] [294]".split(" ");
+const EL=RAW.split(";").map((s,i)=>{const[sym,en,vi]=s.split("|"),z=i+1,P=pos(z);return{z,sym,en,vi,ms:MS[i],...P,cat:cat(z,P.g,sym)}});
+
+/* ---------- BẢNG TUẦN HOÀN & BỘ LỌC NHÓM CHUẨN IA, IIA ---------- */
+const sel=(id,opts)=>{const s=$(id);opts.forEach(([v,t])=>s.append(h("option",{value:v},t)))};
+sel("#fp",[["","Tất cả chu kì"],...[1,2,3,4,5,6,7].map(n=>[n,"Chu kì "+n])]);
+sel("#fg",[
+ ["","Tất cả các nhóm"],
+ ["IA","Nhóm IA (Cột 1 · Kim loại kiềm)"],
+ ["IIA","Nhóm IIA (Cột 2 · Kim loại kiềm thổ)"],
+ ["IIIA","Nhóm IIIA (Cột 13 · Nhóm Boron)"],
+ ["IVA","Nhóm IVA (Cột 14 · Nhóm Carbon)"],
+ ["VA","Nhóm VA (Cột 15 · Nhóm Nitrogen)"],
+ ["VIA","Nhóm VIA (Cột 16 · Chalcogen)"],
+ ["VIIA","Nhóm VIIA (Cột 17 · Halogen)"],
+ ["VIIIA","Nhóm VIIIA (Cột 18 · Khí hiếm)"],
+ ["IB","Nhóm IB (Cột 11 · Nhóm Đồng)"],
+ ["IIB","Nhóm IIB (Cột 12 · Nhóm Kẽm)"],
+ ["IIIB","Nhóm IIIB (Cột 3)"],
+ ["IVB","Nhóm IVB (Cột 4)"],
+ ["VB","Nhóm VB (Cột 5)"],
+ ["VIB","Nhóm VIB (Cột 6)"],
+ ["VIIB","Nhóm VIIB (Cột 7)"],
+ ["VIIIB","Nhóm VIIIB (Cột 8, 9, 10)"],
+ ["f","Họ Lanthanide & Actinide (f-block)"]
+]);
+sel("#fc",[["","Tất cả phân loại"],...Object.entries(CATS)]);
+
+// Thanh tiêu đề nhóm IA -> VIIIA trên bảng truyền thống
+for(let g=1;g<=18;g++){
+ $("#grp-bar").append(h("div",{class:"gh",title:`Nhóm ${ROM[g-1]} (Cột ${g} theo IUPAC)`},h("b",{},ROM[g-1]),h("span",{},"("+g+")")));
+}
+
+$("#pt").append(h("div",{class:"gap"},h("b",{},"🎨 Chú thích phân loại nguyên tố"),h("div",{class:"leg"},Object.entries(CATS).map(([k,v])=>h("span",{class:k},v))),h("span",{class:"note"},"🔍 Rê chuột để phóng to · 🖱️ Nhấn để xem chi tiết · [ ] = số khối quy ước (nguyên tố phóng xạ)")));
+EL.forEach(e=>{e.btn=h("button",{class:"el "+e.cat,style:`grid-row:${e.r};grid-column:${e.c}`,title:`${e.en} (${e.vi}) · Chu kì ${e.p}${e.grp?", Nhóm "+e.grp:""}`,"aria-label":`${e.z} ${e.sym} ${e.en}`,onclick:()=>openEl(e)},h("small",{},e.z),h("b",{},e.sym),h("i",{},e.en),h("small",{},e.ms));$("#pt").append(e.btn)});
+$("#pt").append(h("div",{style:"grid-row:8;grid-column:1/19;height:10px"}),h("div",{class:"lab",style:"grid-row:9;grid-column:1/3"},"✨ Lanthanide 57–70 →"),h("div",{class:"lab",style:"grid-row:10;grid-column:1/3"},"☢️ Actinide 89–102 →"));
+const norm=x=>String(x).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"d").toLowerCase();
+function filt(){
+ const q=norm($("#q").value.trim()),p=$("#fp").value,g=$("#fg").value,c=$("#fc").value;let n=0;
+ EL.forEach(e=>{
+  const m=(!q||[e.sym,e.en,e.vi,String(e.z),e.grp||""].some(x=>{x=norm(x);return x==q||(q.length>1&&isNaN(q)&&x.includes(q))}))
+   &&(!p||e.p==p)
+   &&(!g||(g=="f"?e.g==null:e.grp===g))
+   &&(!c||e.cat==c);
+  e.btn.classList.toggle("dim",!m);if(e.btn2)e.btn2.classList.toggle("dim",!m);if(m)n++;
+ });
+ $("#cnt").textContent="⚡ "+n+" / 118 nguyên tố phù hợp";
+}
+["#q","#fp","#fg","#fc"].forEach(s=>$(s).addEventListener("input",filt));
+$("#clr").onclick=()=>{$("#q").value="";["#fp","#fg","#fc"].forEach(s=>$(s).value="");filt()};filt();
+
+const CF={41:"[Kr] 4d⁴5s¹",42:"[Kr] 4d⁵5s¹",44:"[Kr] 4d⁷5s¹",45:"[Kr] 4d⁸5s¹",46:"[Kr] 4d¹⁰",47:"[Kr] 4d¹⁰5s¹",57:"[Xe] 5d¹6s²",58:"[Xe] 4f¹5d¹6s²",64:"[Xe] 4f⁷5d¹6s²",78:"[Xe] 4f¹⁴5d⁹6s¹",79:"[Xe] 4f¹⁴5d¹⁰6s¹",89:"[Rn] 6d¹7s²",90:"[Rn] 6d²7s²",91:"[Rn] 5f²6d¹7s²",92:"[Rn] 5f³6d¹7s²",93:"[Rn] 5f⁴6d¹7s²",96:"[Rn] 5f⁷6d¹7s²",103:"[Rn] 5f¹⁴7s²7p¹"};
+const SH={41:"2, 8, 18, 12, 1",42:"2, 8, 18, 13, 1",44:"2, 8, 18, 15, 1",45:"2, 8, 18, 16, 1",46:"2, 8, 18, 18",47:"2, 8, 18, 18, 1",57:"2, 8, 18, 18, 9, 2",58:"2, 8, 18, 19, 9, 2",64:"2, 8, 18, 25, 9, 2",78:"2, 8, 18, 32, 17, 1",79:"2, 8, 18, 32, 18, 1",89:"2, 8, 18, 32, 18, 9, 2",90:"2, 8, 18, 32, 18, 10, 2",91:"2, 8, 18, 32, 20, 9, 2",92:"2, 8, 18, 32, 21, 9, 2",93:"2, 8, 18, 32, 22, 9, 2",96:"2, 8, 18, 32, 25, 9, 2",103:"2, 8, 18, 32, 32, 8, 3"};
+const num=t=>t.split(" ").map(x=>x=="-"?null:+x);
+const RAD=num("25 - 145 105 85 70 65 60 50 - 180 150 125 110 100 100 100 - 220 180 160 140 135 140 140 140 135 135 135 135 130 125 115 115 115 - 235 200 180 155 145 145 135 130 135 140 160 155 155 145 145 140 140 - 260 215 195 185 185 185 185 185 185 180 175 175 175 175 175 175 175 155 145 135 135 130 135 135 135 150 190 180 160 190 - - - 215 195 180 180 175 175 175 175"+" -".repeat(23));
+const ENZ=num("2.20 - 0.98 1.57 2.04 2.55 3.04 3.44 3.98 - 0.93 1.31 1.61 1.90 2.19 2.58 3.16 - 0.82 1.00 1.36 1.54 1.63 1.66 1.55 1.83 1.88 1.91 1.90 1.65 1.81 2.01 2.18 2.55 2.96 3.00 0.82 0.95 1.22 1.33 1.6 2.16 1.9 2.2 2.28 2.20 1.93 1.69 1.78 1.96 2.05 2.1 2.66 2.6 0.79 0.89 1.10 1.12 1.13 1.14 - 1.17 - 1.20 - 1.22 1.23 1.24 1.25 - 1.27 1.3 1.5 2.36 1.9 2.2 2.20 2.28 2.54 2.00 1.62 2.33 2.02 2.0 2.2 - - 0.9 1.1 1.3 1.5 1.38 1.36 1.28"+" -".repeat(24));
+const FACT={H:"Là nguyên tố nhẹ nhất và phổ biến nhất trong vũ trụ.",He:"Sôi ở khoảng −269 °C, thấp nhất trong các chất; được dùng bơm khinh khí cầu.",Li:"Là kim loại nhẹ nhất, được dùng trong pin lithium-ion.",C:"Kim cương và than chì đều là dạng thù hình của carbon.",N:"Chiếm khoảng 78% thể tích không khí.",O:"Chiếm khoảng 21% thể tích không khí và cần cho sự cháy, sự hô hấp.",F:"Có độ âm điện lớn nhất trong các nguyên tố.",Ne:"Đèn neon phát ánh sáng đỏ cam khi có dòng điện chạy qua.",Na:"Mềm đến mức cắt được bằng dao và phản ứng mạnh với nước.",Mg:"Cháy với ngọn lửa trắng sáng nên được dùng trong pháo sáng.",Al:"Là kim loại phổ biến nhất trong vỏ Trái Đất.",Si:"Là thành phần chính của cát (SiO₂) và của chip bán dẫn.",P:"Phosphorus trắng tự bốc cháy trong không khí nên được bảo quản dưới nước.",S:"Sulfur cháy với ngọn lửa xanh nhạt tạo khí SO₂.",Cl:"Được dùng để khử trùng nước sinh hoạt và nước bể bơi.",Ar:"Chiếm gần 1% thể tích không khí, là khí hiếm nhiều nhất trong khí quyển.",K:"Ion K⁺ cần cho hoạt động của tế bào thần kinh và cơ.",Ca:"Là thành phần chính của xương, răng và vỏ sò.",Ti:"Nhẹ, bền và chịu ăn mòn nên được dùng làm khung máy bay.",Fe:"Là kim loại được dùng nhiều nhất; hemoglobin trong máu chứa sắt.",Cu:"Dẫn điện rất tốt nên được dùng làm dây điện.",Zn:"Dùng để mạ chống gỉ cho thép (tôn mạ kẽm).",Ga:"Nóng chảy ở khoảng 30 °C nên có thể tan trong lòng bàn tay.",Br:"Cùng với thủy ngân, là nguyên tố ở thể lỏng ở nhiệt độ phòng.",Ag:"Dẫn điện và dẫn nhiệt tốt nhất trong các kim loại.",Sn:"Dùng để mạ lên sắt làm hộp thiếc (sắt tây).",I:"Thiếu iodine trong khẩu phần ăn có thể gây bệnh bướu cổ.",Cs:"Nóng chảy ở khoảng 28 °C, gần nhiệt độ phòng.",W:"Có nhiệt độ nóng chảy cao nhất trong các kim loại (khoảng 3422 °C).",Au:"Rất trơ về mặt hóa học nên không bị gỉ.",Hg:"Là kim loại duy nhất ở thể lỏng ở nhiệt độ phòng.",Pb:"Chì và hợp chất của chì độc nên việc dùng bị hạn chế.",U:"Là nhiên liệu của nhiều lò phản ứng hạt nhân.",Tc:"Là nguyên tố nhẹ nhất không có đồng vị bền.",Og:"Là nguyên tố nặng nhất đã được tổng hợp (Z = 118)."};
+let curEl=null,curSrc=null;
+const METAL=e=>(["ak","ae","tm","pt","ln","ac"].includes(e.cat)?"Kim loại":e.cat=="md"?"Á kim (tính chất trung gian giữa kim loại và phi kim)":"Phi kim")+(e.z>=104?" (dự đoán theo vị trí, chưa đủ dữ liệu thực nghiệm)":"");
+function atomSvg(sh){const n=sh.length,rad=i=>n==1?45:30+i*(110/(n-1));
+ let o=`<svg viewBox="0 0 300 300" role="img" aria-label="Sơ đồ nguyên tử, phân bố electron ${sh.join(", ")}">`;
+ sh.forEach((c,i)=>{const r=rad(i);o+=`<circle cx="150" cy="150" r="${r.toFixed(1)}" fill="none" stroke="#3a4d6e" stroke-dasharray="3 4"/><g class="sh" style="animation-duration:${10+i*5}s${i%2?";animation-direction:reverse":""}">`;
+  for(let k=0;k<c;k++){const t=2*Math.PI*k/c;o+=`<circle cx="${(150+r*Math.cos(t)).toFixed(1)}" cy="${(150+r*Math.sin(t)).toFixed(1)}" r="${c>20?3:5}" fill="${i==n-1?"#ffd23f":"#14b8cf"}"/>`}o+="</g>"});
+ return o+`<circle cx="150" cy="150" r="18" fill="#e0475f"/><text x="150" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">${sh.reduce((a,b)=>a+b,0)}p⁺</text></svg>`}
+function facts(e,sh){const f=[];if(FACT[e.sym])f.push(FACT[e.sym]);
+ f.push(`Nằm ở chu kì ${e.p}, ${e.g==null?"hàng f-block (không gán nhóm A/B)":"nhóm "+e.grp+" (cột "+e.g+" IUPAC)"}.`);
+ if(sh)f.push(`Có ${sh.length} lớp electron${sh.length==e.p?", khớp với số thứ tự chu kì":""}.`);
+ if(e.z==43||e.z==61||e.z>=84)f.push("Mọi đồng vị của nguyên tố này đều phóng xạ.");
+ if(e.z>=95)f.push("Là nguyên tố nhân tạo, được tổng hợp trong phòng thí nghiệm.");
+ return f}
+function openEl(e,src){const cf=config(e.z),UNK="Chưa có dữ liệu đáng tin cậy / Chưa xác định",rad=e.ms.startsWith("[");
+ let ov=$("#ov");if(!ov){ov=h("div",{id:"ov",role:"dialog","aria-modal":"true","aria-label":"Chi tiết nguyên tố"});document.body.append(ov);ov.addEventListener("click",ev=>{if(ev.target===ov)closeEl()})}
+ const sh=cf?cf.shells.split(/,\s*/).map(Number):null,row=(a,b)=>[h("dt",{},a),h("dd",{},b)];
+ const big=h("div",{id:"big",class:e.cat},h("div",{class:"z"},e.z),h("div",{class:"s"},e.sym),h("div",{},h("div",{class:"n"},e.en),h("div",{class:"e"},"Tiếng Việt: "+e.vi),h("div",{class:"e"},(rad?"Số khối ":"NTK ")+e.ms)));
+ const info=h("div",{id:"info"});let pg=1;
+ const fill=()=>{const go=n=>()=>{pg=n;fill();info.querySelector("[data-pg='"+n+"']").focus()};
+  const head=h("div",{class:"row",style:"justify-content:space-between"},h("h2",{style:"margin:0"},"⚛️ "+e.en+" ("+e.sym+")"),h("div",{class:"row"},
+   h("button",{class:"btn"+(pg==1?" p":""),"data-pg":"1",onclick:go(1)},"📄 Trang 1"),h("button",{class:"btn"+(pg==2?" p":""),"data-pg":"2",onclick:go(2)},"🔬 Trang 2"),h("button",{class:"btn",id:"xcl",onclick:closeEl},"Đóng ✕")));
+  if(pg==1)info.replaceChildren(head,h("p",{class:"note",style:"margin:8px 0 0"},"Trang 1/2 · Nhận diện và vị trí trong bảng"),h("dl",{style:"margin-top:10px"},
+    row("Số hiệu nguyên tử (Z)",e.z+" (= số proton = số electron của nguyên tử trung hòa)"),
+    row("Kí hiệu / Tên",e.sym+" · "+e.en+" · tên gọi truyền thống: "+e.vi),
+    row("Nguyên tử khối",rad?e.ms+" — số khối quy ước của đồng vị ổn định nhất (nguyên tố phóng xạ), không phải nguyên tử khối trung bình":e.ms),
+    row("Chu kì",e.p),row("Nhóm",e.g==null?"Họ Lanthanide / Actinide (f-block, hàng riêng)":`Nhóm ${e.grp} (Cột ${e.g} theo IUPAC)`),row("Phân loại",CATS[e.cat]),
+    row("Kim loại / phi kim",METAL(e)),row("Oxide / hydroxide tiêu biểu",OXI[e.sym]||"—")),
+   h("p",{class:"note"},"Nguyên tử khối theo giá trị rút gọn của IUPAC. Số trong [ ] là số khối quy ước."));
+  else{const w=h("div",{class:"atomwrap"});if(sh)w.innerHTML=atomSvg(sh);else w.append(h("p",{class:"note"},"Chưa có dữ liệu đáng tin cậy để vẽ sơ đồ nguyên tử của nguyên tố này."));
+   info.replaceChildren(head,h("p",{class:"note",style:"margin:8px 0 0"},"Trang 2/2 · Cấu trúc, tính chất nguyên tử và thông tin thêm"),h("dl",{style:"margin-top:10px"},
+    row("Cấu hình electron",cf?cf.txt:"Cần đối chiếu: Z ≥ 104, chưa có dữ liệu đáng tin cậy"),row("Phân bố electron theo lớp",cf?cf.shells:UNK),
+    row("Electron lớp ngoài cùng",sh?sh[sh.length-1]:UNK),
+    row("Bán kính nguyên tử",RAD[e.z-1]!=null?RAD[e.z-1]+" pm (giá trị thực nghiệm theo Slater)":UNK),
+    row("Độ âm điện Pauling",ENZ[e.z-1]!=null?ENZ[e.z-1].toFixed(2):UNK)),
+   w,h("h4",{},"💡 Bạn có biết?"),h("ul",{},facts(e,sh).map(x=>h("li",{},x))),
+   h("p",{class:"note"},"Bán kính và độ âm điện nhập từ tài liệu tham khảo, cần đối chiếu SGK/nguồn khoa học trước khi báo cáo."))}};
+ fill();ov.replaceChildren(big,info);ov.hidden=false;document.body.style.overflow="hidden";curEl=e;
+ curSrc=src||e.btn;const a=curSrc.getBoundingClientRect(),b=big.getBoundingClientRect();
+ big.style.transition="none";big.style.transform=`translate(${a.left+a.width/2-b.left-b.width/2}px,${a.top+a.height/2-b.top-b.height/2}px) scale(${a.width/b.width})`;
+ big.getBoundingClientRect();big.style.transition="transform .5s cubic-bezier(.2,.8,.2,1)";big.style.transform="none";$("#xcl").focus()}
+function closeEl(){const ov=$("#ov");if(!ov||ov.hidden)return;ov.hidden=true;document.body.style.overflow="";if(curSrc)curSrc.focus()}
+document.addEventListener("keydown",ev=>{if(ev.key==="Escape")closeEl()});
+
+/* ---------- BẢNG DẠNG TRÒN (dạng góc / tọa độ cực) ---------- */
+(function(){const NS="http://www.w3.org/2000/svg",CX=530,CY=530,R0=58,RW=60,R=R0+7*RW,GAP=6,AW=(360-2*GAP)/18,AX=1230,AY=250,A0=40,AR=54,AW2=(360-2*GAP)/14;
+ const rad=a=>a*Math.PI/180,P=(cx,cy,r,a)=>[cx+r*Math.sin(rad(a)),cy-r*Math.cos(rad(a))],f1=n=>n.toFixed(1);
+ const mk=(t,at,par)=>{const x=document.createElementNS(NS,t);for(const k in at)x.setAttribute(k,at[k]);if(par)par.append(x);return x};
+ const txt=(par,x,y,cls,t,anchor)=>{const o=mk("text",{x:f1(x),y:f1(y),class:cls,"text-anchor":anchor||"middle"},par);o.textContent=t;return o};
+ const svg=mk("svg",{viewBox:"0 0 1420 1060",role:"group","aria-label":"Bảng tuần hoàn dạng tròn"});
+ const cell=(e,cx,cy,r1,r2,a0,a1)=>{const rm=(r1+r2)/2,aw=rm*rad(a1-a0),big=aw>=64,[tx,ty]=P(cx,cy,rm,(a0+a1)/2);
+  const g=mk("g",{class:"cell "+e.cat+(aw<34?" sm":""),tabindex:"0",role:"button","aria-label":`${e.z} ${e.sym} ${e.en}`});
+  mk("title",{},g).textContent=e.en+" ("+e.vi+")";
+  const[x1,y1]=P(cx,cy,r2,a0),[x2,y2]=P(cx,cy,r2,a1),[x3,y3]=P(cx,cy,r1,a1),[x4,y4]=P(cx,cy,r1,a0);
+  mk("path",{d:`M${f1(x1)} ${f1(y1)}A${r2} ${r2} 0 0 1 ${f1(x2)} ${f1(y2)}L${f1(x3)} ${f1(y3)}A${r1} ${r1} 0 0 0 ${f1(x4)} ${f1(y4)}Z`},g);
+  txt(g,tx,ty+(big?-17:-9),"n",e.z);txt(g,tx,ty+(big?-2:6),"s",e.sym);
+  if(big){txt(g,tx,ty+11,"nm",e.en.length>11?e.en.slice(0,10)+"…":e.en);txt(g,tx,ty+23,"ms",e.ms)}
+  g.addEventListener("click",()=>openEl(e,g));
+  g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();openEl(e,g)}});
+  g.addEventListener("mouseenter",()=>{if(g.parentNode&&g.parentNode.lastChild!==g)g.parentNode.append(g)});
+  e.btn2=g;return g};
+ const [lx,ly]=P(CX,CY,R,GAP+2.5*AW);mk("line",{x1:f1(lx),y1:f1(ly),x2:AX-A0-2*AR,y2:AY,stroke:"#ffd23f","stroke-width":1.5,"stroke-dasharray":"5 5"},svg);
+ txt(svg,(lx+AX-A0-2*AR)/2,AY-8,"gl","f-block → vòng phụ");
+ EL.forEach(e=>{if(e.g!=null)svg.append(cell(e,CX,CY,R0+(e.p-1)*RW,R0+e.p*RW,GAP+(e.g-1)*AW,GAP+e.g*AW));
+  else{const six=e.z<=70,i=e.z-(six?57:89),r=A0+(six?0:AR);svg.append(cell(e,AX,AY,r,r+AR,GAP+i*AW2,GAP+(i+1)*AW2))}});
+ for(let g=1;g<=18;g++){const a=GAP+(g-.5)*AW;let[x,y]=P(CX,CY,R+14,a);txt(svg,x,y+4,"gl",ROM[g-1]);[x,y]=P(CX,CY,R+28,a);txt(svg,x,y+3,"gl2","("+g+")")}
+ txt(svg,CX,16,"gl","Nhóm IA → VIIIA (Cột 1 → 18) theo chiều kim đồng hồ, bắt đầu từ đỉnh (0° / 360°)");
+ for(let p=1;p<=7;p++){const[x,y]=P(CX,CY,R0+(p-.5)*RW,0);txt(svg,x,y+5,"pl",p)}
+ txt(svg,CX,CY-4,"gl","Chu kì 1 → 7");txt(svg,CX,CY+12,"gl2","từ trong ra ngoài");
+ for(let p=0;p<2;p++){const[x,y]=P(AX,AY,A0+(p+.5)*AR,0);txt(svg,x,y+5,"pl",6+p)}
+ txt(svg,AX,AY+4,"gl","f");
+ txt(svg,AX,AY+AR*2+A0+26,"gl","Vòng phụ (f-block)");txt(svg,AX,AY+AR*2+A0+42,"gl2","trong: La–Yb (chu kì 6) · ngoài: Ac–No (chu kì 7)");
+ $("#spi").append(svg);
+ Object.entries(CATS).forEach(([k,v])=>$("#spleg").append(h("span",{class:k},v)));
+ const set=sp=>{$("#ptw").hidden=sp;$("#spwrap").hidden=!sp;$("#vtab").classList.toggle("p",!sp);$("#vspi").classList.toggle("p",sp);$("#vtab").setAttribute("aria-pressed",String(!sp));$("#vspi").setAttribute("aria-pressed",String(sp))};
+ $("#vtab").onclick=()=>set(false);$("#vspi").onclick=()=>set(true);filt()})();
+
+/* ---------- QUY ƯỚC (kiểu mô hình nguyên tử) ---------- */
+(function(){
+ const sv=t=>{const d=h("span",{class:"ic"});d.innerHTML=t;return d};
+ const atom=()=>{let o='<svg viewBox="0 0 300 300" role="img" aria-label="Mô hình nguyên tử natri: 11 proton, các lớp electron 2, 8, 1">';
+  [[45,2,"#14b8cf"],[80,8,"#14b8cf"],[115,1,"#ffd23f"]].forEach(([r,n,c],i)=>{
+   o+=`<circle cx="150" cy="150" r="${r}" fill="none" stroke="#3a4d6e" stroke-dasharray="3 4"/><g class="sh" style="animation-duration:${8+i*6}s${i==1?";animation-direction:reverse":""}">`;
+   for(let k=0;k<n;k++){const t=2*Math.PI*k/n;o+=`<circle cx="${(150+r*Math.cos(t)).toFixed(1)}" cy="${(150+r*Math.sin(t)).toFixed(1)}" r="${i==2?7:6}" fill="${c}"${i==2?' class="glow"':""}/>`}o+="</g>"});
+  return o+'<circle cx="150" cy="150" r="24" fill="#e0475f"/><text x="150" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">11p⁺</text></svg>'};
+ const mini=t=>`<svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true"><g fill="none" stroke="#4fd1e3" stroke-width="1.5"><ellipse cx="32" cy="32" rx="29" ry="11" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="29" ry="11" transform="rotate(90 32 32)"/><ellipse cx="32" cy="32" rx="29" ry="11" transform="rotate(150 32 32)"/></g><circle cx="32" cy="32" r="14" fill="#e0475f"/><text x="32" y="36" text-anchor="middle" font-size="${t.length>3?10:12}" font-weight="700" fill="#fff">${t}</text></svg>`;
+ const T=[["IA–B","🧭 Nhóm IA–VIIIA & IB–VIIIB","Bảng tuần hoàn gồm 8 nhóm A (IA → VIIIA, ứng với cột 1, 2 và 13 → 18) và 8 nhóm B (IB → VIIIB, ứng với cột 3 → 12; riêng nhóm VIIIB gồm 3 cột 8, 9, 10). Ví dụ: Na thuộc nhóm IA; Cl thuộc nhóm VIIA; Fe thuộc nhóm VIIIB."],
+  ["f","🧬 Hai hàng họ f (Lanthanide/Actinide)","La–Yb (Z = 57–70) và Ac–No (Z = 89–102) thuộc họ nguyên tố f, xếp thành 2 hàng riêng cuối bảng. Lu (71) và Lr (103) xếp ở nhóm IIIB."],
+  ["[ ]","☢️ Số khối trong dấu [ ]","Nguyên tố phóng xạ không có nguyên tử khối trung bình ổn định nên ghi số khối quy ước của đồng vị bền nhất. Ví dụ: Tc [98], Ra [226]."],
+  ["?","🔎 Dữ liệu thực nghiệm","Các nguyên tố siêu nặng (Z ≥ 104) chưa có đủ dữ liệu thực nghiệm về bán kính/độ âm điện được ghi rõ “Chưa xác định”, tuyệt đối không điền 0."]];
+ $("#conv").append(h("div",{class:"cvh"},h("span",{class:"badge"},"⚡ QUY ƯỚC"),h("b",{},"Cách đọc bảng tuần hoàn nhanh")),
+  h("div",{class:"cvb"},
+   h("div",{class:"atom"},sv(atom()),h("b",{},"⚛️ Ví dụ: Sodium – Natri (Na)"),h("ul",{},
+    h("li",{},"Z = 11 → 11 proton, 11 electron"),h("li",{},"Phân bố theo lớp: 2, 8, 1 → 3 lớp = Chu kì 3"),
+    h("li",{},"1 electron lớp ngoài cùng (3s¹) → Nhóm IA"),h("li",{},"Nguyên tử khối trung bình: 22,990"))),
+   h("div",{class:"tiles"},T.map(([n,t,d])=>h("div",{class:"tile"},sv(mini(n)),h("div",{},h("b",{},t),h("p",{},d)))))));
+ if(matchMedia("(prefers-reduced-motion:reduce)").matches)document.querySelectorAll("#conv .sh").forEach(g=>g.style.animation="none");
+})();
+
+/* ---------- COMPONENT CÂU HỎI TƯƠNG TÁC (GIỐNG Ô LÀM BÀI TẬP) ---------- */
+let pqCounter=0;
+function makePracticeQuestion(label,q){
+ const id="pq_"+(++pqCounter);
+ let picked=null,locked=false;
+ const err=h("div",{class:"err",role:"alert"});
+ const fb=h("div",{hidden:true});
+ const btnCheck=h("button",{class:"btn p"},"✔ Kiểm tra đáp án");
+ const btnReset=h("button",{class:"btn",hidden:true},"↻ Làm lại câu này");
+ const opts=q.o.map((txt,idx)=>{
+  const inp=h("input",{type:"radio",name:id});
+  const lab=h("label",{class:"opt"},inp,`${String.fromCharCode(65+idx)}. ${txt}`);
+  inp.onchange=()=>{if(locked)return;picked=idx;err.textContent=""};
+  return{inp,lab,idx,txt};
+ });
+ btnCheck.onclick=()=>{
+  if(picked===null){err.textContent="⚠️ Hãy chọn một đáp án trước khi kiểm tra.";return}
+  locked=true;
+  opts.forEach(o=>{
+   o.inp.disabled=true;
+   if(o.idx===q.a)o.lab.classList.add("ok-opt");
+   else if(o.idx===picked&&picked!==q.a)o.lab.classList.add("bad-opt");
+  });
+  const isOk=picked===q.a;
+  fb.className="pq-fb "+(isOk?"ok-box":"bad-box");
+  fb.replaceChildren(
+   h("div",{style:"font-weight:700;margin-bottom:4px"},isOk?"🎉 Chính xác! Bạn đã chọn đúng đáp án.":"❌ Chưa chính xác! Đáp án đúng là "+String.fromCharCode(65+q.a)+". "+q.o[q.a]),
+   h("div",{},"💡 Giải thích: "+q.e)
+  );
+  fb.hidden=false;
+  btnCheck.hidden=true;
+  btnReset.hidden=false;
+ };
+ btnReset.onclick=()=>{
+  picked=null;locked=false;err.textContent="";fb.hidden=true;
+  opts.forEach(o=>{o.inp.disabled=false;o.inp.checked=false;o.lab.classList.remove("ok-opt","bad-opt")});
+  btnCheck.hidden=false;btnReset.hidden=true;
+ };
+ return h("div",{class:"pq-card"},
+  h("div",{class:"pq-head"},h("span",{class:"pq-tag"},"📝 "+(label||"CÂU HỎI VẬN DỤNG")),h("span",{class:"note"},"🎯 Chọn 1 đáp án và bấm Kiểm tra")),
+  h("h3",{style:"margin:4px 0 10px"},q.t),
+  ...opts.map(o=>o.lab),
+  err,
+  h("div",{class:"row",style:"margin-top:8px"},btnCheck,btnReset),
+  fb
+ );
+}
+
+/* ---------- LÝ THUYẾT CHUYÊN SÂU & VÍ DỤ MINH HỌA TRONG BẢNG TUẦN HOÀN (#s-pt) ---------- */
+function renderPtTheory(){
+ const box=$("#pt-theory");
+ if(!box)return;
+ const T=(head,rows)=>h("div",{class:"wrap",style:"margin:10px 0"},h("table",{},h("tr",{},head.map(x=>h("th",{},x))),rows.map(r=>h("tr",{},r.map(c=>h("td",{},c))))));
+
+ box.replaceChildren(
+  h("div",{class:"th-hero"},
+   h("div",{class:"cvh",style:"margin-bottom:6px"},h("span",{class:"badge"},"📚 HỆ THỐNG LÝ THUYẾT CHUYÊN SÂU"),h("h2",{style:"margin:0"},"🔬 Cấu tạo Bảng tuần hoàn & Quy luật biến đổi tuần hoàn các đại lượng nguyên tử")),
+   h("p",{class:"note",style:"margin:0;color:#cbd5e1"},"Trình bày đầy đủ bản chất, công thức liên hệ, quy luật biến đổi của Điện tích hạt nhân (Z), Bán kính nguyên tử (R), Độ âm điện (χ), Tính kim loại – phi kim kèm các ví dụ phân tích từng bước và câu hỏi tương tác.")
+  ),
+
+  // ================= 1. ĐIỆN TÍCH HẠT NHÂN Z & CẤU TẠO BTH =================
+  h("div",{class:"card"},
+   h("div",{class:"th-box"},
+    h("h3",{},"⚛️ 1. Điện tích hạt nhân (Z), Cấu hình electron và Cấu tạo Bảng tuần hoàn"),
+    h("p",{style:"margin:4px 0 10px"},"Bảng tuần hoàn các nguyên tố hóa học là công cụ thể hiện mối liên hệ chặt chẽ giữa cấu hình electron nguyên tử với vị trí và tính chất hóa học của nguyên tố:"),
+    h("div",{class:"th-grid"},
+     h("div",{class:"scard"},
+      h("b",{style:"color:#80effc"},"🔹 Ba nguyên tắc sắp xếp bảng tuần hoàn:"),
+      h("ul",{style:"margin:6px 0 0;padding-left:18px"},
+       h("li",{},"Các nguyên tố được sắp xếp theo chiều ",h("b",{},"tăng dần của điện tích hạt nhân nguyên tử (Z)"),"."),
+       h("li",{},"Các nguyên tố có ",h("b",{},"cùng số lớp electron")," trong nguyên tử được xếp thành một hàng ngang (gọi là ",h("b",{},"chu kì"),")."),
+       h("li",{},"Các nguyên tố có ",h("b",{},"số electron hóa trị")," trong nguyên tử như nhau được xếp thành một cột dọc (gọi là ",h("b",{},"nhóm"),").")
+      )
+     ),
+     h("div",{class:"scard"},
+      h("b",{style:"color:#ffd23f"},"🔸 Công thức vàng xác định vị trí từ Z:"),
+      h("ul",{style:"margin:6px 0 0;padding-left:18px"},
+       h("li",{},h("b",{},"Số thứ tự ô nguyên tố")," = Số hiệu nguyên tử (Z) = Số proton (p) = Số electron (e)."),
+       h("li",{},h("b",{},"Số thứ tự chu kì")," = Số lớp electron (n). Bảng tuần hoàn có 7 chu kì: chu kì nhỏ (1, 2, 3) và chu kì lớn (4, 5, 6, 7)."),
+       h("li",{},h("b",{},"Nhóm A (IA → VIIIA)"),": Gồm các nguyên tố khối s và khối p. ",h("b",{},"Số thứ tự nhóm A = Số electron lớp ngoài cùng")," (riêng He có 2e lớp ngoài cùng nhưng thuộc nhóm VIIIA)."),
+       h("li",{},h("b",{},"Nhóm B (IB → VIIIB)"),": Gồm các nguyên tố khối d và khối f (kim loại chuyển tiếp), cấu hình có dạng (n−1)dᵃnsᵇ.")
+      )
+     )
+    ),
+    h("div",{class:"ex-card"},
+     h("div",{class:"ex-title"},"📌 Ví dụ minh họa chi tiết cách xác định vị trí nguyên tố từ số hiệu Z:"),
+     h("ul",{style:"margin:4px 0;padding-left:20px"},
+      h("li",{},h("b",{style:"color:#7dd3fc"},"Ví dụ 1 — Nguyên tố Sodium (Na, Z = 11): "),"Cấu hình electron là ",h("b",{},"1s²2s²2p⁶3s¹")," (hay [Ne]3s¹). Nguyên tử có 11 electron → ",h("span",{class:"ion-pill ion-base"},"Ô số 11"),"; có 3 lớp electron (lớp lớn nhất n = 3) → ",h("span",{class:"ion-pill ion-base"},"Chu kì 3"),"; electron cuối cùng điền vào phân lớp 3s¹ (nguyên tố s) và có 1 electron lớp ngoài cùng → ",h("span",{class:"ion-pill ion-amp"},"Nhóm IA")," (kim loại kiềm)."),
+      h("li",{},h("b",{style:"color:#fda4af"},"Ví dụ 2 — Nguyên tố Chlorine (Cl, Z = 17): "),"Cấu hình electron là ",h("b",{},"1s²2s²2p⁶3s²3p⁵")," (hay [Ne]3s²3p⁵). Nguyên tử có 17e → ",h("span",{class:"ion-pill ion-base"},"Ô số 17"),"; có 3 lớp electron → ",h("span",{class:"ion-pill ion-base"},"Chu kì 3"),"; là nguyên tố p (electron cuối điền vào 3p) và tổng số electron lớp ngoài cùng là 2 + 5 = 7e → ",h("span",{class:"ion-pill ion-acid"},"Nhóm VIIA")," (halogen)."),
+      h("li",{},h("b",{style:"color:#fde047"},"Ví dụ 3 — Nguyên tố Iron (Fe, Z = 26): "),"Thứ tự mức năng lượng: 1s²2s²2p⁶3s²3p⁶4s²3d⁶ → viết gọn theo thứ tự lớp: ",h("b",{},"[Ar]3d⁶4s²"),". Có 26e → ",h("span",{class:"ion-pill ion-base"},"Ô số 26"),"; có 4 lớp electron → ",h("span",{class:"ion-pill ion-base"},"Chu kì 4"),"; electron cuối điền vào phân lớp 3d (nguyên tố d → nhóm B), tổng số e hóa trị (3d⁶ + 4s²) = 6 + 2 = 8 (tổng bằng 8, 9, 10 đều xếp vào nhóm VIIIB) → ",h("span",{class:"ion-pill ion-amp"},"Nhóm VIIIB"),".")
+     )
+    )
+   ),
+   makePracticeQuestion("CÂU HỎI PHẦN 1 · ĐIỆN TÍCH HẠT NHÂN Z & VỊ TRÍ NGUYÊN TỐ",{
+    t:"Nguyên tử của nguyên tố X có cấu hình electron là 1s²2s²2p⁶3s²3p³. Vị trí của X trong bảng tuần hoàn là:",
+    o:["Ô 15, chu kì 3, nhóm VA","Ô 15, chu kì 5, nhóm IIIA","Ô 13, chu kì 3, nhóm IIIA","Ô 15, chu kì 3, nhóm VB"],
+    a:0,
+    e:"Tổng số electron = 2 + 2 + 6 + 2 + 3 = 15 → Z = 15 (ô số 15, Phosphorus). Nguyên tử có 3 lớp electron → chu kì 3; electron cuối điền vào phân lớp 3p (nguyên tố p → nhóm A) và có 2 + 3 = 5 electron lớp ngoài cùng → nhóm VA."
+   })
+  ),
+
+  // ================= 2. BÁN KÍNH NGUYÊN TỬ R =================
+  h("div",{class:"card"},
+   h("div",{class:"th-box warm"},
+    h("h3",{},"📏 2. Bán kính nguyên tử (R) và Quy luật biến đổi tuần hoàn"),
+    h("p",{style:"margin:4px 0 8px"},h("b",{},"Bản chất: "),"Bán kính nguyên tử là khoảng cách từ tâm hạt nhân đến lớp electron ngoài cùng. Độ lớn của bán kính nguyên tử được quyết định bởi ",h("b",{style:"color:#ffd23f"},"2 yếu tố ngược chiều nhau"),":"),
+    h("ul",{style:"margin:4px 0 10px;padding-left:20px"},
+     h("li",{},h("b",{},"Yếu tố 1 — Số lớp electron (n): "),"Số lớp electron càng nhiều thì đám mây electron càng mở rộng ra xa hạt nhân → làm ",h("b",{class:"ok"},"tăng bán kính"),"."),
+     h("li",{},h("b",{},"Yếu tố 2 — Điện tích hạt nhân (Z): "),"Nếu cùng số lớp electron, điện tích hạt nhân dương (+Z) càng lớn thì lực hút tĩnh điện kéo các electron về phía tâm hạt nhân càng mạnh → lớp vỏ bị co rút lại làm ",h("b",{class:"bad"},"giảm bán kính"),"."),
+     h("li",{},h("b",{},"Chú ý khi so sánh bán kính ion và nguyên tử: "),"Cation dương luôn nhỏ hơn nguyên tử tương ứng, còn anion âm luôn lớn hơn nguyên tử tương ứng: ",h("span",{class:"ion-pill ion-amp"},"R(Mⁿ⁺) < R(M) < R(Xᵐ⁻)"),". Với các vi hạt có cùng số electron (đẳng electron như O²⁻, F⁻, Na⁺, Mg²⁺, Al³⁺): hạt nào có Z lớn hơn thì bán kính nhỏ hơn.")
+    ),
+    h("div",{class:"th-grid"},
+     h("div",{class:"flow-step"},
+      h("b",{style:"color:#ffd23f;width:100%"},"➡ Trong một chu kì (từ trái sang phải, Z tăng):"),
+      h("span",{class:"flow-chip"},"Số lớp electron không đổi"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"flow-chip"},"Điện tích hạt nhân Z tăng"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"flow-chip"},"Lực hút hạt nhân tăng mạnh"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"ion-pill ion-acid"},"📉 Bán kính nguyên tử R GIẢM dần")
+     ),
+     h("div",{class:"flow-step"},
+      h("b",{style:"color:#4ade80;width:100%"},"⬇ Trong một nhóm A (từ trên xuống dưới, Z tăng):"),
+      h("span",{class:"flow-chip"},"Số lớp electron tăng thêm"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"flow-chip"},"Khoảng cách từ tâm ra vỏ tăng vọt"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"ion-pill ion-base"},"📈 Bán kính nguyên tử R TĂNG dần")
+     )
+    ),
+    h("div",{class:"ex-card gold"},
+     h("div",{class:"ex-title"},"📌 Ví dụ minh họa thực tế kèm số liệu thực nghiệm (Slater, đơn vị pm):"),
+     T(["Nguyên tố Chu kì 3","Na (IA)","Mg (IIA)","Al (IIIA)","Si (IVA)","P (VA)","S (VIA)","Cl (VIIA)"],[
+      ["Điện tích hạt nhân (Z)","11+","12+","13+","14+","15+","16+","17+"],
+      ["Số lớp electron","3 lớp","3 lớp","3 lớp","3 lớp","3 lớp","3 lớp","3 lớp"],
+      ["Bán kính R (pm)","180 pm","150 pm","125 pm","110 pm","100 pm","100 pm","100 pm"]
+     ]),
+     h("ul",{style:"margin:6px 0 0;padding-left:20px"},
+      h("li",{},h("b",{style:"color:#fde047"},"Ví dụ 1 (Cùng nhóm IA từ trên xuống dưới): "),"Li (chu kì 2, 145 pm) < Na (chu kì 3, 180 pm) < K (chu kì 4, 220 pm) < Rb (chu kì 5, 235 pm) < Cs (chu kì 6, 260 pm). Mỗi lần đi xuống 1 chu kì, nguyên tử có thêm 1 lớp electron mới nên bán kính tăng rõ rệt."),
+      h("li",{},h("b",{style:"color:#7dd3fc"},"Ví dụ 2 (Phương pháp bắc cầu so sánh nguyên tố khác chu kì & khác nhóm): "),"So sánh bán kính của ",h("b",{},"Si (Z = 14), Al (Z = 13), Na (Z = 11) và K (Z = 19)"),": ",
+       "Bước 1: Xét Na (Z=11), Al (Z=13), Si (Z=14) cùng ở chu kì 3 → đi từ trái sang phải bán kính giảm nên ",h("b",{},"R(Si) < R(Al) < R(Na)"),". ",
+       "Bước 2: Xét Na (chu kì 3) và K (chu kì 4) cùng ở nhóm IA → đi từ trên xuống dưới bán kính tăng nên ",h("b",{},"R(Na) < R(K)"),". ",
+       "Kết luận chung: ",h("span",{class:"ion-pill ion-base"},"R(Si) < R(Al) < R(Na) < R(K)"),".")
+     )
+    )
+   ),
+   makePracticeQuestion("CÂU HỎI PHẦN 2 · QUY LUẬT BÁN KÍNH NGUYÊN TỬ",{
+    t:"Cho các nguyên tố: O (Z = 8), F (Z = 9), Na (Z = 11), Mg (Z = 12). Thứ tự sắp xếp theo chiều bán kính nguyên tử tăng dần nào sau đây là ĐÚNG?",
+    o:["F < O < Mg < Na","Na < Mg < O < F","O < F < Mg < Na","F < O < Na < Mg"],
+    a:0,
+    e:"O (Z = 8, nhóm VIA) và F (Z = 9, nhóm VIIA) thuộc chu kì 2 (2 lớp e), đi từ O sang F bán kính giảm nên R(F) < R(O). Na (Z = 11, nhóm IA) và Mg (Z = 12, nhóm IIA) thuộc chu kì 3 (3 lớp e, nằm đầu chu kì) nên lớn hơn hẳn O, F và R(Mg) < R(Na). Vậy chiều tăng dần: F < O < Mg < Na."
+   })
+  ),
+
+  // ================= 3. ĐỘ ÂM ĐIỆN χ =================
+  h("div",{class:"card"},
+   h("div",{class:"th-box pink"},
+    h("h3",{},"🧲 3. Độ âm điện (χ) và Quy luật biến đổi tuần hoàn"),
+    h("p",{style:"margin:4px 0 8px"},h("b",{},"Khái niệm: "),"Độ âm điện (kí hiệu là χ) của một nguyên tử là đại lượng đặc trưng cho ",h("b",{style:"color:#f472b6"},"khả năng hút cặp electron dùng chung")," về phía mình khi tạo thành liên kết hóa học với nguyên tử khác."),
+    h("ul",{style:"margin:4px 0 10px;padding-left:20px"},
+     h("li",{},h("b",{},"Thang độ âm điện Pauling: "),"Do nhà hóa học Linus Pauling thiết lập. Trong bảng tuần hoàn, nguyên tố ",h("b",{style:"color:#ffd23f"},"Fluorine (F, chu kì 2, nhóm VIIA)")," có độ âm điện lớn nhất (",h("b",{},"χ = 3,98"),"), còn ",h("b",{},"Caesium (Cs) và Francium (Fr)")," ở cuối nhóm IA có độ âm điện nhỏ nhất (χ ≈ 0,79). Khí hiếm (nhóm VIIIA) hầu như không liên kết nên thường không xét độ âm điện."),
+     h("li",{},h("b",{},"Mối liên hệ với bán kính R: "),"Độ âm điện tỉ lệ nghịch với bán kính nguyên tử. Bán kính R càng nhỏ và điện tích hạt nhân Z càng lớn thì hạt nhân càng ở gần cặp electron liên kết → hút electron càng mạnh → độ âm điện χ càng lớn."),
+     h("li",{},h("b",{},"Ứng dụng hiệu độ âm điện (Δχ = |χ(A) − χ(B)|) để dự đoán loại liên kết: "),
+      h("span",{class:"ion-pill ion-base"},"0 ≤ Δχ < 0,4: Cộng hóa trị không cực")," · ",
+      h("span",{class:"ion-pill ion-amp"},"0,4 ≤ Δχ < 1,7: Cộng hóa trị có cực")," · ",
+      h("span",{class:"ion-pill ion-acid"},"Δχ ≥ 1,7: Liên kết ion"),"."
+     )
+    ),
+    h("div",{class:"th-grid"},
+     h("div",{class:"flow-step"},
+      h("b",{style:"color:#f472b6;width:100%"},"➡ Trong một chu kì (từ trái sang phải):"),
+      h("span",{class:"flow-chip"},"Z tăng, bán kính R giảm"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"flow-chip"},"Lực hút cặp e liên kết tăng"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"ion-pill ion-base"},"📈 Độ âm điện χ TĂNG dần")
+     ),
+     h("div",{class:"flow-step"},
+      h("b",{style:"color:#ffd23f;width:100%"},"⬇ Trong một nhóm A (từ trên xuống dưới):"),
+      h("span",{class:"flow-chip"},"Số lớp tăng, bán kính R tăng"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"flow-chip"},"Lực hút cặp e liên kết giảm"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"ion-pill ion-acid"},"📉 Độ âm điện χ GIẢM dần")
+     )
+    ),
+    h("div",{class:"ex-card pink"},
+     h("div",{class:"ex-title"},"📌 Ví dụ minh họa chi tiết về Độ âm điện Pauling:"),
+     T(["Chu kì 2","Li (IA)","Be (IIA)","B (IIIA)","C (IVA)","N (VA)","O (VIA)","F (VIIA)"],[
+      ["Số hiệu Z","3","4","5","6","7","8","9"],
+      ["Độ âm điện χ","0,98","1,57","2,04","2,55","3,04","3,44","3,98 (Max)"]
+     ]),
+     h("ul",{style:"margin:6px 0 0;padding-left:20px"},
+      h("li",{},h("b",{style:"color:#fda4af"},"Ví dụ 1 (Trong nhóm VIIA - Halogen từ trên xuống dưới): "),"Đi từ trên xuống dưới theo chiều Z tăng: ",h("b",{},"F (3,98) > Cl (3,16) > Br (2,96) > I (2,66) > At (2,20)"),". Độ âm điện giảm dần vì số lớp electron tăng từ 2 lớp (F) lên 6 lớp (At)."),
+      h("li",{},h("b",{style:"color:#7dd3fc"},"Ví dụ 2 (Dự đoán bản chất liên kết hóa học dựa vào Δχ): "),"Cho χ(H) = 2,20; χ(Na) = 0,93; χ(Cl) = 3,16. ",
+       "• Phân tử Cl₂: Δχ = |3,16 − 3,16| = 0 (< 0,4) → Liên kết cộng hóa trị không phân cực. ",
+       "• Phân tử HCl: Δχ = |3,16 − 2,20| = 0,96 (từ 0,4 đến < 1,7) → Liên kết cộng hóa trị phân cực (cặp e lệch về phía Cl). ",
+       "• Phân tử NaCl: Δχ = |3,16 − 0,93| = 2,23 (≥ 1,7) → Liên kết ion điển hình.")
+     )
+    )
+   ),
+   makePracticeQuestion("CÂU HỎI PHẦN 3 · QUY LUẬT ĐỘ ÂM ĐIỆN",{
+    t:"Cho các nguyên tố N (Z = 7, chu kì 2, nhóm VA), P (Z = 15, chu kì 3, nhóm VA) và O (Z = 8, chu kì 2, nhóm VIA). Thứ tự độ âm điện tăng dần nào sau đây là ĐÚNG?",
+    o:["P < N < O","O < N < P","N < P < O","P < O < N"],
+    a:0,
+    e:"Xét N và P cùng thuộc nhóm VA: đi từ trên xuống dưới (N → P) độ âm điện giảm nên χ(P) < χ(N). Xét N và O cùng thuộc chu kì 2: đi từ trái sang phải (N → O) độ âm điện tăng nên χ(N) < χ(O). Kết hợp lại ta có: P (2,19) < N (3,04) < O (3,44)."
+   })
+  ),
+
+  // ================= 4. TÍNH KIM LOẠI & TÍNH PHI KIM =================
+  h("div",{class:"card"},
+   h("div",{class:"th-box green"},
+    h("h3",{},"⚡ 4. Tính kim loại – Tính phi kim và Quy luật biến đổi tuần hoàn"),
+    h("div",{class:"th-grid"},
+     h("div",{class:"scard"},
+      h("b",{style:"color:#4ade80"},"🛠️ Tính kim loại (Đặc trưng bởi khả năng nhường electron):"),
+      h("p",{style:"margin:6px 0 0"},"Là tính chất của một nguyên tố mà nguyên tử của nó ",h("b",{},"dễ nhường electron hóa trị")," để trở thành ion dương (cation): ",h("span",{class:"ion-pill ion-base"},"M → Mⁿ⁺ + ne⁻"),". Nguyên tử càng dễ nhường electron (bán kính lớn, độ âm điện nhỏ) thì ",h("b",{class:"ok"},"tính kim loại càng mạnh"),".")
+     ),
+     h("div",{class:"scard"},
+      h("b",{style:"color:#fda4af"},"🔥 Tính phi kim (Đặc trưng bởi khả năng nhận electron):"),
+      h("p",{style:"margin:6px 0 0"},"Là tính chất của một nguyên tố mà nguyên tử của nó ",h("b",{},"dễ nhận thêm electron")," để đạt cấu hình bão hòa của khí hiếm và trở thành ion âm (anion): ",h("span",{class:"ion-pill ion-acid"},"X + me⁻ → Xᵐ⁻"),". Nguyên tử càng dễ nhận electron (bán kính nhỏ, độ âm điện lớn) thì ",h("b",{class:"bad"},"tính phi kim càng mạnh"),".")
+     )
+    ),
+    h("div",{class:"th-grid"},
+     h("div",{class:"flow-step"},
+      h("b",{style:"color:#4ade80;width:100%"},"➡ Trong một chu kì (từ trái sang phải, Z tăng):"),
+      h("span",{class:"flow-chip"},"R giảm, χ tăng"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"flow-chip"},"Khó nhường e, dễ nhận e"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"ion-pill ion-acid"},"📉 Tính kim loại GIẢM"),
+      h("span",{class:"ion-pill ion-base"},"📈 Tính phi kim TĂNG")
+     ),
+     h("div",{class:"flow-step"},
+      h("b",{style:"color:#7dd3fc;width:100%"},"⬇ Trong một nhóm A (từ trên xuống dưới, Z tăng):"),
+      h("span",{class:"flow-chip"},"R tăng, χ giảm"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"flow-chip"},"Dễ nhường e, khó nhận e"),h("span",{class:"flow-arr"},"→"),
+      h("span",{class:"ion-pill ion-base"},"📈 Tính kim loại TĂNG"),
+      h("span",{class:"ion-pill ion-acid"},"📉 Tính phi kim GIẢM")
+     )
+    ),
+    h("div",{class:"ex-card green"},
+     h("div",{class:"ex-title"},"📌 Ví dụ thực nghiệm và bài toán so sánh Tính kim loại – Phi kim:"),
+     h("ul",{style:"margin:4px 0;padding-left:20px"},
+      h("li",{},h("b",{style:"color:#4ade80"},"Ví dụ 1 — Chứng minh tính kim loại giảm dần từ Na → Mg → Al ở chu kì 3 qua phản ứng với H₂O:"),
+       h("div",{style:"margin-top:4px;color:var(--mut)"},
+        "• ",h("b",{style:"color:#fff"},"Sodium (Na, nhóm IA): "),"Phản ứng mãnh liệt với nước ngay ở nhiệt độ thường, tỏa nhiều nhiệt: 2Na + 2H₂O → 2NaOH + H₂↑.",h("br"),
+        "• ",h("b",{style:"color:#fff"},"Magnesium (Mg, nhóm IIA): "),"Phản ứng rất chậm với nước ở nhiệt độ thường, chỉ phản ứng nhanh khi đun sôi: Mg + 2H₂O (nóng) → Mg(OH)₂ + H₂↑.",h("br"),
+        "• ",h("b",{style:"color:#fff"},"Aluminium (Al, nhóm IIIA): "),"Không phản ứng với nước ngay cả khi đun nóng do có màng Al₂O₃ bền bảo vệ → Tính kim loại: ",h("span",{class:"ion-pill ion-base"},"Na > Mg > Al"),"."
+       )
+      ),
+      h("li",{},h("b",{style:"color:#fda4af"},"Ví dụ 2 — Chứng minh tính phi kim giảm dần trong nhóm VIIA (F > Cl > Br > I) qua phản ứng đẩy halogen:"),
+       h("div",{style:"margin-top:4px;color:var(--mut)"},
+        "Phi kim mạnh hơn đẩy phi kim yếu hơn ra khỏi dung dịch muối halide của nó:",h("br"),
+        "• Khí Chlorine đẩy được Bromine: ",h("b",{style:"color:#fff"},"Cl₂ + 2NaBr → 2NaCl + Br₂")," (chứng tỏ tính phi kim Cl > Br).",h("br"),
+        "• Bromine đẩy được Iodine: ",h("b",{style:"color:#fff"},"Br₂ + 2NaI → 2NaBr + I₂")," (chứng tỏ tính phi kim Br > I) → Thứ tự tính phi kim: ",h("span",{class:"ion-pill ion-acid"},"F > Cl > Br > I"),"."
+       )
+      ),
+      h("li",{},h("b",{style:"color:#fde047"},"Ví dụ 3 — Bài toán sắp xếp tổng hợp: "),"Sắp xếp các nguyên tố ",h("b",{},"Al (Z=13), Mg (Z=12), Na (Z=11), K (Z=19)")," theo chiều tính kim loại tăng dần: ",
+       "Trong chu kì 3 (Na, Mg, Al), đi từ trái sang phải tính kim loại giảm nên Al < Mg < Na. Trong nhóm IA (Na, K), đi từ trên xuống dưới tính kim loại tăng nên Na < K. Vậy chiều tăng dần: ",h("span",{class:"ion-pill ion-amp"},"Al < Mg < Na < K"),".")
+     ),
+     h("div",{class:"tip-banner"},
+      h("span",{style:"font-size:24px"},"🏆"),
+      h("div",{},h("b",{},"Tổng kết quy luật Bảng tuần hoàn: "),"Kim loại mạnh nhất là ",h("b",{},"Cs / Fr")," (góc dưới bên trái, nhóm IA). Phi kim mạnh nhất là ",h("b",{},"Fluorine – F")," (góc trên bên phải, nhóm VIIA). Đi về phía F thì Độ âm điện & Tính phi kim TĂNG; đi về phía Cs/Fr thì Bán kính & Tính kim loại TĂNG!")
+     )
+    )
+   ),
+   makePracticeQuestion("CÂU HỎI PHẦN 4 · TÍNH KIM LOẠI & PHI KIM",{
+    t:"Cho các nguyên tố: F (Z = 9), O (Z = 8), S (Z = 16). Thứ tự sắp xếp theo chiều tính phi kim giảm dần nào sau đây là ĐÚNG?",
+    o:["F > O > S","S > O > F","O > F > S","F > S > O"],
+    a:0,
+    e:"O (Z = 8, nhóm VIA) và F (Z = 9, nhóm VIIA) cùng thuộc chu kì 2: đi từ trái sang phải tính phi kim tăng nên F > O. O (chu kì 2) và S (Z = 16, chu kì 3) cùng thuộc nhóm VIA: đi từ trên xuống dưới tính phi kim giảm nên O > S. Vậy thứ tự tính phi kim giảm dần là: F > O > S."
+   })
+  )
+ );
+}
+renderPtTheory();
+
+/* ---------- OXIDE – HYDROXIDE (#s-ox) ---------- */
+function renderOx(){
+ const s=$("#s-ox");
+ s.replaceChildren();
+ const p3Data=[
+  {ox:"Na₂O",hy:"NaOH",t:"Base",cls:"b-type",badge:"ion-base"},
+  {ox:"MgO",hy:"Mg(OH)₂",t:"Base",cls:"b-type",badge:"ion-base"},
+  {ox:"Al₂O₃",hy:"Al(OH)₃",t:"Lưỡng tính",cls:"m-type",badge:"ion-amp"},
+  {ox:"SiO₂",hy:"H₂SiO₃",t:"Acid",cls:"a-type",badge:"ion-acid"},
+  {ox:"P₂O₅",hy:"H₃PO₄",t:"Acid",cls:"a-type",badge:"ion-acid"},
+  {ox:"SO₃",hy:"H₂SO₄",t:"Acid",cls:"a-type",badge:"ion-acid"},
+  {ox:"Cl₂O₇",hy:"HClO₄",t:"Acid",cls:"a-type",badge:"ion-acid"}
+ ];
+ const T=(head,rows)=>h("div",{class:"wrap"},h("table",{},h("tr",{},head.map(x=>h("th",{},x))),rows.map(r=>h("tr",{},r.map(c=>h("td",{},c))))));
+
+ s.append(
+  h("div",{class:"th-hero"},
+   h("div",{class:"cvh",style:"margin-bottom:6px"},h("span",{class:"badge"},"⚗️ LÝ THUYẾT TRỌNG TÂM"),h("h2",{style:"margin:0"},"🧪 Tính Acid – Base của Oxide và Hydroxide")),
+   h("p",{class:"note",style:"margin:0;color:#cbd5e1"},"Khái niệm, quy luật biến đổi tuần hoàn theo chu kì và nhóm A, giải thích nguyên nhân và bài tập vận dụng.")
+  ),
+
+  // 1. Khái niệm
+  h("div",{class:"card"},
+   h("h2",{style:"margin-top:0;color:#80effc"},"📘 1. Khái niệm"),
+   h("div",{class:"th-grid"},
+    h("div",{class:"th-box"},
+     h("h3",{},"🧪 Tính acid – base của oxide"),
+     h("p",{style:"margin:0"},"Thể hiện qua tính ",h("span",{class:"ion-pill ion-acid"},"acid")," hoặc ",h("span",{class:"ion-pill ion-base"},"base")," của oxide khi tác dụng với nước hoặc phản ứng với acid/base.")
+    ),
+    h("div",{class:"th-box warm"},
+     h("h3",{},"💧 Tính acid – base của hydroxide"),
+     h("p",{style:"margin:0"},"Thể hiện qua khả năng phân li ra ion ",h("span",{class:"ion-pill ion-acid"},"H⁺ (acid)")," hoặc ",h("span",{class:"ion-pill ion-base"},"OH⁻ (base)")," trong nước.")
+    )
+   )
+  ),
+
+  // 2. Quy luật biến đổi
+  h("div",{class:"card"},
+   h("h2",{style:"margin-top:0;color:#ffd23f"},"🧭 2. Quy luật biến đổi"),
+   h("div",{class:"th-grid"},
+    h("div",{class:"th-box"},
+     h("h3",{},"➡ Trong một chu kì (từ trái sang phải)"),
+     h("ul",{style:"margin:4px 0;padding-left:20px"},
+      h("li",{},"Tính ",h("span",{class:"ion-pill ion-base"},"base")," của oxide và hydroxide ",h("b",{class:"bad"},"giảm dần"),"."),
+      h("li",{},"Tính ",h("span",{class:"ion-pill ion-acid"},"acid")," ",h("b",{class:"ok"},"tăng dần"),".")
+     )
+    ),
+    h("div",{class:"th-box green"},
+     h("h3",{},"⬇ Trong một nhóm A (từ trên xuống dưới)"),
+     h("ul",{style:"margin:4px 0;padding-left:20px"},
+      h("li",{},"Tính ",h("span",{class:"ion-pill ion-base"},"base")," của oxide và hydroxide ",h("b",{class:"ok"},"tăng dần"),"."),
+      h("li",{},"Tính ",h("span",{class:"ion-pill ion-acid"},"acid")," ",h("b",{class:"bad"},"giảm dần"),".")
+     )
+    )
+   ),
+   h("h3",{style:"margin:14px 0 6px"},"📊 Ví dụ chu kì 3:"),
+   h("div",{class:"wrap"},
+    h("div",{class:"p3-grid"},p3Data.map(d=>h("div",{class:"p3-item "+d.cls},
+     h("div",{class:"ox-f"},d.ox),
+     h("div",{class:"hy-f"},d.hy),
+     h("div",{},h("span",{class:"ion-pill "+d.badge},d.t))
+    )))
+   ),
+   T(["Oxide","Na₂O","MgO","Al₂O₃","SiO₂","P₂O₅","SO₃","Cl₂O₇"],[
+    ["Tính chất","Base","Base","Lưỡng tính","Acid","Acid","Acid","Acid"]
+   ])
+  ),
+
+  // 3. Giải thích
+  h("div",{class:"card"},
+   h("h2",{style:"margin-top:0;color:#4ade80"},"🔍 3. Giải thích"),
+   h("div",{class:"flow-step"},
+    h("b",{style:"color:#80effc;width:100%"},"🔹 Trong một chu kì:"),
+    h("span",{class:"flow-chip"},"Điện tích hạt nhân tăng, số lớp electron không đổi, bán kính nguyên tử giảm"),
+    h("span",{class:"flow-arr"},"→"),
+    h("span",{class:"flow-chip"},"Tính kim loại giảm, tính phi kim tăng"),
+    h("span",{class:"flow-arr"},"→"),
+    h("span",{class:"ion-pill ion-acid"},"Tính base giảm, tính acid tăng")
+   ),
+   h("div",{class:"flow-step",style:"border-left-color:#ffd23f;margin-top:10px"},
+    h("b",{style:"color:#ffd23f;width:100%"},"🔸 Trong một nhóm A:"),
+    h("span",{class:"flow-chip"},"Số lớp electron tăng, bán kính nguyên tử tăng"),
+    h("span",{class:"flow-arr"},"→"),
+    h("span",{class:"flow-chip"},"Tính kim loại tăng, tính phi kim giảm"),
+    h("span",{class:"flow-arr"},"→"),
+    h("span",{class:"ion-pill ion-base"},"Tính base tăng, tính acid giảm")
+   ),
+   h("div",{class:"tip-banner"},
+    h("span",{style:"font-size:26px"},"💡"),
+    h("div",{},h("b",{},"Mẹo nhớ: "),"Đi ngang sang phải: ",h("span",{class:"ion-pill ion-base"},"base giảm"),", ",h("span",{class:"ion-pill ion-acid"},"acid tăng"),". Đi xuống một nhóm: ",h("span",{class:"ion-pill ion-base"},"base tăng"),", ",h("span",{class:"ion-pill ion-acid"},"acid giảm"),".")
+   )
+  ),
+
+  // 2 câu hỏi vận dụng phần Oxide - Hydroxide
+  h("div",{class:"card"},
+   h("h2",{style:"margin-top:0;color:#ffd23f"},"🎯 Bài tập vận dụng: Oxide & Hydroxide"),
+   makePracticeQuestion("CÂU HỎI OXIDE – HYDROXIDE 1",{
+    t:"Trong chu kì 3 (Na, Mg, Al, Si, P, S, Cl), oxide cao nhất nào sau đây mang tính lưỡng tính?",
+    o:["Al₂O₃","MgO","Na₂O","SO₃"],
+    a:0,
+    e:"Trong chu kì 3: Na₂O và MgO có tính base; Al₂O₃ có tính lưỡng tính (tác dụng được với cả dung dịch acid mạnh và base mạnh); SiO₂, P₂O₅, SO₃, Cl₂O₇ có tính acid."
+   }),
+   makePracticeQuestion("CÂU HỎI OXIDE – HYDROXIDE 2",{
+    t:"Sắp xếp các hydroxide của các nguyên tố chu kì 3 gồm H₂SiO₃, H₃PO₄, H₂SO₄, HClO₄ theo chiều tính acid tăng dần:",
+    o:["H₂SiO₃ < H₃PO₄ < H₂SO₄ < HClO₄","HClO₄ < H₂SO₄ < H₃PO₄ < H₂SiO₃","H₃PO₄ < H₂SiO₃ < H₂SO₄ < HClO₄","H₂SiO₃ < H₂SO₄ < H₃PO₄ < HClO₄"],
+    a:0,
+    e:"Trong một chu kì (từ trái sang phải: Si → P → S → Cl), điện tích hạt nhân tăng, bán kính nguyên tử giảm, tính phi kim tăng → tính acid của oxide và hydroxide tăng dần: H₂SiO₃ < H₃PO₄ < H₂SO₄ < HClO₄."
+   })
+  )
+ );
+}
+renderOx();
+
+/* ---------- BÀI TẬP & NGÂN HÀNG CÂU HỎI (ĐÃ XÁO LẠI MÃ ĐỀ) ---------- */
+const QZ=[
+{t:"Na₂O thuộc loại oxide nào sau đây?",o:["Oxide base","Oxide acid","Oxide lưỡng tính","Oxide trung tính"],a:0,e:"Na là kim loại kiềm mạnh; Na₂O tác dụng với nước tạo base mạnh: Na₂O + H₂O → 2NaOH."},
+{t:"Al₂O₃ thuộc loại oxide nào sau đây?",o:["Oxide base","Oxide acid","Oxide lưỡng tính","Oxide trung tính"],a:2,e:"Al₂O₃ vừa tác dụng với dung dịch acid mạnh (HCl) vừa tác dụng với dung dịch base mạnh (NaOH)."},
+{t:"CO thuộc loại oxide nào sau đây?",o:["Oxide base","Oxide acid","Oxide lưỡng tính","Oxide trung tính"],a:3,e:"CO là oxide không tạo muối (oxide trung tính), không phản ứng với acid hay base ở điều kiện thường."},
+{t:"Phương trình hóa học nào sau đây viết đúng?",o:["SO₃ + H₂O → H₂SO₃","SO₃ + H₂O → H₂SO₄","Al₂O₃ + 3H₂O → 2Al(OH)₃","CO₂ + H₂O → H₂CO₄"],a:1,e:"SO₃ + H₂O → H₂SO₄. Al₂O₃ không phản ứng trực tiếp với nước."},
+{t:"Trong một chu kì (từ trái sang phải), tính acid – base của oxide và hydroxide cao nhất biến đổi như thế nào?",o:["Tính base tăng dần, tính acid giảm dần","Tính base giảm dần, tính acid tăng dần","Cả tính base và tính acid đều tăng dần","Tính base và tính acid không đổi"],a:1,e:"Đi ngang sang phải trong một chu kì: tính kim loại giảm, tính phi kim tăng → tính base giảm dần, tính acid tăng dần."},
+{t:"Trong một chu kì, khi điện tích hạt nhân tăng (từ trái sang phải) thì bán kính nguyên tử:",o:["Tăng dần","Giảm dần","Không đổi","Tăng rồi giảm"],a:1,e:"Số lớp electron không đổi, lực hút hạt nhân tăng nên bán kính nguyên tử giảm dần."},
+{t:"Trong nhóm IA (từ trên xuống dưới: từ LiOH đến CsOH), tính base của các hydroxide:",o:["Giảm dần","Tăng dần","Không đổi","Giảm rồi tăng"],a:1,e:"Đi xuống một nhóm A: số lớp electron tăng, bán kính nguyên tử tăng → tính kim loại tăng → tính base tăng dần."},
+{t:"Hydroxide nào sau đây có tính base mạnh nhất?",o:["NaOH","Mg(OH)₂","Al(OH)₃","H₃PO₄"],a:0,e:"Trong chu kì 3 (Na → Mg → Al → P), tính base của hydroxide giảm dần nên NaOH có tính base mạnh nhất."},
+{t:"Đúng hay sai: “Mọi oxide phi kim đều là oxide acid.”",o:["Đúng","Sai"],a:1,e:"Sai: CO, NO là các oxide trung tính (không tạo muối)."},
+{t:"Đúng hay sai: “Al(OH)₃ tan được trong cả dung dịch HCl và dung dịch NaOH.”",o:["Đúng","Sai"],a:0,e:"Đúng: Al(OH)₃ là hydroxide lưỡng tính."},
+{t:"Bảng tuần hoàn hiện đại sắp xếp các nguyên tố theo chiều tăng dần của:",o:["Nguyên tử khối","Số hiệu nguyên tử (điện tích hạt nhân)","Số neutron","Bán kính nguyên tử"],a:1,e:"Nguyên tắc sắp xếp hiện đại dựa trên chiều tăng dần của điện tích hạt nhân (số hiệu nguyên tử Z)."},
+{t:"Số hiệu nguyên tử (Z) của một nguyên tố bằng:",o:["Số proton trong hạt nhân","Số neutron","Số khối","Số lớp electron"],a:0,e:"Z = số đơn vị điện tích hạt nhân = số proton = số electron của nguyên tử trung hòa."},
+{t:"Nguyên tố có Z = 11 (Na) nằm ở vị trí nào trong bảng tuần hoàn?",o:["Chu kì 3, nhóm IA","Chu kì 2, nhóm IA","Chu kì 3, nhóm IIA","Chu kì 1, nhóm IIIA"],a:0,e:"Na: 1s²2s²2p⁶3s¹ → 3 lớp (chu kì 3), 1 electron lớp ngoài cùng (nhóm IA)."},
+{t:"Số thứ tự của chu kì trong bảng tuần hoàn bằng:",o:["Số lớp electron","Số electron lớp ngoài cùng","Số proton","Số neutron"],a:0,e:"Nguyên tử các nguyên tố cùng chu kì có cùng số lớp electron."},
+{t:"Với nguyên tố nhóm A, số thứ tự nhóm bằng:",o:["Số electron lớp ngoài cùng","Số lớp electron","Số neutron","Số khối"],a:0,e:"Ví dụ S có 6 electron lớp ngoài cùng → nhóm VIA."},
+{t:"Cấu hình electron đúng của Fe (Z = 26) là:",o:["1s²2s²2p⁶3s²3p⁶3d⁶4s²","1s²2s²2p⁶3s²3p⁶3d⁸","1s²2s²2p⁶3s²3p⁶4s²3d⁸","1s²2s²2p⁶3s²3p⁶3d⁶"],a:0,e:"Tổng 26 electron; 4s điền trước 3d và viết theo thứ tự lớp: 3d⁶4s²."},
+{t:"Nguyên tố nào sau đây là khí hiếm (nhóm VIIIA)?",o:["Na","Cl","Ne","Mg"],a:2,e:"Ne thuộc nhóm VIIIA, lớp ngoài cùng đã bão hòa 8 electron."},
+{t:"Dãy nào gồm các nguyên tố halogen (nhóm VIIA)?",o:["Li, Na, K, Rb","F, Cl, Br, I","O, S, Se, Te","He, Ne, Ar, Kr"],a:1,e:"Halogen (nhóm VIIA) gồm F, Cl, Br, I (và At, Ts); mỗi nguyên tử có 7 electron lớp ngoài cùng."},
+{t:"Trong một chu kì, theo chiều tăng điện tích hạt nhân, độ âm điện nói chung:",o:["Tăng dần","Giảm dần","Không đổi","Giảm rồi tăng"],a:0,e:"Bán kính giảm, lực hút electron của hạt nhân tăng nên độ âm điện tăng dần."},
+{t:"Trong một nhóm A, từ trên xuống dưới, bán kính nguyên tử:",o:["Tăng dần","Giảm dần","Không đổi","Giảm rồi tăng"],a:0,e:"Số lớp electron tăng dần nên bán kính nguyên tử tăng dần."},
+{t:"Đúng hay sai: “Helium (He) thuộc nhóm VIIIA dù chỉ có 2 electron lớp ngoài cùng.”",o:["Đúng","Sai"],a:0,e:"He: 1s², lớp K đã bão hòa nên là khí hiếm và đứng ở nhóm VIIIA."},
+{t:"Nguyên tố thuộc chu kì 3, nhóm VIA có số hiệu nguyên tử là:",o:["8","16","34","32"],a:1,e:"Đó là lưu huỳnh (S): 1s²2s²2p⁶3s²3p⁴, Z = 16."},
+{t:"Nguyên tố K (Z = 19) thuộc chu kì và nhóm nào?",o:["Chu kì 4, nhóm IA","Chu kì 3, nhóm IA","Chu kì 4, nhóm IIA","Chu kì 3, nhóm VIIA"],a:0,e:"K: 1s²2s²2p⁶3s²3p⁶4s¹ → 4 lớp, 1 electron lớp ngoài cùng (nhóm IA)."},
+{t:"Nguyên tố Cl (Z = 17) thuộc chu kì và nhóm nào?",o:["Chu kì 3, nhóm VIIA","Chu kì 3, nhóm VIA","Chu kì 2, nhóm VIIA","Chu kì 4, nhóm VIIA"],a:0,e:"Cl: 1s²2s²2p⁶3s²3p⁵ → 3 lớp, 7 electron lớp ngoài cùng (nhóm VIIA)."},
+{t:"Cấu hình electron của Mg (Z = 12) là:",o:["1s²2s²2p⁶3s²","1s²2s²2p⁶3s¹","1s²2s²2p⁶3s²3p¹","1s²2s²2p⁵3s²"],a:0,e:"Mg có 12 electron, trong đó có 2 electron ở lớp ngoài cùng (3s²)."},
+{t:"Nguyên tử Ca (Z = 20) có bao nhiêu electron ở lớp ngoài cùng?",o:["1","2","8","10"],a:1,e:"Ca: [Ar]4s² → 2 electron lớp ngoài cùng, thuộc nhóm IIA."},
+{t:"Nguyên tử Al (Z = 13) có bao nhiêu lớp electron?",o:["2","3","4","13"],a:1,e:"Al: 1s²2s²2p⁶3s²3p¹ → 3 lớp electron, thuộc chu kì 3."},
+{t:"Nguyên tố nào có tính kim loại mạnh nhất trong các nguyên tố sau?",o:["Li","Na","K","Mg"],a:2,e:"K ở chu kì 4, nhóm IA: mạnh hơn Li, Na (cùng nhóm, ở trên) và mạnh hơn Mg (chu kì 3, nhóm IIA)."},
+{t:"Nguyên tố có độ âm điện lớn nhất trong bảng tuần hoàn là:",o:["O","Cl","F","N"],a:2,e:"Fluorine (F) có độ âm điện Pauling lớn nhất (3,98)."},
+{t:"Trong các nguyên tử sau, nguyên tử nào có bán kính lớn nhất?",o:["Na","Mg","Al","Cl"],a:0,e:"Cùng chu kì 3, bán kính nguyên tử giảm dần từ Na đến Cl."},
+{t:"Các nguyên tố nhóm IA (trừ H) được gọi là:",o:["Kim loại kiềm","Kim loại kiềm thổ","Halogen","Khí hiếm"],a:0,e:"Li, Na, K, Rb, Cs, Fr là các kim loại kiềm."},
+{t:"Các nguyên tố nhóm IIA được gọi là:",o:["Kim loại kiềm","Kim loại kiềm thổ","Halogen","Khí hiếm"],a:1,e:"Be, Mg, Ca, Sr, Ba, Ra là các kim loại kiềm thổ."},
+{t:"Chu kì 2 có bao nhiêu nguyên tố?",o:["2","8","18","10"],a:1,e:"Chu kì 2 gồm 8 nguyên tố từ Li (Z = 3) đến Ne (Z = 10)."},
+{t:"Chu kì 4 có bao nhiêu nguyên tố?",o:["8","18","32","10"],a:1,e:"Chu kì 4 gồm 18 nguyên tố từ K (Z = 19) đến Kr (Z = 36)."},
+{t:"Trong bảng tuần hoàn, các nguyên tố nhóm B bao gồm:",o:["Các nguyên tố khối d và khối f","Các nguyên tố khối s và khối p","Chỉ các khí hiếm","Chỉ các phi kim"],a:0,e:"Nhóm B (IB đến VIIIB) gồm các nguyên tố chuyển tiếp thuộc khối d và khối f."},
+{t:"Nguyên tử khối trung bình của chlorine xấp xỉ 35,5 vì:",o:["Chlorine có hai đồng vị chính ³⁵Cl và ³⁷Cl","Chlorine có 35,5 proton","Chlorine có 35,5 neutron","Chlorine có 35 electron"],a:0,e:"Nguyên tử khối trung bình tính theo tỉ lệ phần trăm các đồng vị bền trong tự nhiên."},
+{t:"Đúng hay sai: “Các nguyên tố cùng nhóm A có tính chất hóa học tương tự nhau vì có cùng số electron lớp ngoài cùng.”",o:["Đúng","Sai"],a:0,e:"Cùng số electron lớp ngoài cùng nên tính chất hóa học tương tự nhau."},
+{t:"Đúng hay sai: “Trong một chu kì, nguyên tử các nguyên tố có cùng số electron lớp ngoài cùng.”",o:["Đúng","Sai"],a:1,e:"Cùng chu kì thì có cùng số lớp electron; số electron lớp ngoài cùng tăng dần."},
+{t:"Nguyên tố X thuộc chu kì 3, nhóm VA. Cấu hình electron của X là:",o:["1s²2s²2p⁶3s²3p³","1s²2s²2p⁶3s²3p⁵","1s²2s²2p⁶3s³","1s²2s²2p³"],a:0,e:"X là phosphorus (Z = 15): 3 lớp electron, 5 electron lớp ngoài cùng."},
+{t:"Ion Na⁺ có cấu hình electron giống nguyên tử khí hiếm nào?",o:["Ne","He","Ar","Kr"],a:0,e:"Na⁺ có 10 electron: 1s²2s²2p⁶, giống Ne."},
+{t:"Fe (Z = 26) là nguyên tố thuộc loại nào (theo phân lớp electron cuối cùng được điền)?",o:["Nguyên tố s","Nguyên tố p","Nguyên tố d","Nguyên tố f"],a:2,e:"Fe: [Ar]3d⁶4s²; electron cuối cùng điền vào phân lớp 3d."},
+{t:"Nguyên tử Ar (Z = 18) có bao nhiêu electron ở lớp ngoài cùng?",o:["2","6","8","18"],a:2,e:"Ar: 1s²2s²2p⁶3s²3p⁶ → 8 electron lớp ngoài cùng."},
+{t:"Oxide nào sau đây là oxide acid?",o:["Na₂O","MgO","SO₃","CO"],a:2,e:"SO₃ + H₂O → H₂SO₄; SO₃ tác dụng với base tạo muối."},
+{t:"Oxide nào sau đây là oxide base?",o:["CO₂","MgO","SO₃","CO"],a:1,e:"MgO + 2HCl → MgCl₂ + H₂O."},
+{t:"Hydroxide tương ứng với oxide Na₂O là:",o:["NaOH","Na(OH)₂","NaHO₂","Na₂OH"],a:0,e:"Na hóa trị I nên hydroxide tương ứng là NaOH."},
+{t:"Hydroxide nào sau đây có tính lưỡng tính?",o:["NaOH","Mg(OH)₂","Al(OH)₃","KOH"],a:2,e:"Al(OH)₃ tan trong cả dung dịch acid mạnh và base mạnh."},
+{t:"Acid tương ứng với oxide SO₃ là:",o:["H₂SO₄","H₂SO₃","H₂S","HSO₄"],a:0,e:"SO₃ + H₂O → H₂SO₄."},
+{t:"Acid tương ứng với oxide P₂O₅ là:",o:["H₃PO₄","H₃PO₃","HPO₂","H₂PO₄"],a:0,e:"P₂O₅ + 3H₂O → 2H₃PO₄."},
+{t:"Tính acid – base của hydroxide trong nước được thể hiện qua khả năng:",o:["Phân li ra ion H⁺ (acid) hoặc OH⁻ (base)","Chỉ phản ứng với muối","Không tan trong nước","Tạo khí hiếm"],a:0,e:"Tính acid – base của hydroxide thể hiện qua khả năng phân li ra ion H⁺ (acid) hoặc OH⁻ (base) trong nước."},
+{t:"Phương trình nào sau đây đã cân bằng đúng?",o:["CO₂ + 2NaOH → Na₂CO₃ + H₂O","CO₂ + NaOH → Na₂CO₃ + H₂O","CO₂ + 2NaOH → NaCO₃ + H₂O","CO₂ + 2NaOH → Na₂CO₃ + 2H₂O"],a:0,e:"Hai bên đều có 2 Na, 1 C, 4 O, 2 H."},
+{t:"Trong chu kì 3, hydroxide có tính acid mạnh nhất là:",o:["NaOH","Mg(OH)₂","H₂SO₄","HClO₄"],a:3,e:"Tính acid tăng dần từ Na đến Cl; HClO₄ là acid mạnh nhất."},
+{t:"Oxide cao nhất của lưu huỳnh (S, nhóm VIA) là:",o:["SO₂","SO₃","S₂O","S₂O₃"],a:1,e:"S ở nhóm VIA nên hóa trị cao nhất với oxygen là VI: SO₃."},
+{t:"Oxide cao nhất của nguyên tố nhóm VA có dạng:",o:["R₂O₅","RO₅","R₂O₃","RO₃"],a:0,e:"Hóa trị cao nhất với oxygen bằng V, ví dụ N₂O₅, P₂O₅."},
+{t:"Trong chu kì 3, dãy các oxide theo thứ tự từ Na đến Cl (Na₂O, MgO, Al₂O₃, SiO₂, P₂O₅, SO₃, Cl₂O₇) có tính chất biến đổi như thế nào?",o:["Từ base (Na₂O, MgO) → lưỡng tính (Al₂O₃) → acid (SiO₂, P₂O₅, SO₃, Cl₂O₇)","Từ acid → lưỡng tính → base","Tất cả đều là oxide base","Tất cả đều là oxide acid"],a:0,e:"Đi ngang sang phải trong chu kì 3: Na₂O, MgO (Base) → Al₂O₃ (Lưỡng tính) → SiO₂, P₂O₅, SO₃, Cl₂O₇ (Acid)."},
+{t:"Giải thích nào sau đây đúng về quy luật biến đổi trong một chu kì (từ trái sang phải)?",o:["Điện tích hạt nhân tăng, số lớp electron không đổi, bán kính nguyên tử giảm → tính kim loại giảm, tính phi kim tăng → tính base giảm, tính acid tăng","Số lớp electron tăng, bán kính tăng → tính kim loại tăng → tính base tăng","Điện tích hạt nhân giảm → bán kính tăng → tính acid giảm","Số lớp electron giảm → tính phi kim giảm → tính acid giảm"],a:0,e:"Trong một chu kì: Điện tích hạt nhân tăng, số lớp electron không đổi, bán kính nguyên tử giảm → tính kim loại giảm, tính phi kim tăng → tính base giảm, tính acid tăng."},
+{t:"Cho CaO tác dụng với nước thu được:",o:["Ca(OH)₂","CaH₂","Ca(OH)₃","CaCO₃"],a:0,e:"CaO + H₂O → Ca(OH)₂."},
+{t:"Dung dịch NaOH phản ứng được với chất nào sau đây?",o:["CO₂","MgO","CaO","K₂O"],a:0,e:"CO₂ là oxide acid nên phản ứng với base NaOH; các oxide base không phản ứng với NaOH."},
+{t:"Dung dịch HCl phản ứng được với chất nào sau đây?",o:["SO₃","CO₂","MgO","P₂O₅"],a:2,e:"MgO là oxide base nên phản ứng với acid HCl; các oxide acid không phản ứng với HCl."},
+{t:"Từ Na đến Cl trong chu kì 3, tính kim loại của các nguyên tố:",o:["Giảm dần","Tăng dần","Không đổi","Tăng rồi giảm"],a:0,e:"Bán kính nguyên tử giảm, độ âm điện tăng, tính phi kim tăng nên tính kim loại giảm dần."},
+{t:"Trong nhóm IIA, từ Be đến Ba, tính base của hydroxide:",o:["Tăng dần","Giảm dần","Không đổi","Giảm rồi tăng"],a:0,e:"Đi xuống một nhóm A: số lớp electron tăng, bán kính tăng, tính kim loại tăng nên tính base của hydroxide tăng dần."}];
+const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const shuf=(arr,r)=>{const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+QZ.forEach((q,i)=>{if(q.o.length===4){const pm=shuf([0,1,2,3],rng(2026+i*17));q.o=pm.map(j=>q.o[j]);q.a=pm.indexOf(q.a)}});
+const ALL_IDS=Array.from({length:QZ.length},(_,i)=>i);
+const EXAMS=Array.from({length:10},(_,m)=>shuf(ALL_IDS,rng(8026+m*41)).slice(0,25));
+
+/* ---------- HỆ THỐNG ĐỒNG BỘ DỮ LIỆU GEMINI & GOOGLE SHEETS (KHÔNG GIỚI HẠN) ---------- */
+const ADMIN_CODE="admin251011";
+const DEFAULT_SHEET="https://docs.google.com/spreadsheets/d/1X56QiI14UYKrldwcdj-Ybhy8oj-oYqYRVk5X4iqvxno/edit?gid=0#gid=0";
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(_){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}}};
+
+let me=null,st=null,allStatus=LS.get("pl_gemini_status",{}),ACC=LS.get("pl_gemini_accounts",{});
+let sheetLink=LS.get("pl_sheet_link",DEFAULT_SHEET),gasUrl=LS.get("pl_gas_url","");
+let view=null,qi=0,ans=[],t0=0,busy=false,TABS=[],curTab="s-pt",hb=null,offOpen=false,cfgEl=null,linkBox=null,syncEl=null,syncBusy=false;
+const isAdmin=()=>!!me&&me.admin===true;let QL=[],curDe=0;
+const pickDe=()=>{try{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%EXAMS.length}catch(_){return Math.floor(Math.random()*EXAMS.length)}};
+const fmtT=x=>x==null?"—":Math.floor(x/60)+" phút "+String(x%60).padStart(2,"0")+" giây";
+
+// Kênh đồng bộ thời gian thực giữa các tab/trình duyệt và kho lưu trữ không giới hạn
+const BC=(typeof BroadcastChannel!=="undefined")?new BroadcastChannel("periodic_lab_gemini_sync"):null;
+function saveLocalDB(){
+ LS.set("pl_gemini_accounts",ACC);
+ LS.set("pl_gemini_status",allStatus);
+ if(BC){try{BC.postMessage({type:"sync",ACC,allStatus,sheetLink,gasUrl})}catch(_){}}
+}
+if(BC){
+ BC.onmessage=ev=>{
+  const d=ev.data;if(!d)return;
+  if(d.ACC)Object.assign(ACC,d.ACC);
+  if(d.allStatus)Object.assign(allStatus,d.allStatus);
+  if(d.sheetLink)sheetLink=d.sheetLink;
+  if(d.gasUrl!=null)gasUrl=d.gasUrl;
+  onStatus();
+ };
+}
+window.addEventListener("storage",ev=>{
+ if(ev.key==="pl_gemini_accounts"||ev.key==="pl_gemini_status"){
+  ACC=LS.get("pl_gemini_accounts",ACC);
+  allStatus=LS.get("pl_gemini_status",allStatus);
+  onStatus();
+ }
+});
+
+const GM=/^([a-z0-9.]+)(\+[a-z0-9._-]*)?@gmail\.com$/;
+const gmailCanon=e=>{const m=GM.exec(String(e||"").trim().toLowerCase());if(!m)return null;const k=m[1].replace(/\./g,"");return k.length>=3?k+"@gmail.com":null};
+async function acctKey(c){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("periodiclab|"+c));return"h"+Array.from(new Uint8Array(b)).slice(0,12).map(x=>x.toString(16).padStart(2,"0")).join("")}catch(_){return"h"+c.replace(/[^a-z0-9]/g,"_")}}
+
+const gsId=u=>{const m=/\/spreadsheets\/d\/([A-Za-z0-9_-]+)/.exec(u||"");return m?m[1]:null};
+const sset=t=>{if(syncEl)syncEl.textContent=t};
+
+// Đọc trực tiếp dữ liệu không giới hạn từ Google Sheet bằng JSONP (Google Visualization API)
+function pullFromGoogleSheet(silent){
+ const id=gsId(sheetLink);
+ if(!id){if(!silent)sset("⚠️ Link Google Sheet chưa hợp lệ.");return Promise.resolve(false)}
+ if(!silent)sset("⏳ Đang tải dữ liệu từ Google Sheet…");
+ return new Promise(resolve=>{
+  const cbName="pl_gviz_cb_"+Date.now()+"_"+Math.floor(Math.random()*1000);
+  const timer=setTimeout(()=>{cleanup();if(!silent)sset("ℹ️ Đang dùng bộ nhớ Gemini cục bộ (Google Sheet chưa bật chia sẻ công khai hoặc đang ngoại tuyến).");resolve(false)},6000);
+  const sc=document.createElement("script");
+  function cleanup(){clearTimeout(timer);delete window[cbName];if(sc.parentNode)sc.parentNode.removeChild(sc)}
+  window[cbName]=function(res){
+   cleanup();
+   try{
+    if(!res||!res.table||!res.table.rows){resolve(false);return}
+    let count=0;
+    res.table.rows.forEach((r,idx)=>{
+     const c=r.c||[];
+     const val=i=>(c[i]&&c[i].v!=null)?String(c[i].v).trim():"";
+     const stt=val(0),name=val(1),cls=val(2),att=val(3),cor=val(4),wrg=val(5),scr=val(6);
+     if(!name||name==="Họ và tên"||name==="STT")return;
+     const uid="gs_"+norm(name+"_"+cls).replace(/\s+/g,"_");
+     // Không ghi đè nếu đã có tài khoản trùng tên + lớp trên máy
+     const existingKey=Object.keys(ACC).find(k=>norm(ACC[k].name)===norm(name)&&norm(ACC[k].cls||"")===norm(cls==="—"?"":cls));
+     const key=existingKey||uid;
+     if(!ACC[key])ACC[key]={u:key,name,cls:cls==="—"?"":cls,createdAt:new Date(Date.now()+idx).toISOString()};
+     const scoreNum=parseFloat(scr.replace(",","."));
+     if(!isNaN(scoreNum)){
+      const cur=allStatus[key]||{};
+      if(cur.phase!=="doing"){
+       allStatus[key]={
+        u:key,name,cls:cls==="—"?"":cls,phase:"done",
+        attempts:parseInt(att,10)||cur.attempts||1,
+        correct:parseInt(cor,10)||cur.correct||0,
+        wrong:parseInt(wrg,10)||cur.wrong||0,
+        total:EXAMS[0].length,
+        score:scoreNum,
+        dur:cur.dur||null,
+        at:cur.at||new Date().toISOString(),
+        seen:cur.seen||0
+       };
+      }
+     }
+     count++;
+    });
+    saveLocalDB();onStatus();
+    if(!silent)sset(`✔ Đã đồng bộ từ Google Sheet lúc ${new Date().toLocaleTimeString("vi-VN")} (${Object.keys(ACC).length} học sinh, không giới hạn dòng).`);
+    resolve(true);
+   }catch(_){resolve(false)}
+  };
+  sc.onerror=()=>{cleanup();if(!silent)sset("ℹ️ Đang lưu trữ trực tiếp trên Gemini Sync.");resolve(false)};
+  sc.src=`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json;responseHandler:${cbName}&_=${Date.now()}`;
+  document.head.append(sc);
+ });
+}
+
+// Đẩy toàn bộ bảng điểm không giới hạn lên Google Sheet (qua Google Apps Script của Gemini nếu đã gắn, hoặc chuẩn bị sẵn dữ liệu)
+const SHEAD=["STT","Họ và tên","Lớp","Số bài đã làm","Số câu đúng","Số câu sai","Điểm","Xếp hạng"];
+function roster(){
+ const m={};
+ Object.entries(ACC).forEach(([k,a])=>m[k]={u:k,name:a.name||k,cls:a.cls||"",created:a.createdAt||""});
+ Object.entries(allStatus).forEach(([k,x])=>{if(!m[k])m[k]={u:k,name:x.name||k,cls:x.cls||"",created:""}});
+ const arr=Object.values(m).sort((a,b)=>(a.created||"~").localeCompare(b.created||"~")||a.name.localeCompare(b.name));
+ arr.forEach((x,i)=>x.stt=i+1);
+ return arr;
+}
+const rows=()=>Object.values(allStatus).filter(x=>x&&x.phase==="done").sort((a,b)=>b.score-a.score||(a.dur??999999)-(b.dur??999999)||(a.at<b.at?-1:1));
+function sheetRows(R,rk){
+ return R.map(u=>{
+  const x=allStatus[u.u]||{},d=x.phase==="done",i=rk.findIndex(r=>r.u===u.u);
+  return[u.stt,u.name,u.cls||"—",x.attempts||0,d?x.correct:"—",d?x.wrong:"—",d?x.score:"—",d&&i>=0?i+1:"—"];
+ });
+}
+
+async function doSync(force){
+ if(syncBusy)return;
+ syncBusy=true;
+ const R=roster(),rk=rows(),data=[SHEAD,...sheetRows(R,rk)];
+ if(gasUrl&&/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec/.test(gasUrl)){
+  sset("⏳ Đang cập nhật không giới hạn lên Google Sheet qua Gemini Bridge…");
+  try{
+   await fetch(gasUrl,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"syncAll",sheetId:gsId(sheetLink),headers:SHEAD,rows:sheetRows(R,rk),totalAccounts:R.length,updatedAt:new Date().toISOString()})});
+   sset(`✔ Đã ghi ${R.length} tài khoản (không giới hạn dòng) lên Google Sheet lúc ${new Date().toLocaleTimeString("vi-VN")}.`);
+  }catch(_){
+   sset("⚠️ Không gửi được tới Web App URL, dữ liệu vẫn được bảo toàn trên máy.");
+  }
+ }else{
+  await pullFromGoogleSheet(!force);
+ }
+ syncBusy=false;
+}
+
+async function saveAccount(a){
+ ACC[a.u]={u:a.u,name:a.name,cls:a.cls,createdAt:a.createdAt};
+ LS.set("pl_acct",{u:a.u,name:a.name,cls:a.cls,email:a.email,createdAt:a.createdAt});
+ LS.set("pl_auto",true);
+ saveLocalDB();
+ doSync(false);
+ return true;
+}
+async function findAccount(key){
+ const l=LS.get("pl_acct",null);
+ if(l&&l.u===key&&l.name)return l;
+ if(ACC[key])return ACC[key];
+ return null;
+}
+
+async function boot(){
+ renderGate("loading");
+ pullFromGoogleSheet(true);
+ const a=LS.get("pl_acct",null);
+ if(a&&a.u&&a.name&&LS.get("pl_auto",true)){
+  if(!ACC[a.u])ACC[a.u]={u:a.u,name:a.name,cls:a.cls||"",createdAt:a.createdAt||new Date().toISOString()};
+  saveLocalDB();
+  return enter({u:a.u,name:a.name,cls:a.cls||""});
+ }
+ renderGate("login",a);
+}
+function buildTabs(){
+ TABS=[["s-pt","🧪 Bảng tuần hoàn"],["s-ox","⚗️ Oxide – Hydroxide"]];
+ if(isAdmin())TABS.push(["s-prof","📊 Cập nhật trạng thái & Google Sheet"],["s-key","🔑 Bộ câu hỏi & đáp án"]);
+ else TABS.push(["s-quiz","📝 Làm bài"]);
+ $("#tabs").replaceChildren(...TABS.map(([id,t])=>h("button",{role:"tab","data-t":id,onclick:()=>show(id)},t)),h("button",{class:"btn",style:"margin-left:auto",onclick:logout},"🚪 Đăng xuất · "+me.name));
+}
+function show(id){
+ curTab=id;TABS.forEach(([i])=>$("#"+i).hidden=i!=id);
+ ["s-prof","s-key","s-quiz"].forEach(i=>{if(!TABS.some(t=>t[0]==i))$("#"+i).hidden=true});
+ document.querySelectorAll("#tabs button[data-t]").forEach(b=>b.setAttribute("aria-selected",b.dataset.t==id));
+ if(id=="s-prof")renderAdmin();if(id=="s-key")renderKey();if(id=="s-quiz")renderQuizTab();
+}
+const ENV='<svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3" fill="#fff" stroke="#d93025" stroke-width="1.8"/><path d="M3 6.5l9 7 9-7" fill="none" stroke="#d93025" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+function heroArt(){const w=h("div",{class:"art","aria-hidden":"true"});
+ let o='<svg viewBox="0 0 300 300">';[[50,3,"#14b8cf"],[85,6,"#14b8cf"],[120,2,"#ffd23f"]].forEach(([r,n,c],i)=>{o+=`<circle cx="150" cy="150" r="${r}" fill="none" stroke="#3a4d6e" stroke-dasharray="3 4"/><g class="sh" style="animation-duration:${9+i*6}s${i==1?";animation-direction:reverse":""}">`;for(let k=0;k<n;k++){const t=2*Math.PI*k/n;o+=`<circle cx="${(150+r*Math.cos(t)).toFixed(1)}" cy="${(150+r*Math.sin(t)).toFixed(1)}" r="${i==2?8:6}" fill="${c}"/>`}o+="</g>"});
+ o+='<circle cx="150" cy="150" r="30" fill="#e0475f"/><text x="150" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">PERIODIC</text><text x="150" y="162" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">LAB</text></svg>';
+ const svg=h("span",{});svg.innerHTML=o;w.append(svg.firstChild);
+ [["H","1","nm",4,6,"0s"],["He","2","ng",76,8,"-1s"],["Na","11","ak",2,74,"-2s"],["Fe","26","tm",78,70,"-3s"],["Cl","17","hl",40,86,"-1.5s"],["O","8","nm",40,2,"-2.5s"]].forEach(([sy,z,c,l,t,d])=>w.append(h("div",{class:"ft "+c,style:`left:${l}%;top:${t}%;animation-delay:${d}`},h("small",{},z),h("b",{},sy))));
+ return w}
+function stepper(i){return h("ol",{class:"steps","aria-label":"Các bước"},["Đăng nhập Gmail","Đăng ký","Làm bài"].map((t,k)=>h("li",{class:k==i?"on":k<i?"done":""},h("i",{},k<i?"✓":k+1),t)))}
+function hero(i,title,sub,...kids){return h("div",{class:"hero"},heroArt(),h("div",{class:"panel"},stepper(i),h("h2",{},title),h("p",{class:"sub"},sub),...kids))}
+function renderGate(mode,a){const g=$("#gate");g.replaceChildren();
+ if(mode==="loading"){g.append(h("div",{class:"card gate"},h("p",{},"⏳ Đang khởi tạo hệ thống…")));return}
+ const er=h("div",{class:"err",role:"alert"});
+ const em=h("input",{type:"email",maxlength:80,autocomplete:"email",placeholder:"ten@gmail.com",class:"big"});if(a&&a.email)em.value=a.email;
+ if(mode==="register"){const n=h("input",{maxlength:80,autocomplete:"name",placeholder:"Họ và tên",class:"big"}),cl=h("input",{maxlength:12,placeholder:"vd: 10A1",class:"big"}),btn=h("button",{class:"gbtn"});btn.innerHTML=ENV;btn.append(h("span",{},"Đăng ký tài khoản"));
+  const go=async()=>{const c=gmailCanon(em.value),nm=n.value.replace(/\s+/g," ").trim(),cls=cl.value.replace(/\s+/g," ").trim();
+   if(!c){er.textContent="Hãy nhập đúng địa chỉ Gmail (đuôi @gmail.com).";return}
+   if(nm.length<2||nm.length>60||!/^[\p{L}\s.'-]+$/u.test(nm)){er.textContent="Họ và tên phải từ 2 đến 60 ký tự, chỉ gồm chữ cái và khoảng trắng.";return}
+   if(cls.length<1||cls.length>10||!/^[\p{L}\p{N}\s./-]+$/u.test(cls)){er.textContent="Lớp phải từ 1 đến 10 ký tự (chữ, số, dấu cách, . / -).";return}
+   btn.disabled=true;er.textContent="";const key=await acctKey(c),ex=await findAccount(key);
+   if(ex){btn.disabled=false;er.textContent="Gmail này đã đăng ký rồi. Hãy quay lại và đăng nhập.";return}
+   const acct={u:key,name:nm,cls,email:em.value.trim().toLowerCase(),createdAt:new Date().toISOString()};const ok=await saveAccount(acct);enter({u:key,name:nm,cls,saved:ok})};
+  btn.onclick=go;[em,n,cl].forEach(i=>i.addEventListener("keydown",e=>e.key==="Enter"&&go()));
+  g.append(hero(1,"✨ Đăng ký tài khoản","Nhập Gmail và họ tên của bạn. Không cần admin duyệt, không giới hạn số lượng.",h("div",{class:"stack"},h("label",{},"📧 Gmail",em),h("div",{class:"two"},h("label",{},"👤 Họ và tên",n),h("label",{},"🏫 Lớp",cl)),btn),er,
+   h("p",{class:"small"},"Đã có tài khoản? ",h("a",{href:"#",onclick:e=>{e.preventDefault();renderGate("login",{email:em.value})}},"Đăng nhập")),
+   h("p",{class:"small"},"Hệ thống đồng bộ tự động qua Gemini & Google Sheets.")));em.focus();return}
+ const gb=h("button",{class:"gbtn"});gb.innerHTML=ENV;gb.append(h("span",{},"Đăng nhập bằng Gmail"));
+ const go=async()=>{if(em.value.trim()===ADMIN_CODE){enter({u:"admin",name:"Admin",admin:true});return}
+  const c=gmailCanon(em.value);if(!c){er.textContent="Hãy nhập đúng địa chỉ Gmail (đuôi @gmail.com).";return}
+  gb.disabled=true;er.textContent="";const key=await acctKey(c),acc=await findAccount(key);gb.disabled=false;
+  if(!acc){er.textContent="Gmail này chưa có tài khoản trên thiết bị này. Hãy bấm “Đăng ký ngay” bên dưới.";return}
+  LS.set("pl_acct",{u:key,name:acc.name,cls:acc.cls||"",email:em.value.trim().toLowerCase(),createdAt:acc.createdAt});LS.set("pl_auto",true);enter({u:key,name:acc.name,cls:acc.cls||""})};
+ gb.onclick=go;em.addEventListener("keydown",e=>e.key==="Enter"&&go());
+ g.append(hero(0,"🚀 Đăng nhập PERIODIC LAB","Khám phá bảng tuần hoàn, luyện tập oxide – hydroxide và xem thứ hạng của bạn.",h("div",{class:"stack"},h("label",{},"📧 Gmail",em),gb),er,
+  h("p",{class:"small"},"Chưa có tài khoản? ",h("a",{href:"#",onclick:e=>{e.preventDefault();renderGate("register",{email:em.value})}},"Đăng ký ngay")),
+  h("ul",{class:"perks"},h("li",{},"Không cần mật khẩu, không cần admin duyệt"),h("li",{},"Đồng bộ Gemini & Google Sheets không giới hạn số lượng"),h("li",{},"Bảo mật Gmail bằng thuật toán băm SHA-256"))))}
+
+async function enter(x){
+ me=x;$("#gate").replaceChildren(h("div",{class:"card gate"},h("p",{},"⏳ Đang đăng nhập…")));
+ st=isAdmin()?null:{u:x.u,name:x.name,cls:x.cls||"",phase:"idle",cur:0,correct:0,wrong:0,total:EXAMS[0].length,score:null,dur:null,at:null,attempts:0,seen:Date.now()};
+ $("#gate").hidden=true;$("#tabs").hidden=false;$("#app").hidden=false;buildTabs();await initStatus();show(isAdmin()?"s-prof":"s-pt");
+ if(!hb)hb=setInterval(()=>{if(st){st.seen=Date.now();push()}if(curTab=="s-prof")renderAdmin()},30000);
+}
+async function initStatus(){
+ if(!st)return;
+ const v=allStatus[me.u];
+ if(v){
+  st.attempts=v.attempts||0;
+  if(v.phase==="done"&&st.phase==="idle"){Object.assign(st,v);st.name=me.name;st.cls=me.cls||v.cls||""}
+ }
+ st.seen=Date.now();push();
+}
+async function push(){
+ if(!st)return;
+ allStatus[st.u]={...st};
+ saveLocalDB();
+ onStatus();
+}
+function onStatus(){
+ const e=$("#lb");if(e)e.replaceChildren(lbTable());
+ const r=$("#rk");if(r)r.textContent=rankTxt();
+ if(curTab=="s-prof")renderAdmin();
+}
+async function logout(){if(st){st.seen=0;await push()}LS.set("pl_auto",false);location.reload()}
+const rankTxt=()=>{const r=rows(),i=r.findIndex(x=>x.u===me.u);return i<0?"—":(i+1)+" / "+r.length};
+function lbTable(){const r=rows();return r.length?h("div",{class:"wrap"},h("table",{},h("tr",{},["🏅 Hạng","👤 Họ và tên","🏫 Lớp","⭐ Điểm","✔ Đúng","✘ Sai","⏱️ Thời gian"].map(x=>h("th",{},x))),r.map((x,i)=>h("tr",{class:x.u===me.u?"me":""},h("td",{},i+1),h("td",{},x.name),h("td",{},x.cls||"—"),h("td",{},x.score),h("td",{},x.correct),h("td",{},x.wrong),h("td",{},fmtT(x.dur)))))):h("p",{class:"note"},"Chưa có ai nộp bài.")}
+
+function renderQuizTab(){const s=$("#s-quiz");s.replaceChildren();
+ if(!view)view=st.phase==="done"?"done":"intro";
+ if(view==="doing")showQ(s);else if(view==="done")showDone(s);else showIntro(s)}
+function showIntro(s){s.append(h("div",{class:"card"},h("h2",{},"📝 Bài tập tổng hợp"),h("p",{},`${EXAMS[0].length} câu; mã đề được bốc ngẫu nhiên khi bạn bấm bắt đầu. Làm lần lượt từng câu. Đáp án chỉ hiện sau khi nộp; điểm tính theo thang 10, xếp hạng theo điểm rồi đến thời gian làm bài. Tự động lưu và đồng bộ qua Gemini & Google Sheets không giới hạn số lượt làm bài.`),h("button",{class:"btn p",onclick:start},st.phase==="done"?"↻ Làm lại (lượt mới)":"🚀 Bắt đầu làm bài")))}
+function start(){let m;do{m=pickDe()}while(m===st.de&&EXAMS.length>1);curDe=m;QL=EXAMS[m].map(i=>QZ[i]);qi=0;ans=[];t0=Date.now();busy=false;Object.assign(st,{phase:"doing",de:m,total:QL.length,cur:1,correct:0,wrong:0,score:null,dur:null,at:null,seen:Date.now()});view="doing";push();renderQuizTab()}
+function showQ(s){const q=QL[qi],msg=h("div",{class:"err",role:"alert"});
+ const rd=q.o.map((o,j)=>{const i=h("input",{type:"radio",name:"q"});i.checked=ans[qi]===j;i.onchange=()=>{ans[qi]=j;msg.textContent=""};return h("label",{class:"opt"},i,o)});
+ s.append(h("div",{class:"card"},h("div",{class:"row",style:"justify-content:space-between"},h("b",{},"📋 "+`Mã đề ${String(curDe+1).padStart(2,"0")} · Câu ${qi+1}/${QL.length}`),h("span",{class:"note"},"👤 "+me.name)),h("progress",{max:QL.length,value:qi,style:"width:100%"}),h("h3",{},q.t),rd,msg,
+  h("button",{class:"btn p",onclick:()=>nextQ(msg)},qi<QL.length-1?"Câu tiếp ›":"🏁 Nộp bài")))}
+function nextQ(msg){if(ans[qi]==null){msg.textContent="⚠️ Hãy chọn một đáp án.";return}
+ ans[qi]===QL[qi].a?st.correct++:st.wrong++;
+ if(qi<QL.length-1){qi++;st.cur=qi+1;st.seen=Date.now();push();renderQuizTab()}else finish()}
+async function finish(){if(busy)return;busy=true;const n=QL.length;
+ Object.assign(st,{phase:"done",cur:n,attempts:(st.attempts||0)+1,score:+(st.correct/n*10).toFixed(2),dur:Math.round((Date.now()-t0)/1000),at:new Date().toISOString(),seen:Date.now()});
+ view="done";await push();renderQuizTab();doSync(false)}
+function showDone(s){const rv=QL.length>0&&ans.length===QL.length;
+ s.append(h("div",{class:"card"},h("h2",{},"🏆 Kết quả của bạn"),h("div",{class:"sc"},st.score+" / 10"),h("p",{},`Mã đề ${st.de!=null?String(st.de+1).padStart(2,"0"):"—"} · ✔ Đúng ${st.correct} · ✘ Sai ${st.wrong} · Tổng ${st.total||QL.length} câu · ⏱️ Thời gian ${fmtT(st.dur)}`),h("p",{},"🏅 Xếp hạng: ",h("b",{id:"rk"},rankTxt())),h("button",{class:"btn p",onclick:()=>{view="intro";renderQuizTab()}},"↻ Làm lại")),
+  h("div",{class:"card"},h("h3",{},"📊 Bảng xếp hạng"),h("div",{id:"lb"},lbTable())),
+  rv?h("div",{class:"card"},h("h3",{},"🔎 Xem lại đáp án chi tiết"),QL.map((q,i)=>{const ok=ans[i]===q.a;return h("div",{class:"q"},h("b",{},(i+1)+". "+q.t),h("div",{class:ok?"ok":"bad"},(ok?"✔ Đúng. ":"✘ Sai. Đáp án: "+q.o[q.a]+". ")+q.e))})):null)}
+
+/* ---- QUẢN TRỊ & CẬP NHẬT GOOGLE SHEET KHÔNG GIỚI HẠN QUA GEMINI ---- */
+function kind(x){if(!x)return"off";if(x.phase==="done")return"done";if(Date.now()-x.seen>=120000)return"off";return x.phase==="doing"?"doing":"act"}
+const csvEsc=v=>{v=String(v??"");if(/^[=+\-@\t\r]/.test(v))v="'"+v;return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+
+// Tải file CSV trực tiếp bằng HTML5 Blob (hoạt động trên mọi trình duyệt, không giới hạn dòng)
+function dlCsv(R,rk,m){
+ const csv="\uFEFF"+[SHEAD,...sheetRows(R,rk)].map(r=>r.map(csvEsc).join(",")).join("\r\n");
+ try{
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const url=URL.createObjectURL(blob);
+  const a=h("a",{href:url,download:"bang-diem-periodic-lab.csv"});
+  document.body.append(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+  m.textContent="✔ Đã tải xuống bang-diem-periodic-lab.csv thành công!";
+ }catch(_){m.textContent="⚠️ Trình duyệt chặn tải file."}
+}
+
+// Sao chép bảng điểm dạng TSV để dán thẳng (Ctrl+V) vào Google Sheet
+async function copyTsv(R,rk,m){
+ const tsv=[SHEAD,...sheetRows(R,rk)].map(r=>r.join("\t")).join("\n");
+ try{
+  await navigator.clipboard.writeText(tsv);
+  m.textContent="✔ Đã sao chép! Bạn chỉ cần mở Google Sheet, bấm vào ô A1 rồi nhấn Ctrl + V.";
+ }catch(_){m.textContent="⚠️ Không sao chép tự động được."}
+}
+
+const GAS_SCRIPT_CODE=`// Mã Google Apps Script tự động cập nhật Google Sheet (Không giới hạn số dòng)
+// Hướng dẫn: Mở Google Sheet -> Tiện ích mở rộng (Extensions) -> Apps Script -> Dán mã này vào -> Triển khai (Deploy) -> Ứng dụng web (Web App) -> Quyền truy cập: Bất kỳ ai (Anyone) -> Copy URL dán vào trang Admin.
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.openById("${gsId(DEFAULT_SHEET)||"1X56QiI14UYKrldwcdj-Ybhy8oj-oYqYRVk5X4iqvxno"}");
+    var sheet = ss.getSheets()[0];
+    if (data.action === "syncAll" && data.rows) {
+      sheet.clearContents();
+      var all = [data.headers].concat(data.rows);
+      sheet.getRange(1, 1, all.length, all[0].length).setValues(all);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ok: true, rows: (data.rows||[]).length})).setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}`;
+
+function renderAdmin(){
+ if(!isAdmin())return;
+ const s=$("#s-prof");s.replaceChildren();
+ const R=roster(),by={off:[],act:[],doing:[],done:[]},rk=rows();
+ R.forEach(u=>by[kind(allStatus[u.u])].push(u));
+ const card=(u,k)=>{
+  const x=allStatus[u.u]||{};let b,d;
+  if(k=="doing"){b=h("span",{class:"st doing"},"📝 Đang làm bài");d=`Đang làm câu ${x.cur}/${x.total} · Đúng ${x.correct} · Sai ${x.wrong}`}
+  else if(k=="act"){b=h("span",{class:"st act"},"🟢 Đang hoạt động");d="Đã đăng nhập, chưa làm bài"}
+  else{b=h("span",{class:"st done"},"✔ Đã xong");d=`Điểm ${x.score}/10 · Đúng ${x.correct} · Sai ${x.wrong} · Hạng ${rk.findIndex(r=>r.u===u.u)+1}/${rk.length}`}
+  return h("div",{class:"scard"},h("div",{},h("b",{},u.stt+". "+u.name+(u.cls?" · Lớp "+u.cls:"")+(x.de!=null?" · Mã đề "+String(x.de+1).padStart(2,"0"):"")),b),h("div",{class:"note"},d),k=="doing"?h("progress",{max:x.total,value:x.correct+x.wrong,style:"width:100%"}):null);
+ };
+ const det=h("details",{class:"card",ontoggle:e=>{offOpen=e.target.open}},h("summary",{},`⚪ Chưa hoạt động (${by.off.length})`),h("div",{class:"chips"},by.off.map(u=>h("span",{},u.stt+". "+u.name+(u.cls?" ("+u.cls+")":"")))));det.open=offOpen;
+
+ if(!cfgEl){
+  const url=h("input",{type:"url",value:sheetLink,placeholder:"https://docs.google.com/spreadsheets/d/…",style:"min-width:300px"});
+  const gInp=h("input",{type:"url",value:gasUrl,placeholder:"https://script.google.com/macros/s/…/exec (Tùy chọn để tự động ghi 2 chiều)",style:"min-width:300px"});
+  const m=h("span",{class:"note"});
+  linkBox=h("div",{});
+  syncEl=h("span",{class:"note"},"Sẵn sàng đồng bộ không giới hạn.");
+  cfgEl=h("div",{class:"card"},
+   h("h3",{style:"margin-top:0"},"📗 Kết nối Gemini & Google Sheet Bảng điểm (Không giới hạn số lượng)"),
+   linkBox,
+   h("p",{class:"note"},"Hệ thống đã gắn sẵn Google Sheet của bạn. Bạn có thể bấm “Đồng bộ ngay” để đọc/ghi dữ liệu không giới hạn số dòng, hoặc sao chép bảng điểm dán trực tiếp vào Sheet."),
+   h("div",{class:"row",style:"margin-bottom:10px"},
+    h("button",{class:"btn p",onclick:()=>doSync(true)},"🔄 Đồng bộ ngay với Google Sheet"),
+    h("button",{class:"btn",onclick:()=>pullFromGoogleSheet(false)},"📥 Tải dữ liệu từ Google Sheet về"),
+    syncEl
+   ),
+   h("div",{class:"row"},
+    h("label",{},"🔗 Link Google Sheet",url),
+    h("label",{},"⚡ Web App URL (Apps Script ghi tự động)",gInp),
+    h("button",{class:"btn p",onclick:()=>{
+     const v=url.value.trim();
+     if(v&&!/^https:\/\/docs\.google\.com\/spreadsheets\/.+/.test(v)){m.textContent="⚠️ Link phải có dạng https://docs.google.com/spreadsheets/…";return}
+     sheetLink=v||DEFAULT_SHEET;gasUrl=gInp.value.trim();
+     LS.set("pl_sheet_link",sheetLink);LS.set("pl_gas_url",gasUrl);
+     saveLocalDB();m.textContent="✔ Đã lưu cấu hình Google Sheet!";renderAdmin();
+    }},"💾 Lưu cấu hình"),
+    m
+   ),
+   h("details",{style:"margin-top:12px"},
+    h("summary",{style:"color:#ffd23f;font-size:13.5px"},"💡 Xem mã Google Apps Script để tự động ghi bảng điểm không giới hạn vào Sheet của bạn"),
+    h("p",{class:"note",style:"margin:6px 0"},"Nếu muốn bảng điểm tự động ghi thẳng vào Google Sheet mỗi khi học sinh nộp bài (không giới hạn số dòng), hãy dán đoạn mã dưới đây vào mục Tiện ích mở rộng → Apps Script trong Google Sheet của bạn:"),
+    h("div",{class:"code-box"},GAS_SCRIPT_CODE)
+   )
+  );
+ }
+ const ok=/^https:\/\/docs\.google\.com\/spreadsheets\//.test(sheetLink);
+ linkBox.replaceChildren(ok?h("p",{style:"margin:6px 0"},"🔗 Link Google Sheet đang kết nối: ",h("a",{href:sheetLink,target:"_blank",rel:"noopener noreferrer",style:"color:var(--cy);font-weight:700"},sheetLink)):h("p",{class:"note"},"Chưa có link Google Sheet."));
+ const dm=h("span",{class:"note"});
+ s.append(
+  h("div",{class:"card"},
+   h("h2",{style:"margin-top:0"},"📊 Cập nhật trạng thái lớp học (Gemini Unlimited Sync)"),
+   h("p",{class:"note"},`👥 Tổng ${R.length} tài khoản (Không giới hạn) · ⚪ Chưa hoạt động: ${by.off.length} · 🟢 Đang hoạt động: ${by.act.length} · 📝 Đang làm bài: ${by.doing.length} · ✔ Đã xong: ${by.done.length}.`)
+  ),
+  cfgEl,det,
+  h("div",{class:"card"},h("h3",{style:"margin-top:0"},"⚡ Học sinh đang hoạt động & đã hoàn thành"),by.doing.length+by.act.length+by.done.length?[by.doing.map(u=>card(u,"doing")),by.act.map(u=>card(u,"act")),rk.map(r=>R.find(u=>u.u===r.u)).filter(Boolean).map(u=>card(u,"done"))].flat():h("p",{class:"note"},"Chưa có tài khoản nào hoạt động.")),
+  h("div",{class:"card"},
+   h("h3",{style:"margin-top:0"},"📋 Dữ liệu bảng điểm tổng hợp (Không giới hạn số lượng)"),
+   h("div",{class:"row",style:"margin-bottom:10px"},
+    h("button",{class:"btn p",onclick:()=>dlCsv(R,rk,dm)},"⬇️ Tải file CSV (Excel / Google Sheet)"),
+    h("button",{class:"btn",onclick:()=>copyTsv(R,rk,dm)},"📋 Sao chép bảng điểm (Dán thẳng Ctrl+V vào Google Sheet)"),
+    dm
+   ),
+   R.length?h("div",{class:"wrap"},h("table",{},h("tr",{},SHEAD.map(x=>h("th",{},x))),sheetRows(R,rk).map(r=>h("tr",{},r.map(c=>h("td",{},c)))))):h("p",{class:"note"},"Chưa có tài khoản nào đăng ký.")
+  )
+ );
+}
+function renderKey(){if(!isAdmin())return;const s=$("#s-key");s.replaceChildren();
+ s.append(h("div",{class:"card"},h("h2",{},"🔑 Bộ câu hỏi & đáp án (Đã xáo lại mã đề)"),h("p",{class:"note"},`Ngân hàng ${QZ.length} câu, chia thành ${EXAMS.length} mã đề × ${EXAMS[0].length} câu. Mỗi lần học sinh bấm bắt đầu làm bài, hệ thống bốc ngẫu nhiên một mã đề (khác mã đề của lần làm liền trước). Nhấn vào từng mã đề để mở hoặc thu gọn.`)),
+  ...EXAMS.map((ex,m)=>h("details",{class:"card"},h("summary",{},`📑 Mã đề ${String(m+1).padStart(2,"0")} — ${ex.length} câu`),
+   ex.map((id,k)=>{const q=QZ[id];return h("div",{class:"q"},h("b",{},`Câu ${k+1}. ${q.t}`),q.o.map((o,j)=>h("div",{class:"opt"+(j===q.a?" ok":""),style:(j===q.a?"border-color:#4ade80;":"")+"cursor:default"},(j===q.a?"✔ ":"")+String.fromCharCode(65+j)+". "+o)),h("p",{class:"note"},"💡 Đáp án đúng: "+String.fromCharCode(65+q.a)+". "+q.o[q.a]+" — "+q.e))}))))}
+/* ---- khởi động ---- */
+boot();
+</script></body></html>
